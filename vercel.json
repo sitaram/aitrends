@@ -1,5 +1,8 @@
 {
   "functions": {
+    "app/page.js": {
+      "maxDuration": 60
+    },
     "pages/api/query-openai.js": {
       "maxDuration": 60
     }
