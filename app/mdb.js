@@ -17,3 +17,4 @@ const BoldMarkdown = ({ text }) => {
 };
 
 export default BoldMarkdown;
+
