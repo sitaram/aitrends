@@ -10,7 +10,7 @@ import remarkGfm from 'remark-gfm';
 import axios from 'axios';
 import TimeframeSlider from './timeframe-slider';
 import TopicBrowser from './topic-browser';
-import BoldMarkdown from './mdb.js';
+import CustomMarkdown from './custom-md.js';
 
 const drawerWidth = 240;
 const cache_salt = '1';
@@ -205,7 +205,7 @@ const Home = () => {
 	      ) : (
 		content.map((part, index) => (
 		  <div key={index} className="message">
-		    <BoldMarkdown text={part} />
+		    <CustomMarkdown text={part} />
 		  </div>
 		))
 	      )
