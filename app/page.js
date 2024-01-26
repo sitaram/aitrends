@@ -6,9 +6,11 @@ import { ThreeDots } from 'react-loader-spinner'; // Import a loading spinner li
 import { AppBar, Toolbar, IconButton, Typography, Drawer, CssBaseline, Box, useMediaQuery } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
+import remarkGfm from 'remark-gfm';
 import axios from 'axios';
 import TimeframeSlider from './timeframe-slider';
 import TopicBrowser from './topic-browser';
+import BoldMarkdown from './mdb.js';
 
 const drawerWidth = 240;
 const cache_salt = '1';
@@ -71,10 +73,10 @@ const Home = () => {
       return; // Prevents fetching if a request is already in progress
     }
 
-    const prompt = `What are recent advances in the ${timeframe} in ${topic}? Research as necessary to get this list.
+    const queryPrompt = `What are recent advances in the ${timeframe} in ${topic}? Research as necessary to get this list.
     In your reply, be explicit about the time window you're talking about.`;
 
-    var cache = localStorage.getItem("openai:" + cache_salt + ":" + prompt);
+    var cache = localStorage.getItem("openai:" + cache_salt + ":" + queryPrompt);
     if (cache) {
       setContent(splitChat(cache));
       return;
@@ -84,9 +86,9 @@ const Home = () => {
     setIsLoading(true); // Set loading state before fetching
 
     try {
-      const response = await axios.post('/api/query-openai', { prompt });
+      const response = await axios.post('/api/query-openai', { prompt: queryPrompt });
       const chatMessage = response.data.data;
-      localStorage.setItem("openai:" + cache_salt + ":" + prompt, chatMessage);
+      localStorage.setItem("openai:" + cache_salt + ":" + queryPrompt, chatMessage);
       setContent(splitChat(chatMessage));
     } catch (error) {
       console.error('Error fetching content:', error);
@@ -172,17 +174,19 @@ const Home = () => {
 	  <Toolbar />
 	  <TimeframeSlider value={timeframe} onChange={handleTimeframeChange} />
 	  <div>
-	    {/* Render the split chat message */}
-	    {isLoading ? (
-	      <div className="centered"><ThreeDots color="#3a506b" /></div>
-	    ) : (
-	      // Render the split chat message when not loading
-	      content.map((part, index) => (
-		<div key={index} className="message">
-		  {part}
+	    {
+	      isLoading ? (
+		<div className="centered">
+		  <ThreeDots color="#3a506b" />
 		</div>
-	      ))
-	    )}
+	      ) : (
+		content.map((part, index) => (
+		  <div key={index} className="message">
+		    <BoldMarkdown text={part} />
+		  </div>
+		))
+	      )
+	    }
 	  </div>
 	</Box>
       </Box>
