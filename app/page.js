@@ -11,6 +11,7 @@ import TimeframeSlider from './timeframe-slider';
 import TopicBrowser from './topic-browser';
 
 const drawerWidth = 240;
+const cache_salt = '1';
 
 const theme = createTheme({
   palette: {
@@ -66,25 +67,26 @@ const Home = () => {
   const fetchInProgress = useRef(false);
 
   const fetchContent = useCallback(async () => {
+    if (fetchInProgress.current) {
+      return; // Prevents fetching if a request is already in progress
+    }
+
     const prompt = `What are recent advances in the ${timeframe} in ${topic}? Research as necessary to get this list.
     In your reply, be explicit about the time window you're talking about.`;
 
-    var cache = localStorage.getItem("openai:" + prompt);
+    var cache = localStorage.getItem("openai:" + cache_salt + ":" + prompt);
     if (cache) {
       setContent(splitChat(cache));
       return;
     }
 
-    if (fetchInProgress.current) {
-      return; // Prevents fetching if a request is already in progress
-    }
     fetchInProgress.current = true;
     setIsLoading(true); // Set loading state before fetching
 
     try {
       const response = await axios.post('/api/query-openai', { prompt });
       const chatMessage = response.data.data;
-      localStorage.setItem("openai:" + prompt, chatMessage);
+      localStorage.setItem("openai:" + cache_salt + ":" + prompt, chatMessage);
       setContent(splitChat(chatMessage));
     } catch (error) {
       console.error('Error fetching content:', error);

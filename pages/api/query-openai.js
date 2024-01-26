@@ -20,8 +20,8 @@ export default async (req, res) => {
 
     const completion = await openai.chat.completions.create({
       messages: [{ role: "system", content: prompt }],
-      model: 'gpt-3.5-turbo',
-      // model: 'gpt-4-turbo-preview',
+      // model: 'gpt-3.5-turbo',
+      model: 'gpt-4-turbo-preview',
     });
 
       // max_tokens: 100, // Adjust as needed
