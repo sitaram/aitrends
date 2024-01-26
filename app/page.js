@@ -33,6 +33,16 @@ const theme = createTheme({
   },
 });
 
+const clearCache = () => {
+  for (i in localStorage)
+    if (i.match(/^openai:/))
+      localStorage.removeItem(i);
+}
+
+const splitChat = (str) => {
+  return str.split('\n').filter(line => line.trim() !== '');
+}
+
 const Home = () => {
   const [mobileOpen, setMobileOpen] = useState(false); // State to control drawer visibility
   const [timeframe, setTimeframe] = useState('last two weeks');
@@ -56,19 +66,26 @@ const Home = () => {
   const fetchInProgress = useRef(false);
 
   const fetchContent = useCallback(async () => {
+    const prompt = `What are recent advances in the ${timeframe} in ${topic}? Research as necessary to get this list.
+    In your reply, be explicit about the time window you're talking about.`;
+
+    var cache = localStorage.getItem("openai:" + prompt);
+    if (cache) {
+      setContent(splitChat(cache));
+      return;
+    }
+
     if (fetchInProgress.current) {
       return; // Prevents fetching if a request is already in progress
     }
     fetchInProgress.current = true;
     setIsLoading(true); // Set loading state before fetching
 
-    const prompt = `What are recent advances in the ${timeframe} in ${topic}? Research as necessary to get this list.
-    In your reply, be explicit about the time window you're talking about.`;
     try {
       const response = await axios.post('/api/query-openai', { prompt });
       const chatMessage = response.data.data;
-      const messageParts = chatMessage.split('\n');
-      setContent(messageParts);
+      localStorage.setItem("openai:" + prompt, chatMessage);
+      setContent(splitChat(chatMessage));
     } catch (error) {
       console.error('Error fetching content:', error);
     }
