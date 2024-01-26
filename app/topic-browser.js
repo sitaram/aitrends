@@ -51,7 +51,6 @@ const topics = [
 // AI in Retail
 
 const StyledList = styled(List)(({ theme }) => ({
-  marginTop: '-48px'
 }));
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({

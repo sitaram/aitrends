@@ -114,7 +114,14 @@ const Home = () => {
 	    onClose={handleDrawerToggle}
 	    ModalProps={{ keepMounted: true }}
 	    sx={{
-	      '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth }
+	      '& .MuiDrawer-paper': {
+		width: drawerWidth,
+		boxSizing: 'border-box',
+		marginTop: '64px', // Adjusting the top margin to AppBar's height
+		height: `calc(100% - 64px)`,
+		backgroundColor: '#fafafa', // A light background color for the drawer
+		zIndex: '100000000',
+	      }
 	    }}
 	  >
 	    <TopicBrowser onSelect={handleTopicChange} selectedTopic={topic} />
@@ -128,8 +135,6 @@ const Home = () => {
 	      '& .MuiDrawer-paper': {
 		width: drawerWidth,
 		boxSizing: 'border-box',
-		marginTop: '64px', // Adjusting the top margin to AppBar's height
-		height: `calc(100% - 64px)`,
 		backgroundColor: '#fafafa', // A light background color for the drawer
 		zIndex: '1',
 	      }
