@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "pages/api/query-openai.js": {
+      "maxDuration": 60
+    }
+  }
+}
