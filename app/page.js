@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import React from 'react';
 import { ThreeDots } from 'react-loader-spinner'; // Import a loading spinner library
-import { AppBar, Toolbar, IconButton, Typography, Drawer, CssBaseline, Box, useMediaQuery } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Typography, Drawer, CssBaseline, Box, SwipeableDrawer, useMediaQuery } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 import remarkGfm from 'remark-gfm';
@@ -117,6 +117,25 @@ const Home = () => {
 	    >
 	      <MenuIcon />
 	    </IconButton>
+            {/* Add the pull-out tab */}
+            <Box
+              sx={{
+                display: { xs: 'block', sm: 'none' },
+                backgroundColor: theme.palette.primary.main,
+                color: theme.palette.common.white,
+                padding: '8px 16px',
+                borderRadius: '0 12px 12px 0',
+                cursor: 'pointer',
+                zIndex: 1,
+                position: 'fixed',
+                left: 0,
+                top: '90%',
+                transform: 'translateY(-50%)',
+              }}
+              onClick={handleDrawerToggle}
+            >
+              Topics
+            </Box>
 	    <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
 		<Typography variant="h6" noWrap>
 		    AI Trends Live
@@ -129,24 +148,28 @@ const Home = () => {
 	</AppBar>
 
 	{isMobile ? (
-	  <Drawer
-	    variant="temporary"
+	  <SwipeableDrawer
+	    anchor="left"
 	    open={mobileOpen}
 	    onClose={handleDrawerToggle}
-	    ModalProps={{ keepMounted: true }}
+	    onOpen={handleDrawerToggle}
 	    sx={{
-	      '& .MuiDrawer-paper': {
+	      '.MuiDrawer-paper': {
 		width: drawerWidth,
-		boxSizing: 'border-box',
-		marginTop: '64px', // Adjusting the top margin to AppBar's height
+		marginTop: '64px',
 		height: `calc(100% - 64px)`,
-		backgroundColor: '#fafafa', // A light background color for the drawer
-		zIndex: '100000000',
-	      }
+		backgroundColor: '#fafafa',
+		zIndex: '1',
+		position: 'fixed',
+		transition: 'transform 0.3s ease',
+		transform: mobileOpen
+		  ? 'translateX(0)'
+		  : `translateX(-${drawerWidth}px)`,
+	      },
 	    }}
 	  >
 	    <TopicBrowser onSelect={handleTopicChange} selectedTopic={topic} />
-	  </Drawer>
+	  </SwipeableDrawer>
 	) : (
 	  <Drawer
 	    variant="permanent"
