@@ -49,6 +49,12 @@ const DrawerComponent = ({ mobileOpen, handleDrawerToggle, topic, handleTopicCha
             open={mobileOpen}
             onClose={handleDrawerToggle}
             onOpen={handleDrawerToggle}
+	    sx={{
+	      '.MuiDrawer-paper': {
+		marginTop: '60px', // Add this margin to create space for the title bar
+		height: `calc(100% - 60px)`,
+	      },
+	    }}
           >
             {drawerContent}
           </SwipeableDrawer>
@@ -60,8 +66,11 @@ const DrawerComponent = ({ mobileOpen, handleDrawerToggle, topic, handleTopicCha
             width: drawerWidth,
             flexShrink: 0,
             '& .MuiDrawer-paper': {
+              marginTop: '64px',
+              height: `calc(100% - 64px)`,
               width: drawerWidth,
               boxSizing: 'border-box',
+	      zIndex: 1000,
             },
           }}
         >
