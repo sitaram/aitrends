@@ -14,7 +14,7 @@ const ContentComponent = ({ isLoading, content }) => {
         </div>
       ) : (
         contentArray.map((part, index) => (
-	  <Paper elevation={1} sx={{ padding: '1rem', marginBottom: '.5rem' }}>
+	  <Paper key={index} elevation={1} sx={{ padding: '1rem', marginBottom: '.5rem' }}>
             <CustomMarkdown text={part} />
           </Paper>
         ))
