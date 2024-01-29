@@ -1,77 +1,30 @@
-'use client'
-
 import React from 'react';
 import { styled } from '@mui/material/styles';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-
-const topics = [
-'All AI Topics',
-'Machine Learning',
-'Deep Learning',
-'Natural Language Processing',
-'Computer Vision',
-'Reinforcement Learning',
-'Predictive Analytics',
-'Neural Network Architectures',
-'Generative Adversarial Networks',
-'Robotics and Automation',
-'Autonomous Vehicles',
-'AI Ethics and Fairness',
-'Explainable AI (XAI)',
-'Edge AI',
-'Quantum Machine Learning',
-];
-
-// produce a bullet list of AI subtopics, just the names and prefer short ones, focusing on terms and concepts that are
-// prevalent and important in today's research and discourse, sorted descending order of prevalence and importance,
-// while ensuring a diverse representation of the field.
-//
-// produce a bullet list a dozen or so of AI subtopics, just the names and prefer short ones, no acronyms, prioritizing
-// terms that are prevalent and important in today's research and discourse, sorted descending order of prevalence and
-// importance, while ensuring a diverse representation of the field. avoid topics that used to be hot but are now faded,
-// in other words bias towards recency of importance and trendiness of the concept. cover a good mix of topics for the
-// layman as well as the expert. research as needed.
-//
-// Machine Learning
-// Deep Learning
-// Natural Language Processing
-// Computer Vision
-// Reinforcement Learning
-// Generative Adversarial Networks (GANs)
-// Autonomous Vehicles
-// AI Ethics and Fairness
-// Explainable AI (XAI)
-// AI in Healthcare
-// AI in Finance
-// AI in Robotics
-// AI in Cybersecurity
-// AI in Education
-// AI in Retail
+import Collapse from '@mui/material/Collapse';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import { topics } from './topics'; // Import the topics data from your topics.js file
 
 const StyledList = styled(List)(({ theme }) => ({
+  width: 240, // Set a fixed width for the drawer
+  overflowX: 'hidden', // Hide horizontal overflow
 }));
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
-  width: '90%', // Adjust the width as needed
-  margin: 'auto', // Center the item
-  marginTop: '0px',
-  marginBottom: '0px',
+  width: '100%', // Set the width to 100% to prevent horizontal expansion
   padding: '5px 10px',
-  borderRadius: theme.shape.borderRadius, // Use theme's border radius
+  borderRadius: theme.shape.borderRadius,
   color: theme.palette.grey[600],
   backgroundColor: '#fafafa',
-  // Add more styling for selected item, hover, etc.
   '&.Mui-selected': {
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.common.white,
     '& .MuiListItemText-primary': {
       fontWeight: theme.typography.fontWeightMedium,
-    }
-  },
-  ':hover': {
-    background: `linear-gradient(45deg, ${theme.palette.grey[100]} 10%, ${theme.palette.grey[300]} 90%)`,
+    },
   },
   '&.Mui-selected:hover': {
     background: 'none',
@@ -79,19 +32,51 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
   },
 }));
 
+const SubListItem = styled(ListItem)(({ theme }) => ({
+  paddingLeft: theme.spacing(4), // Add left padding to indent sub-items
+  '&.Mui-selected': {
+    backgroundColor: theme.palette.primary.main, // Change background color to blue when selected
+    color: theme.palette.common.white,
+  },
+}));
+
+const CollapseWrapper = styled(Collapse)(({ theme }) => ({
+  overflowX: 'hidden', // Hide horizontal overflow for collapsing section
+}));
 
 const TopicBrowser = ({ onSelect, selectedTopic }) => {
+  const [open, setOpen] = React.useState({});
+
+  const handleClick = (index) => {
+    setOpen({ ...open, [index]: !open[index] });
+  };
+
   return (
     <StyledList>
-      {topics.map(topic => (
-        <StyledListItem
-          button
-          key={topic}
-          onClick={() => onSelect(topic)}
-          selected={selectedTopic === topic}
-        >
-          <ListItemText primary={topic} />
-        </StyledListItem>
+      <StyledListItem button onClick={() => onSelect("All AI Topics")} selected={selectedTopic === "All AI Topics"}>
+        <ListItemText primary="All AI Topics" />
+      </StyledListItem>
+      {topics.clusters.map((cluster, clusterIndex) => (
+        <div key={cluster.name}>
+          <StyledListItem button onClick={() => handleClick(clusterIndex)}>
+            <ListItemText primary={cluster.name} />
+            {open[clusterIndex] ? <ExpandLess /> : <ExpandMore />}
+          </StyledListItem>
+          <CollapseWrapper in={open[clusterIndex]} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              {cluster.topics.map((topic, topicIndex) => (
+                <SubListItem
+                  button
+                  key={topicIndex}
+                  onClick={() => onSelect(topic)}
+                  selected={selectedTopic === topic}
+                >
+                  <ListItemText primary={topic} />
+                </SubListItem>
+              ))}
+            </List>
+          </CollapseWrapper>
+        </div>
       ))}
     </StyledList>
   );
