@@ -26,16 +26,16 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
       fontWeight: theme.typography.fontWeightMedium,
     },
   },
-  '&.Mui-selected:hover': {
+  '&.Mui-selected, &.Mui-selected:hover': {
     background: 'none',
-    backgroundColor: theme.palette.primary.dark,
+    backgroundColor: theme.palette.primary.main,
   },
 }));
 
 const SubListItem = styled(ListItem)(({ theme }) => ({
   paddingLeft: theme.spacing(4), // Add left padding to indent sub-items
-  '&.Mui-selected': {
-    backgroundColor: theme.palette.primary.main, // Change background color to blue when selected
+  '&.Mui-selected, &.Mui-selected:hover': {
+    backgroundColor: theme.palette.primary.main,
     color: theme.palette.common.white,
   },
 }));
