@@ -13,7 +13,7 @@ export default async (req, res) => {
       return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    const { prompt } = req.body;
+    const { prompt, ttl } = req.body;
     console.log('PROMPT:', prompt);
 
     if (!prompt) {
@@ -35,7 +35,7 @@ export default async (req, res) => {
     const responseData = completion.choices[0]?.message?.content || '';
     
     // Save the new response to Redis cache with an expiration time
-    await redis.setex(cacheKey, 3600, responseData); // Expires in 1 hour
+    await redis.setex(cacheKey, ttl, responseData); // Expires in the timeframe period
 
     res.status(200).json({ data: responseData });
   } catch (error) {

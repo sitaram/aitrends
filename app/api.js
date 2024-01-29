@@ -2,25 +2,28 @@
 import axios from 'axios';
 import { splitChat } from './utils';
 
-export const fetchContent = async (queryPrompt, cache_salt, setContent, setIsLoading, signal) => {
+export const fetchContent = async (queryPrompt, ttl, cache_salt, setContent, setIsLoading, signal) => {
   const cacheKey = `openai:${cache_salt}:${queryPrompt}`;
+
+  /*
   const cache = JSON.parse(localStorage.getItem(cacheKey));
   if (cache) {
     setContent(splitChat(cache));
     setIsLoading(false);
     return; // Assuming setIsLoading(false) is handled outside if cached data is used.
   }
+  */
 
   try {
     setContent([]);
     const response = await axios({
       method: 'post',
       url: '/api/query-openai',
-      data: { prompt: queryPrompt },
+      data: { prompt: queryPrompt, ttl: ttl },
       signal: signal // Correctly using just the signal here.
     });
     const data = response.data.data;
-    localStorage.setItem(cacheKey, JSON.stringify(data));
+    // localStorage.setItem(cacheKey, JSON.stringify(data));
     setContent(splitChat(data));
     setIsLoading(false);
   } catch (error) {

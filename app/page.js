@@ -10,6 +10,7 @@ import ContentComponent from './ContentComponent';
 import axios from 'axios';
 import { fetchContent } from './api';
 import TimeframeSlider from './TimeframeSlider';
+import { calculateTTL } from './utils';
 
 const Home = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -40,7 +41,7 @@ const Home = () => {
 	const queryPrompt = `What are recent advances in the ${timeframe} in ${topic}? Research as necessary to get this list.
 	In your reply, be explicit about the time window you're talking about.`;
 
-        await fetchContent(queryPrompt, cache_salt, setContent, setIsLoading, abortController.signal);
+        await fetchContent(queryPrompt, calculateTTL(timeframe), cache_salt, setContent, setIsLoading, abortController.signal);
       } catch (error) {
         if (axios.isCancel(error)) {
           console.log('Request was cancelled');
