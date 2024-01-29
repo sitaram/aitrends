@@ -24,8 +24,6 @@ export default async (req, res) => {
       model: 'gpt-4-turbo-preview',
     });
 
-      // max_tokens: 100, // Adjust as needed
-
     res.status(200).json({ data: completion.choices[0]?.message?.content || '' });
   } catch (error) {
     console.error('Error making request to OpenAI:', error);
