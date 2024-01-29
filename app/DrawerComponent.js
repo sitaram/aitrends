@@ -20,7 +20,6 @@ const DrawerComponent = ({ mobileOpen, handleDrawerToggle, topic, handleTopicCha
           <Button
             variant="contained"
             color="primary"
-            startIcon={<MenuIcon />}
             onClick={handleDrawerToggle}
             sx={{
               borderRadius: '0 20px 20px 0', // Rounded edges on the right side
