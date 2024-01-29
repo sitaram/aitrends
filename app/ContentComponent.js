@@ -1,5 +1,6 @@
 // ContentComponent.js
 import React from 'react';
+import { Paper } from '@mui/material';
 import { ThreeDots } from 'react-loader-spinner';
 import CustomMarkdown from './CustomMarkdown'; // Assuming you have this component
 
@@ -13,9 +14,9 @@ const ContentComponent = ({ isLoading, content }) => {
         </div>
       ) : (
         contentArray.map((part, index) => (
-          <div key={index} className="message">
+	  <Paper elevation={1} sx={{ padding: '1rem', marginBottom: '.5rem' }}>
             <CustomMarkdown text={part} />
-          </div>
+          </Paper>
         ))
       )}
     </div>

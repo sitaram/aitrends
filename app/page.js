@@ -2,7 +2,7 @@
 
 // Home.js
 import React, { useState, useEffect, useCallback } from 'react';
-import { Box, Toolbar, CssBaseline, ThemeProvider, useMediaQuery } from '@mui/material';
+import { Typography, Paper, Box, Toolbar, CssBaseline, ThemeProvider, useMediaQuery } from '@mui/material';
 import { theme } from './theme';
 import AppBarComponent from './AppBarComponent';
 import DrawerComponent from './DrawerComponent';
@@ -11,6 +11,7 @@ import axios from 'axios';
 import { fetchContent } from './api';
 import TimeframeSlider from './TimeframeSlider';
 import { calculateTTL } from './utils';
+import { Helmet } from 'react-helmet-async';
 
 const Home = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -61,6 +62,12 @@ const Home = () => {
     };
   }, [timeframe, topic]); // Removed setIsLoading and setContent from dependencies
 
+  useEffect(() => {
+    // Set the title based on the current topic
+    document.title = topic;
+  }, [topic]);
+
+  // TODO: <Helmet><title>{topic}</title></Helmet>
 
   return (
     <ThemeProvider theme={theme}>
@@ -78,6 +85,9 @@ const Home = () => {
           sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - 240px)` } }}
         >
           <Toolbar />
+	  <Paper elevation={3} sx={{ padding: '1rem', marginBottom: '.8rem' }}>
+            <Typography variant="h1" sx={{ fontSize: '2rem' }}>{topic}</Typography>
+          </Paper>
           <TimeframeSlider value={timeframe} onChange={handleTimeframeChange} />
           <ContentComponent isLoading={isLoading} content={content} />
         </Box>

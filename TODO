@@ -1,6 +1,10 @@
 reload-all endpoint
 flush endpoint
 
+show topic on title
+
+expando to collapso others
+
 rag (web pages input to api) via langchain
 
 click to read more
