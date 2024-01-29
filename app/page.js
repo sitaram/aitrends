@@ -7,9 +7,9 @@ import { theme } from './theme';
 import AppBarComponent from './AppBarComponent';
 import DrawerComponent from './DrawerComponent';
 import ContentComponent from './ContentComponent';
+import axios from 'axios';
 import { fetchContent } from './api';
-import TimeframeSlider from './TimeframeSlider'; // Assuming this is your component
-// You may need to adjust imports based on your actual component file names
+import TimeframeSlider from './TimeframeSlider';
 
 const Home = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -17,7 +17,7 @@ const Home = () => {
   const [topic, setTopic] = useState('All AI Topics');
   const [content, setContent] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const cache_salt = '1'; // Adjust this as necessary
+  const cache_salt = '1';
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -31,15 +31,35 @@ const Home = () => {
     setTopic(newTopic);
   };
 
-  const initFetch = useCallback(() => {
-    const queryPrompt = `What are recent advances in the ${timeframe} in ${topic}? Research as necessary to get this list.
-    In your reply, be explicit about the time window you're talking about.`;
-    fetchContent(queryPrompt, cache_salt, setIsLoading, setContent);
-  }, [timeframe, topic]);
-
   useEffect(() => {
-    initFetch();
-  }, [initFetch]);
+    const abortController = new AbortController();
+
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+	const queryPrompt = `What are recent advances in the ${timeframe} in ${topic}? Research as necessary to get this list.
+	In your reply, be explicit about the time window you're talking about.`;
+
+        await fetchContent(queryPrompt, cache_salt, setContent, setIsLoading, abortController.signal);
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log('Request was cancelled');
+        } else {
+          console.error('An error occurred:', error);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+
+    // Cleanup function to cancel the request if the component unmounts or dependencies change
+    return () => {
+      abortController.abort();
+    };
+  }, [timeframe, topic]); // Removed setIsLoading and setContent from dependencies
+
 
   return (
     <ThemeProvider theme={theme}>

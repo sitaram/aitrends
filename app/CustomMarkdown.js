@@ -7,7 +7,7 @@ const CustomMarkdown = ({ text }) => {
     const boldRegex = /(\*\*|__)(.*?)\1/g;
     const sectionRegex = /###? (\d+\.)?(.*)/g;
     const bulletRegex = /^ *- (.*)/g;
-    return markdownText.
+    return (markdownText || '').
       replace(boldRegex, '<b>$2</b>').
       replace(sectionRegex, '<u><b>$2</b></u>').
       replace(bulletRegex, '&emsp;- $1');

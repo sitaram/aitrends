@@ -4,6 +4,7 @@ import { ThreeDots } from 'react-loader-spinner';
 import CustomMarkdown from './CustomMarkdown'; // Assuming you have this component
 
 const ContentComponent = ({ isLoading, content }) => {
+  const contentArray = Array.isArray(content) ? content : [];
   return (
     <div>
       {isLoading ? (
@@ -11,7 +12,7 @@ const ContentComponent = ({ isLoading, content }) => {
           <ThreeDots color="#3a506b" />
         </div>
       ) : (
-        content.map((part, index) => (
+        contentArray.map((part, index) => (
           <div key={index} className="message">
             <CustomMarkdown text={part} />
           </div>
