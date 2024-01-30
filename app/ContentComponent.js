@@ -2,7 +2,7 @@
 import React from 'react';
 import { Paper } from '@mui/material';
 import { ThreeDots } from 'react-loader-spinner';
-import CustomMarkdown from './CustomMarkdown'; // Assuming you have this component
+import CustomMarkdown from './CustomMarkdown';
 
 const ContentComponent = ({ isLoading, content }) => {
   const contentArray = Array.isArray(content) ? content : [];

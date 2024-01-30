@@ -5,7 +5,7 @@ show topic on title
 
 expando to collapso others
 
-routes and hash parameters
+routes and hash parameters (stashed)
 
 rag (web pages input to api) via langchain
 
@@ -20,3 +20,5 @@ extract topics from content
 logo
 
 infinite scroll
+
+mobile app via Flutter
