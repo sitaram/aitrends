@@ -45,10 +45,14 @@ const CollapseWrapper = styled(Collapse)(({ theme }) => ({
 }));
 
 const TopicBrowser = ({ onSelect, selectedTopic }) => {
-  const [open, setOpen] = React.useState({});
+  const [openTopicIndex, setOpenTopicIndex] = React.useState(null);
 
   const handleClick = (index) => {
-    setOpen({ ...open, [index]: !open[index] });
+    if (openTopicIndex === index) {
+      setOpenTopicIndex(null); // Close the clicked topic if it's already open
+    } else {
+      setOpenTopicIndex(index); // Open the clicked topic
+    }
   };
 
   return (
@@ -60,9 +64,9 @@ const TopicBrowser = ({ onSelect, selectedTopic }) => {
         <div key={cluster.name}>
           <StyledListItem button onClick={() => handleClick(clusterIndex)}>
             <ListItemText primary={cluster.name} />
-            {open[clusterIndex] ? <ExpandLess /> : <ExpandMore />}
+	    {openTopicIndex === clusterIndex ? <ExpandLess /> : <ExpandMore />}
           </StyledListItem>
-          <CollapseWrapper in={open[clusterIndex]} timeout="auto" unmountOnExit>
+          <CollapseWrapper in={openTopicIndex === clusterIndex} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               {cluster.topics.map((topic, topicIndex) => (
                 <SubListItem

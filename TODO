@@ -1,8 +1,6 @@
 reload-all endpoint
 flush endpoint
 
-expando to collapso others
-
 routes and hash parameters (stashed)
 
 rag (web pages input to api) via langchain
