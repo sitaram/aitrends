@@ -1,6 +1,5 @@
 'use client'
 
-// Home.js
 import React, { useState, useEffect, useCallback } from 'react';
 import { Typography, Paper, Box, Toolbar, CssBaseline, ThemeProvider, useMediaQuery } from '@mui/material';
 import { theme } from './theme';
@@ -9,9 +8,9 @@ import DrawerComponent from './DrawerComponent';
 import ContentComponent from './ContentComponent';
 import axios from 'axios';
 import { fetchContent } from './api';
-import TimeframeSlider from './TimeframeSlider';
 import { calculateTTL } from './utils';
 import { Helmet } from 'react-helmet-async';
+import TimeframeSlider from './TimeframeSlider';
 
 const Home = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -39,8 +38,7 @@ const Home = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-	const queryPrompt = `What are recent advances in the ${timeframe} in ${topic}? Research as necessary to get this list.
-	In your reply, be explicit about the time window you're talking about.`;
+        const queryPrompt = `What are recent advances in the ${timeframe} in ${topic}? Research as necessary to get this list. In your reply, be explicit about the time window you're talking about.`;
 
         await fetchContent(queryPrompt, calculateTTL(timeframe), cache_salt, setContent, setIsLoading, abortController.signal);
       } catch (error) {
@@ -56,18 +54,14 @@ const Home = () => {
 
     fetchData();
 
-    // Cleanup function to cancel the request if the component unmounts or dependencies change
     return () => {
       abortController.abort();
     };
-  }, [timeframe, topic]); // Removed setIsLoading and setContent from dependencies
+  }, [timeframe, topic]);
 
   useEffect(() => {
-    // Set the title based on the current topic
     document.title = topic;
   }, [topic]);
-
-  // TODO: <Helmet><title>{topic}</title></Helmet>
 
   return (
     <ThemeProvider theme={theme}>
@@ -85,13 +79,13 @@ const Home = () => {
           sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - 240px)` } }}
         >
           <Toolbar />
-	  <Paper elevation={3} sx={{ padding: '1rem', marginBottom: '.8rem' }}>
+          <Paper elevation={3} sx={{ padding: '1rem', marginBottom: '.8rem' }}>
             <Typography variant="h1" sx={{ fontSize: '2rem' }}>{topic}</Typography>
           </Paper>
-          <TimeframeSlider value={timeframe} onChange={handleTimeframeChange} />
           <ContentComponent isLoading={isLoading} content={content} />
         </Box>
       </Box>
+      <TimeframeSlider value={timeframe} onChange={handleTimeframeChange} /> {/* Moved outside of the main content */}
     </ThemeProvider>
   );
 };

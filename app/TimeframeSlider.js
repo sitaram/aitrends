@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import { ToggleButtonGroup, ToggleButton, Paper } from '@mui/material';
+import { Box, ToggleButtonGroup, ToggleButton, Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 // Custom Styling for ToggleButtonGroup
@@ -50,27 +50,38 @@ const TimeframeSlider = ({ value, onChange }) => {
   };
 
   return (
-    <Paper elevation={3} sx={{ padding: '8px', margin: '-16px 0 16px' }}>
-      <StyledToggleButtonGroup
-        value={value}
-        exclusive
-        onChange={handleTimeframeChange}
-        aria-label="timeframe"
-      >
-        <StyledToggleButton value="last two weeks" aria-label="last two weeks">
-          Last Two Weeks
-        </StyledToggleButton>
-        <StyledToggleButton value="last 3 months" aria-label="last 3 months">
-          Last 3 Months
-        </StyledToggleButton>
-        <StyledToggleButton value="last year" aria-label="last year">
-          Last Year
-        </StyledToggleButton>
-        <StyledToggleButton value="last decade" aria-label="last decade">
-          Last Decade
-        </StyledToggleButton>
-      </StyledToggleButtonGroup>
-    </Paper>
+    <Box
+       sx={{
+	 position: 'fixed',
+	 bottom: 0,
+	 left: 0,
+	 width: '80%',
+	 zIndex: 999, // Ensure the slider is above other content
+	 backgroundColor: 'white',
+       }}
+     >
+      <Paper elevation={3} sx={{ margin: '-8px' }}>
+	<StyledToggleButtonGroup
+	  value={value}
+	  exclusive
+	  onChange={handleTimeframeChange}
+	  aria-label="timeframe"
+	>
+	  <StyledToggleButton value="last two weeks" aria-label="last two weeks">
+	    Last Two Weeks
+	  </StyledToggleButton>
+	  <StyledToggleButton value="last 3 months" aria-label="last 3 months">
+	    Last 3 Months
+	  </StyledToggleButton>
+	  <StyledToggleButton value="last year" aria-label="last year">
+	    Last Year
+	  </StyledToggleButton>
+	  <StyledToggleButton value="last decade" aria-label="last decade">
+	    Last Decade
+	  </StyledToggleButton>
+	</StyledToggleButtonGroup>
+      </Paper>
+    </Box>
   );
 };
 
