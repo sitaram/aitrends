@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import { Box, ToggleButtonGroup, ToggleButton, Paper, Button } from '@mui/material';
+import { Box, ToggleButtonGroup, ToggleButton, Paper, Button, useMediaQuery } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 // Custom Styling for ToggleButtonGroup
@@ -42,44 +42,51 @@ const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
   },
 }));
 
-const TimeframeSlider = ({ value, onChange, handleTopicsDrawerToggle }) => {
+const TimeframeSlider = ({ theme, value, onChange, handleTopicsDrawerToggle }) => {
   const handleTimeframeChange = (event, newTimeframe) => {
     if (newTimeframe !== null) {
       onChange(newTimeframe);
     }
   };
 
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   return (
-    <Box
-       sx={{
-	 position: 'fixed',
-	 bottom: 0,
-	 left: 0,
-	 width: '100%',
-	 zIndex: 999, // Ensure the slider is above other content
-	 backgroundColor: 'white',
-       }}
-     >
-      <Paper elevation={3} sx={{ margin: '-8px' }}>
+    <Paper elevation={3} sx={{ margin: '-8px' }}>
+      <Box
+	 sx={{
+	   position: 'fixed',
+	   bottom: 0,
+	   zIndex: 999, // Ensure the slider is above other content
+	   left: !isMobile ? '240px' : 0,
+	   width: !isMobile ? 'calc(100% - 240px)' : '100%',
+	   display: 'flex',
+	   justifyContent: 'space-between',
+	   alignItems: 'center',
+	   backgroundColor: 'white',
+	 }}
+       >
 	<StyledToggleButtonGroup
 	  value={value}
 	  exclusive
 	  onChange={handleTimeframeChange}
 	  aria-label="timeframe"
 	  sx={{
-	    width: '80%',
+	    bottom: 0,
+	    display: 'flex',
+	    justifyContent: 'space-between',
+	    alignItems: 'center',
 	  }}
 	>
-	  <StyledToggleButton value="last two weeks" aria-label="last two weeks">
-	    Last Two Weeks
+	  <StyledToggleButton value="last two weeks" aria-label="last two weeks" sx={{ flexGrow: 1 }}>
+	    Last 2 Weeks
 	  </StyledToggleButton>
-	  <StyledToggleButton value="last 3 months" aria-label="last 3 months">
+	  <StyledToggleButton value="last 3 months" aria-label="last 3 months" sx={{ flexGrow: 1 }}>
 	    Last 3 Months
 	  </StyledToggleButton>
-	  <StyledToggleButton value="last year" aria-label="last year">
+	  <StyledToggleButton value="last year" aria-label="last year" sx={{ flexGrow: 1 }}>
 	    Last Year
 	  </StyledToggleButton>
-	  <StyledToggleButton value="last decade" aria-label="last decade">
+	  <StyledToggleButton value="last decade" aria-label="last decade" sx={{ flexGrow: 1 }}>
 	    Last Decade
 	  </StyledToggleButton>
 	</StyledToggleButtonGroup>
@@ -94,9 +101,6 @@ const TimeframeSlider = ({ value, onChange, handleTopicsDrawerToggle }) => {
             padding: '16px',
             fontSize: '0.875rem',
             textTransform: 'none',
-            position: 'absolute',
-            bottom: '8px',
-            right: 0, // Position it on the right
             zIndex: 1201,
             backgroundColor: '#3a506b !important',
             color: '#fff',
@@ -109,8 +113,8 @@ const TimeframeSlider = ({ value, onChange, handleTopicsDrawerToggle }) => {
         >
           Topics
         </Button>
-      </Paper>
-    </Box>
+      </Box>
+    </Paper>
   );
 };
 

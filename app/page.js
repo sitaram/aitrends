@@ -77,7 +77,12 @@ const Home = () => {
         />
         <Box
           component="main"
-          sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - 240px)` } }}
+          sx={{
+            flexGrow: 1,
+            p: 3,
+            padding: '12px',
+            width: '100%',
+          }}
         >
           <Toolbar />
           <Paper elevation={3} sx={{ padding: '1rem', marginBottom: '.8rem' }}>
@@ -86,7 +91,11 @@ const Home = () => {
           <ContentComponent isLoading={isLoading} content={content} />
         </Box>
       </Box>
-      <TimeframeSlider value={timeframe} onChange={handleTimeframeChange} handleTopicsDrawerToggle={handleTopicsDrawerToggle} />
+      <TimeframeSlider
+	theme={theme}
+	value={timeframe}
+	onChange={handleTimeframeChange}
+	handleTopicsDrawerToggle={handleTopicsDrawerToggle} />
     </ThemeProvider>
   );
 };
