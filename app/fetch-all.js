@@ -1,3 +1,5 @@
+'use client'
+
 import axios from 'axios';
 import { timeframes } from './timeframes'; // Import timeframes array
 import { topics } from './topics'; // Import topics object

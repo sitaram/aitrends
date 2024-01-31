@@ -78,11 +78,11 @@ const Home = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    // TODO window.addEventListener('scroll', handleScroll);
 
     return () => {
       // Remove the scroll event listener when the component unmounts
-      window.removeEventListener('scroll', handleScroll);
+      // TODO window.removeEventListener('scroll', handleScroll);
     };
   }, [topic]);
 
