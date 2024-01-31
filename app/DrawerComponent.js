@@ -18,7 +18,7 @@ const DrawerComponent = ({ topicsDrawerOpen, handleTopicsDrawerToggle, topic, ha
       {isMobile ? (
         <>
           <SwipeableDrawer
-            anchor="left"
+            anchor="right"
             open={topicsDrawerOpen}
             onClose={handleTopicsDrawerToggle}
             onOpen={handleTopicsDrawerToggle}
