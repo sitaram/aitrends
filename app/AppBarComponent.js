@@ -3,7 +3,7 @@ import React from 'react';
 import { AppBar, Toolbar, IconButton, Typography, Box } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
-const AppBarComponent = ({ handleTopicsDrawerToggle }) => {
+const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic }) => {
   return (
     <AppBar position="fixed">
       <Toolbar>
@@ -18,7 +18,7 @@ const AppBarComponent = ({ handleTopicsDrawerToggle }) => {
         </IconButton>
         <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
           <Typography variant="h6" noWrap>
-            AI Trends Live
+            {displayedTopic}
           </Typography>
           <Typography variant="h6" noWrap>
             <a href="https://aitrends.live/" target="_blank" rel="noopener noreferrer">aitrends.live</a>

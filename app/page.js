@@ -12,12 +12,15 @@ import { calculateTTL } from './utils';
 import { Helmet } from 'react-helmet-async';
 import TimeframeSlider from './TimeframeSlider';
 
+const appName = 'AI Trends';
+
 const Home = () => {
   const [topicsDrawerOpen, setTopicsDrawerOpen] = useState(false);
   const [timeframe, setTimeframe] = useState('last two weeks');
   const [topic, setTopic] = useState('All AI Topics');
   const [content, setContent] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [displayedTopic, setDisplayedTopic] = useState(appName);
   const cache_salt = '1';
 
   const handleTopicsDrawerToggle = () => {
@@ -60,14 +63,34 @@ const Home = () => {
   }, [timeframe, topic]);
 
   useEffect(() => {
-    document.title = topic;
+    document.title = appName + ': ' + topic;
+
+    // Add a scroll event listener to detect when the title scrolls off the page
+    const handleScroll = () => {
+      const titleElement = document.querySelector('.title'); // Adjust the selector as needed
+      const titleRect = titleElement.getBoundingClientRect();
+      if (titleRect.bottom < 64) {
+        // Title is no longer visible, update the displayed topic
+        setDisplayedTopic(topic);
+      } else {
+        // Title is still visible, display the default topic
+        setDisplayedTopic(appName);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      // Remove the scroll event listener when the component unmounts
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [topic]);
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box sx={{ display: 'flex' }}>
-        <AppBarComponent handleTopicsDrawerToggle={handleTopicsDrawerToggle} />
+        <AppBarComponent handleTopicsDrawerToggle={handleTopicsDrawerToggle} displayedTopic={displayedTopic} />
         <DrawerComponent
           topicsDrawerOpen={topicsDrawerOpen}
           handleTopicsDrawerToggle={handleTopicsDrawerToggle}
@@ -86,7 +109,7 @@ const Home = () => {
         >
           <Toolbar />
           <Paper elevation={3} sx={{ padding: '1rem', marginBottom: '.8rem' }}>
-            <Typography variant="h1" sx={{ fontSize: '2rem' }}>{topic}</Typography>
+            <Typography variant="h1" sx={{ fontSize: '2rem' }} className="title">{topic}</Typography>
           </Paper>
           <ContentComponent isLoading={isLoading} content={content} />
         </Box>
