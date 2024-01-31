@@ -97,7 +97,8 @@ const TimeframeSlider = ({ theme, value, onChange, handleTopicsDrawerToggle }) =
           sx={{
             borderRadius: '32px 32px',
             minWidth: 'auto',
-            padding: '16px',
+            padding: '15px 10px',
+	    margin: '6px',
             fontSize: '0.875rem',
             textTransform: 'none',
             zIndex: 1201,
