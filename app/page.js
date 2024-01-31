@@ -22,7 +22,6 @@ const Home = () => {
   const [content, setContent] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [displayedTopic, setDisplayedTopic] = useState(appName);
-  const cache_salt = '1';
 
   const handleTopicsDrawerToggle = () => {
     setTopicsDrawerOpen(!topicsDrawerOpen);
@@ -43,7 +42,7 @@ const Home = () => {
       setIsLoading(true);
       try {
 	const queryPrompt = generateQueryPrompt(timeframe, topic);
-        await fetchContent(queryPrompt, calculateTTL(timeframe), cache_salt, setContent, setIsLoading, abortController.signal);
+        await fetchContent(queryPrompt, calculateTTL(timeframe), setContent, setIsLoading, abortController.signal);
       } catch (error) {
         if (axios.isCancel(error)) {
           console.log('Request was cancelled');
