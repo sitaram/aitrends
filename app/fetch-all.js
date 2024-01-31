@@ -47,5 +47,6 @@ const fetchAll = async () => {
 export default fetchAll;
 
 // Call the function to start fetching data
-// ENABLE TO CALL FROM BROWSER
-// window.fetchAll = fetchAll;
+if (typeof window !== 'undefined') {
+  window.fetchAll = fetchAll;
+}
