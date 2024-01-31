@@ -12,6 +12,7 @@ import { calculateTTL } from './utils';
 import { Helmet } from 'react-helmet-async';
 import TimeframeSlider from './TimeframeSlider';
 import generateQueryPrompt from './prompt';
+import fetchAll from './fetch-all';
 
 const appName = 'AI Trends';
 
