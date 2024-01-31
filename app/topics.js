@@ -8,14 +8,32 @@ export const topics = {
         "Computer Vision",
         "Reinforcement Learning",
         "Generative Adversarial Networks (GANs)",
-        "Transformers in Natural Language Processing (NLP)",
+        "Transformers in NLP",
         "Federated Learning",
         "Self-Supervised Learning",
+        "Anomaly Detection",
+        "Transfer Learning",
+        "Multi-Task Learning",
+        "Meta-Learning",
+        "Sparse Data Learning",
+        "AI Ethics and Fairness",
+        "Explainable AI (XAI)",
       ],
     },
     {
       name: "Emerging AI Technologies",
-      topics: ["Quantum Machine Learning", "AI in Edge Computing"],
+      topics: [
+        "Quantum Machine Learning",
+        "AI in Edge Computing",
+        "Neuromorphic Computing",
+        "Augmented Reality and AI",
+        "Blockchain and AI",
+        "Evolutionary Algorithms",
+        "Hybrid AI Models",
+        "Language Models (e.g., GPT, BERT)",
+        "Synthetic Data Generation",
+        "AI for Internet of Things (IoT)",
+      ],
     },
     {
       name: "AI Applications in Industries",
@@ -27,11 +45,30 @@ export const topics = {
         "AI in Robotics and Automation",
         "AI in Cybersecurity",
         "AI for Drug Discovery",
+        "AI in Agriculture",
+        "AI in Retail",
+        "AI in Education",
+        "AI in Content Creation",
+        "AI in Manufacturing",
+        "AI in Supply Chain Management",
+        "AI for Smart Cities",
+        "AI in Energy Sector",
       ],
     },
     {
       name: "Ethical and Responsible AI",
-      topics: ["Ethical AI and Fairness"],
+      topics: [
+        "Ethical AI and Fairness",
+        "Bias Detection and Mitigation",
+        "Privacy-preserving AI",
+        "Sustainable AI",
+        "AI Governance",
+        "Responsible AI Design",
+        "AI and Intellectual Property",
+        "AI Transparency",
+        "AI Accountability",
+        "AI and Human Rights",
+      ],
     },
     {
       name: "AI-Powered User Interaction",
@@ -39,35 +76,90 @@ export const topics = {
         "AI-powered Chatbots and Virtual Assistants",
         "AI-driven Recommendation Systems",
         "Explainable AI (XAI)",
+        "Natural Language Generation",
+        "Emotion AI",
+        "Voice and Speech Recognition",
+        "Conversational AI",
+        "Human-AI Collaboration",
+        "Personalized AI Interfaces",
+        "AI in Gaming",
+      ],
+    },
+    {
+      name: "Data Science and Analysis",
+      topics: [
+        "Big Data Analytics",
+        "Predictive Analytics",
+        "Data Visualization",
+        "Data Mining",
+        "Statistical Modeling",
+        "Data Warehousing",
+        "Data Governance",
+        "Real-time Data Processing",
+        "Data Integration",
+        "Machine Learning Pipelines",
+      ],
+    },
+    {
+      name: "AI in Content Creation and Management",
+      topics: [
+        "Generative Art",
+        "Content Automation",
+        "Digital Asset Management",
+        "AI in Journalism",
+        "AI in Music Creation",
+        "AI in Video Production",
+        "AI for SEO",
+        "Content Personalization",
+        "Interactive Media",
+        "AI in Advertising",
+      ],
+    },
+    {
+      name: "AI for Environmental and Societal Impact",
+      topics: [
+        "AI for Wildlife Conservation",
+        "AI in Disaster Response",
+        "AI for Water Resource Management",
+        "AI in Renewable Energy",
+        "AI for Sustainable Agriculture",
+        "AI in Pollution Control",
+        "AI for Urban Planning",
+        "AI in Public Health",
+        "AI for Social Good Initiatives",
+        "AI and Ethics in Society",
+      ],
+    },
+    {
+      name: "AI Research and Theory",
+      topics: [
+        "Theoretical Foundations of AI",
+        "AI Model Interpretability",
+        "AI Algorithm Efficiency",
+        "AI and Cognitive Science",
+        "Machine Learning Theory",
+        "AI Model Generalization",
+        "AI Safety and Security",
+        "AI Model Robustness",
+        "AI and Quantum Computing",
+        "AI in Complex Systems",
+      ],
+    },
+    {
+      name: "AI Infrastructure and Platforms",
+      topics: [
+        "Cloud AI Services",
+        "AI Hardware Accelerators",
+        "AI Model Deployment",
+        "AI Development Tools",
+        "AI Model Monitoring",
+        "AI in Edge Devices",
+        "AI Data Lakes",
+        "AI Model Management",
+        "AI Scalability Solutions",
+        "AI and Blockchain Integration",
       ],
     },
   ],
 };
 
-
-
-// produce a bullet list of AI subtopics, just the names and prefer short ones, focusing on terms and concepts that are
-// prevalent and important in today's research and discourse, sorted descending order of prevalence and importance,
-// while ensuring a diverse representation of the field.
-//
-// produce a bullet list a dozen or so of AI subtopics, just the names and prefer short ones, no acronyms, prioritizing
-// terms that are prevalent and important in today's research and discourse, sorted descending order of prevalence and
-// importance, while ensuring a diverse representation of the field. avoid topics that used to be hot but are now faded,
-// in other words bias towards recency of importance and trendiness of the concept. cover a good mix of topics for the
-// layman as well as the expert. research as needed.
-//
-// Machine Learning
-// Deep Learning
-// Natural Language Processing
-// Computer Vision
-// Reinforcement Learning
-// Generative Adversarial Networks (GANs)
-// Autonomous Vehicles
-// AI Ethics and Fairness
-// Explainable AI (XAI)
-// AI in Healthcare
-// AI in Finance
-// AI in Robotics
-// AI in Cybersecurity
-// AI in Education
-// AI in Retail
