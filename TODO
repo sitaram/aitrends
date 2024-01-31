@@ -1,4 +1,3 @@
-reload-all endpoint
 flush endpoint
 
 routes and hash parameters (stashed)
