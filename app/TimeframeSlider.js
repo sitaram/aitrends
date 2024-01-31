@@ -78,7 +78,7 @@ const TimeframeSlider = ({ theme, value, onChange, handleTopicsDrawerToggle }) =
 	  }}
 	>
 	  <StyledToggleButton value="last two weeks" aria-label="last two weeks" sx={{ flexGrow: 1 }}>
-	    Last 2 Weeks
+	    Last two Weeks
 	  </StyledToggleButton>
 	  <StyledToggleButton value="last 3 months" aria-label="last 3 months" sx={{ flexGrow: 1 }}>
 	    Last 3 Months
