@@ -11,6 +11,7 @@ import { fetchContent } from './api';
 import { calculateTTL } from './utils';
 import { Helmet } from 'react-helmet-async';
 import TimeframeSlider from './TimeframeSlider';
+import generateQueryPrompt from './prompt';
 
 const appName = 'AI Trends';
 
@@ -41,8 +42,7 @@ const Home = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const queryPrompt = `What are recent advances in the ${timeframe} in ${topic}? Research as necessary to get this list. In your reply, be explicit about the time window you're talking about.`;
-
+	const queryPrompt = generateQueryPrompt(timeframe, topic);
         await fetchContent(queryPrompt, calculateTTL(timeframe), cache_salt, setContent, setIsLoading, abortController.signal);
       } catch (error) {
         if (axios.isCancel(error)) {

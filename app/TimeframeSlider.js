@@ -3,6 +3,7 @@
 import React from 'react';
 import { Box, ToggleButtonGroup, ToggleButton, Paper, Button, useMediaQuery } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { timeframes } from './timeframes';
 
 // Custom Styling for ToggleButtonGroup
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
@@ -77,18 +78,16 @@ const TimeframeSlider = ({ theme, value, onChange, handleTopicsDrawerToggle }) =
 	    alignItems: 'center',
 	  }}
 	>
-	  <StyledToggleButton value="last two weeks" aria-label="last two weeks" sx={{ flexGrow: 1 }}>
-	    Last two Weeks
-	  </StyledToggleButton>
-	  <StyledToggleButton value="last 3 months" aria-label="last 3 months" sx={{ flexGrow: 1 }}>
-	    Last 3 Months
-	  </StyledToggleButton>
-	  <StyledToggleButton value="last year" aria-label="last year" sx={{ flexGrow: 1 }}>
-	    Last Year
-	  </StyledToggleButton>
-	  <StyledToggleButton value="last decade" aria-label="last decade" sx={{ flexGrow: 1 }}>
-	    Last Decade
-	  </StyledToggleButton>
+	  {timeframes.map((timeframeItem) => (
+            <StyledToggleButton
+              key={timeframeItem.toLowerCase()}
+              value={timeframeItem.toLowerCase()}
+              aria-label={timeframeItem.toLowerCase()}
+              sx={{ flexGrow: 1 }}
+            >
+              {timeframeItem}
+            </StyledToggleButton>
+          ))}
 	</StyledToggleButtonGroup>
 
         <Button
