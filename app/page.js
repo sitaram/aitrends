@@ -108,7 +108,7 @@ const Home = () => {
           }}
         >
           <Toolbar />
-          <Paper elevation={3} sx={{ padding: '1rem', marginBottom: '.8rem' }}>
+          <Paper elevation={3} sx={{ padding: '1rem', marginBottom: '.8rem', backgroundColor: '#aec3d7' }}>
             <Typography variant="h1" sx={{ fontSize: '2rem' }} className="title">{topic}</Typography>
           </Paper>
           <ContentComponent isLoading={isLoading} content={content} />
