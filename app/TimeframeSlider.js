@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import { Box, ToggleButtonGroup, ToggleButton, Paper } from '@mui/material';
+import { Box, ToggleButtonGroup, ToggleButton, Paper, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 // Custom Styling for ToggleButtonGroup
@@ -42,7 +42,7 @@ const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
   },
 }));
 
-const TimeframeSlider = ({ value, onChange }) => {
+const TimeframeSlider = ({ value, onChange, handleTopicsDrawerToggle }) => {
   const handleTimeframeChange = (event, newTimeframe) => {
     if (newTimeframe !== null) {
       onChange(newTimeframe);
@@ -55,7 +55,7 @@ const TimeframeSlider = ({ value, onChange }) => {
 	 position: 'fixed',
 	 bottom: 0,
 	 left: 0,
-	 width: '80%',
+	 width: '100%',
 	 zIndex: 999, // Ensure the slider is above other content
 	 backgroundColor: 'white',
        }}
@@ -66,6 +66,9 @@ const TimeframeSlider = ({ value, onChange }) => {
 	  exclusive
 	  onChange={handleTimeframeChange}
 	  aria-label="timeframe"
+	  sx={{
+	    width: '80%',
+	  }}
 	>
 	  <StyledToggleButton value="last two weeks" aria-label="last two weeks">
 	    Last Two Weeks
@@ -80,6 +83,32 @@ const TimeframeSlider = ({ value, onChange }) => {
 	    Last Decade
 	  </StyledToggleButton>
 	</StyledToggleButtonGroup>
+
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleTopicsDrawerToggle}
+          sx={{
+            borderRadius: '32px 32px',
+            minWidth: 'auto',
+            padding: '16px',
+            fontSize: '0.875rem',
+            textTransform: 'none',
+            position: 'absolute',
+            bottom: '8px',
+            right: 0, // Position it on the right
+            zIndex: 1201,
+            backgroundColor: '#3a506b !important',
+            color: '#fff',
+            opacity: 1,
+            '&:hover': {
+              backgroundColor: '#1976d2',
+              opacity: 1,
+            },
+          }}
+        >
+          Topics
+        </Button>
       </Paper>
     </Box>
   );

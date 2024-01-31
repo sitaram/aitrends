@@ -13,15 +13,15 @@ import { Helmet } from 'react-helmet-async';
 import TimeframeSlider from './TimeframeSlider';
 
 const Home = () => {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [topicsDrawerOpen, setTopicsDrawerOpen] = useState(false);
   const [timeframe, setTimeframe] = useState('last two weeks');
   const [topic, setTopic] = useState('All AI Topics');
   const [content, setContent] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const cache_salt = '1';
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+  const handleTopicsDrawerToggle = () => {
+    setTopicsDrawerOpen(!topicsDrawerOpen);
   };
 
   const handleTimeframeChange = (newTimeframe) => {
@@ -67,11 +67,12 @@ const Home = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box sx={{ display: 'flex' }}>
-        <AppBarComponent handleDrawerToggle={handleDrawerToggle} />
+        <AppBarComponent handleTopicsDrawerToggle={handleTopicsDrawerToggle} />
         <DrawerComponent
-          mobileOpen={mobileOpen}
-          handleDrawerToggle={handleDrawerToggle}
+          topicsDrawerOpen={topicsDrawerOpen}
+          handleTopicsDrawerToggle={handleTopicsDrawerToggle}
           topic={topic}
+          timeframe={timeframe}
           handleTopicChange={handleTopicChange}
         />
         <Box
@@ -85,7 +86,7 @@ const Home = () => {
           <ContentComponent isLoading={isLoading} content={content} />
         </Box>
       </Box>
-      <TimeframeSlider value={timeframe} onChange={handleTimeframeChange} /> {/* Moved outside of the main content */}
+      <TimeframeSlider value={timeframe} onChange={handleTimeframeChange} handleTopicsDrawerToggle={handleTopicsDrawerToggle} />
     </ThemeProvider>
   );
 };

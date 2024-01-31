@@ -3,7 +3,7 @@ import React from 'react';
 import { AppBar, Toolbar, IconButton, Typography, Box } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
-const AppBarComponent = ({ handleDrawerToggle }) => {
+const AppBarComponent = ({ handleTopicsDrawerToggle }) => {
   return (
     <AppBar position="fixed">
       <Toolbar>
@@ -11,7 +11,7 @@ const AppBarComponent = ({ handleDrawerToggle }) => {
           color="inherit"
           aria-label="open drawer"
           edge="start"
-          onClick={handleDrawerToggle}
+          onClick={handleTopicsDrawerToggle}
           sx={{ mr: 2, display: { sm: 'block' } }}
         >
           <MenuIcon />
