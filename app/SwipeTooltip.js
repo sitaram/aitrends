@@ -13,7 +13,7 @@ const SwipeTooltip = () => {
 
   useEffect(() => {
     // Optionally hide instructions after a delay or based on user interaction
-    const timer = setTimeout(() => setHasSwiped(true), 3000);
+    const timer = setTimeout(() => setHasSwiped(true), 2000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -24,11 +24,12 @@ const SwipeTooltip = () => {
     bottom: '20%', // Adjust as needed
     left: '50%',
     transform: 'translateX(-50%)',
-    backgroundColor: 'rgba(97, 97, 97, 0.9)', // Tooltip-like background color
-    color: '#fff', // Text color
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    color: 'white',
     padding: '8px 16px',
     borderRadius: '4px',
-    fontSize: '14px',
+    fontSize: '1rem',
+    transition: 'opacity 0.5s ease',
     boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
     zIndex: 1000, // Ensure it appears above other content
     animation: 'fadeIn 1s',

@@ -38,6 +38,13 @@ const Home = () => {
     setTopic(newTopic);
   };
 
+  const handleSwitchTopic = (direction) => {
+    if (direction === 'Previous')
+      setCurrentTopicIndex((currentTopicIndex - 1 + allTopics.length) % allTopics.length);
+    else
+      setCurrentTopicIndex((currentTopicIndex + 1) % allTopics.length);
+  }
+
   useEffect(() => {
     const abortController = new AbortController();
 
@@ -98,14 +105,6 @@ const Home = () => {
     setTopic(newTopic); // Assuming setTopic updates the topic state used to fetch content
   }, [currentTopicIndex]);
 
-  const handleSwipe = (e, deltaX) => {
-    if (deltaX > 200) {
-      setCurrentTopicIndex((currentTopicIndex - 1 + allTopics.length) % allTopics.length);
-    } else if (deltaX < -200) {
-      setCurrentTopicIndex((currentTopicIndex + 1) % allTopics.length);
-    }
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -131,7 +130,11 @@ const Home = () => {
           <Paper elevation={3} sx={{ padding: '1rem', marginBottom: '.8rem', backgroundColor: '#bed3e7' }}>
             <Typography variant="h1" sx={{ fontSize: '2rem' }} className="title">{topic}</Typography>
           </Paper>
-	  <ContentComponent isLoading={isLoading} content={content} handleSwipe={handleSwipe} />
+	  <ContentComponent
+	    isLoading={isLoading}
+	    content={content}
+	    currentTopicIndex={currentTopicIndex}
+	    handleSwitchTopic={handleSwitchTopic} />
         </Box>
       </Box>
       <TimeframeSlider
