@@ -5,7 +5,7 @@ import { ThreeDots } from 'react-loader-spinner';
 import CustomMarkdown from './CustomMarkdown';
 import { Tooltip } from '@mui/material';
 import { useSwipeable } from 'react-swipeable';
-import SwipeInstructions from './SwipeInstructions'; // Ensure you import SwipeInstructions
+import SwipeTooltip from './SwipeTooltip'; // Ensure you import SwipeTooltip
 
 const ContentComponent = ({ isLoading, content, onSwipeLeft, onSwipeRight }) => {
   const [hasSwiped, setHasSwiped] = useState(false);
@@ -22,7 +22,7 @@ const ContentComponent = ({ isLoading, content, onSwipeLeft, onSwipeRight }) => 
 
   return (
     <div {...handlers} style={{ paddingBottom: '64px', }}>
-      <SwipeInstructions /> {/* Place the SwipeInstructions component */}
+      <SwipeTooltip /> {/* Place the SwipeTooltip component */}
       {isLoading ? (
         <div className="centered">
           <ThreeDots color="#3a506b" />

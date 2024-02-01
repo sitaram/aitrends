@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSwipeable } from 'react-swipeable';
 
-const SwipeInstructions = () => {
+const SwipeTooltip = () => {
   const [hasSwiped, setHasSwiped] = useState(false);
 
   // Example useSwipeable hook usage
@@ -42,4 +42,4 @@ const SwipeInstructions = () => {
   );
 };
 
-export default SwipeInstructions;
+export default SwipeTooltip;
