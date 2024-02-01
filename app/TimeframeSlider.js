@@ -63,7 +63,7 @@ const TimeframeSlider = ({ theme, value, onChange, handleTopicsDrawerToggle }) =
 	   display: 'flex',
 	   justifyContent: 'space-between',
 	   alignItems: 'center',
-	   backgroundColor: '#aec3d7',
+	   backgroundColor: '#bed3e7',
 	 }}
        >
 	<StyledToggleButtonGroup

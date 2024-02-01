@@ -1,8 +1,9 @@
+reload endpoint
 flush endpoint
 
 routes and hash parameters (stashed)
 
-rag (web pages input to api) via langchain
+freshen: rag (web pages input to api) via langchain
 
 click to read more
 
@@ -10,10 +11,12 @@ hero images
 
 videos
 
-extract topics from content
-
 logo
 
 infinite scroll
 
 mobile app via Flutter
+
+wikipedia links to topic
+
+extract topics from content
