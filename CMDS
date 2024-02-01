@@ -22,3 +22,35 @@ later: vercel deploy
 
 
 
+
+
+// produce a bullet list of AI subtopics, just the names and prefer short ones, focusing on terms and concepts that are
+// prevalent and important in today's research and discourse, sorted descending order of prevalence and importance,
+// while ensuring a diverse representation of the field.
+//
+// produce a bullet list a dozen or so of AI subtopics, just the names and prefer short ones, no acronyms, prioritizing
+// terms that are prevalent and important in today's research and discourse, sorted descending order of prevalence and
+// importance, while ensuring a diverse representation of the field. avoid topics that used to be hot but are now faded,
+// in other words bias towards recency of importance and trendiness of the concept. cover a good mix of topics for the
+// layman as well as the expert. research as needed.
+//
+// Machine Learning
+// Deep Learning
+// Natural Language Processing
+// Computer Vision
+// Reinforcement Learning
+// Generative Adversarial Networks (GANs)
+// Autonomous Vehicles
+// AI Ethics and Fairness
+// Explainable AI (XAI)
+// AI in Healthcare
+// AI in Finance
+// AI in Robotics
+// AI in Cybersecurity
+// AI in Education
+// AI in Retail
+
+
+
+for each topic in this json, add a thumbnail image url, and a wikipedia page url. do it in chunks, say for all topics in one category at a time, and i'll hit next. definitely output json.
+
