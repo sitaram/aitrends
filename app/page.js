@@ -13,20 +13,19 @@ import { Helmet } from 'react-helmet-async';
 import TimeframeSlider from './TimeframeSlider';
 import generateQueryPrompt from './prompt';
 import fetchAll from './fetch-all';
-import { topics } from './topics'; // Import the topics data from your topics.js file
-
-const appName = 'AI Trends';
+import { topics } from './topics';
+import * as Constants from './constants';
 
 const Home = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [topicsDrawerOpen, setTopicsDrawerOpen] = useState(isMobile);
   const [timeframe, setTimeframe] = useState('last two weeks');
-  const [topic, setTopic] = useState('All AI Topics');
+  const [topic, setTopic] = useState(Constants.ALLTOPICS);
   const [content, setContent] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [displayedTopic, setDisplayedTopic] = useState(appName);
+  const [displayedTopic, setDisplayedTopic] = useState(Constants.APPNAME);
   const [currentTopicIndex, setCurrentTopicIndex] = useState(0);
-  const allTopics = flattenTopics(topics.clusters);
+  const allTopics = [Constants.ALLTOPICS, ...flattenTopics(topics.clusters)];
 
   const handleTopicsDrawerToggle = () => {
     setTopicsDrawerOpen(!topicsDrawerOpen);
@@ -67,7 +66,7 @@ const Home = () => {
   }, [timeframe, topic]);
 
   useEffect(() => {
-    document.title = appName + ': ' + topic;
+    document.title = Constants.APPNAME + ': ' + topic;
 
     // Add a scroll event listener to detect when the title scrolls off the page
     const handleScroll = () => {
@@ -78,7 +77,7 @@ const Home = () => {
         setDisplayedTopic(topic);
       } else {
         // Title is still visible, display the default topic
-        setDisplayedTopic(appName);
+        setDisplayedTopic(Constants.APPNAME);
       }
     };
 
@@ -101,15 +100,11 @@ const Home = () => {
   }, [currentTopicIndex]);
 
   const onSwipeLeft = () => {
-    if (currentTopicIndex < allTopics.length - 1) {
-      setCurrentTopicIndex(currentTopicIndex + 1);
-    }
+    setCurrentTopicIndex((currentTopicIndex + 1) % allTopics.length);
   };
 
   const onSwipeRight = () => {
-    if (currentTopicIndex > 0) {
-      setCurrentTopicIndex(currentTopicIndex - 1);
-    }
+    setCurrentTopicIndex((currentTopicIndex - 1 + allTopics.length) % allTopics.length);
   };
 
   return (
