@@ -99,10 +99,10 @@ const Home = () => {
   }, [currentTopicIndex]);
 
   const handleSwipe = (e, deltaX) => {
-    if (deltaX > 100) {
-      setCurrentTopicIndex((currentTopicIndex + 1) % allTopics.length);
-    } else if (deltaX < -100) {
+    if (deltaX > 200) {
       setCurrentTopicIndex((currentTopicIndex - 1 + allTopics.length) % allTopics.length);
+    } else if (deltaX < -200) {
+      setCurrentTopicIndex((currentTopicIndex + 1) % allTopics.length);
     }
   };
 
