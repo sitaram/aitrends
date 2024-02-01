@@ -13,7 +13,7 @@ const SwipeTooltip = () => {
 
   useEffect(() => {
     // Optionally hide instructions after a delay or based on user interaction
-    const timer = setTimeout(() => setHasSwiped(true), 2000);
+    const timer = setTimeout(() => setHasSwiped(true), 3000);
     return () => clearTimeout(timer);
   }, []);
 
