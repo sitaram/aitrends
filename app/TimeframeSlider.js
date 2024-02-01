@@ -1,6 +1,9 @@
 'use client'
 
 import React from 'react';
+import { IconButton } from '@mui/material';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Box, ToggleButtonGroup, ToggleButton, Paper, Button, useMediaQuery } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { timeframes } from './timeframes';
@@ -43,7 +46,7 @@ const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
   },
 }));
 
-const TimeframeSlider = ({ theme, value, onChange, handleTopicsDrawerToggle }) => {
+const TimeframeSlider = ({ theme, value, onChange, handleTopicsDrawerToggle, handleSwitchTopic }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleTimeframeChange = (event, newTimeframe) => {
@@ -61,13 +64,18 @@ const TimeframeSlider = ({ theme, value, onChange, handleTopicsDrawerToggle }) =
 	   zIndex: 999, // Ensure the slider is above other content
 	   left: !isMobile ? '240px' : 0,
 	   width: !isMobile ? 'calc(100% - 240px)' : '100%',
-	   paddingLeft: !isMobile ? '240px' : 0,
+	   padding: !isMobile ? '0 40px' : 0,
 	   display: 'flex',
 	   justifyContent: 'space-between',
 	   alignItems: 'center',
 	   backgroundColor: '#bed3e7',
 	 }}
        >
+        {!isMobile &&
+	 (<IconButton onClick={() => handleSwitchTopic('Previous')}>
+	    <NavigateBeforeIcon />
+	  </IconButton>)}
+
 	<StyledToggleButtonGroup
 	  value={value}
 	  exclusive
@@ -116,6 +124,11 @@ const TimeframeSlider = ({ theme, value, onChange, handleTopicsDrawerToggle }) =
         >
           Topics
         </Button>
+
+	{!isMobile &&
+	 (<IconButton onClick={() => handleSwitchTopic('Next')}>
+	    <NavigateNextIcon />
+	  </IconButton>)}
       </Box>
     </Paper>
   );

@@ -142,7 +142,8 @@ const Home = () => {
 	theme={theme}
 	value={timeframe}
 	onChange={handleTimeframeChange}
-	handleTopicsDrawerToggle={handleTopicsDrawerToggle} />
+	handleTopicsDrawerToggle={handleTopicsDrawerToggle}
+	handleSwitchTopic={handleSwitchTopic} />
     </ThemeProvider>
   );
 };
