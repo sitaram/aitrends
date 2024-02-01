@@ -7,15 +7,11 @@ import { Tooltip } from '@mui/material';
 import { useSwipeable } from 'react-swipeable';
 import SwipeTooltip from './SwipeTooltip'; // Ensure you import SwipeTooltip
 
-const ContentComponent = ({ isLoading, content, onSwipeLeft, onSwipeRight }) => {
-  const [hasSwiped, setHasSwiped] = useState(false);
+const ContentComponent = ({ isLoading, content, handleSwipe }) => {
   const contentArray = Array.isArray(content) ? content : [];
 
-  // useSwipeable hook to handle swipe actions
   const handlers = useSwipeable({
-    onSwiped: () => setHasSwiped(true), // Update to indicate a swipe has occurred
-    onSwipedLeft: () => onSwipeLeft(),
-    onSwipedRight: () => onSwipeRight(),
+    onSwiped: (eventData) => handleSwipe(eventData.event, eventData.deltaX),
     preventDefaultTouchmoveEvent: true, // Optional: to prevent scrolling while swiping
     trackMouse: true // Optional: allows swipe with mouse on desktop
   });

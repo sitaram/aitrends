@@ -98,12 +98,12 @@ const Home = () => {
     setTopic(newTopic); // Assuming setTopic updates the topic state used to fetch content
   }, [currentTopicIndex]);
 
-  const onSwipeLeft = () => {
-    setCurrentTopicIndex((currentTopicIndex + 1) % allTopics.length);
-  };
-
-  const onSwipeRight = () => {
-    setCurrentTopicIndex((currentTopicIndex - 1 + allTopics.length) % allTopics.length);
+  const handleSwipe = (e, deltaX) => {
+    if (deltaX > 100) {
+      setCurrentTopicIndex((currentTopicIndex + 1) % allTopics.length);
+    } else if (deltaX < -100) {
+      setCurrentTopicIndex((currentTopicIndex - 1 + allTopics.length) % allTopics.length);
+    }
   };
 
   return (
@@ -131,7 +131,7 @@ const Home = () => {
           <Paper elevation={3} sx={{ padding: '1rem', marginBottom: '.8rem', backgroundColor: '#bed3e7' }}>
             <Typography variant="h1" sx={{ fontSize: '2rem' }} className="title">{topic}</Typography>
           </Paper>
-	  <ContentComponent isLoading={isLoading} content={content} onSwipeLeft={onSwipeLeft} onSwipeRight={onSwipeRight} />
+	  <ContentComponent isLoading={isLoading} content={content} handleSwipe={handleSwipe} />
         </Box>
       </Box>
       <TimeframeSlider
