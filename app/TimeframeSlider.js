@@ -100,6 +100,7 @@ const TimeframeSlider = ({ theme, value, onChange, handleTopicsDrawerToggle, han
           ))}
 	</StyledToggleButtonGroup>
 
+	{isMobile &&
         <Button
           variant="contained"
           color="primary"
@@ -123,7 +124,7 @@ const TimeframeSlider = ({ theme, value, onChange, handleTopicsDrawerToggle, han
           }}
         >
           Topics
-        </Button>
+        </Button>}
 
 	{!isMobile &&
 	 (<IconButton onClick={() => handleSwitchTopic('Next')}>
