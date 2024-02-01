@@ -11,12 +11,15 @@ const ContentComponent = ({ theme, isLoading, content, handleSwitchTopic }) => {
   
   const handleSwipe = (eventData) => {
     const deltaX = eventData.deltaX;
-    if (deltaX > 200) {
-      setFeedback('Previous');
-      handleSwitchTopic('Previous');
-    } else if (deltaX < -200) {
-      setFeedback('Next');
-      handleSwitchTopic('Next');
+    const deltaY = eventData.deltaY;
+    if (deltaY < 50 && deltaY > -50) {
+      if (deltaX > 100) {
+	setFeedback('Previous');
+	handleSwitchTopic('Previous');
+      } else if (deltaX < -100) {
+	setFeedback('Next');
+	handleSwitchTopic('Next');
+      }
     }
     setTimeout(() => setFeedback(''), 500); // Reset feedback after 500ms
   };
