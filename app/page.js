@@ -8,21 +8,25 @@ import DrawerComponent from './DrawerComponent';
 import ContentComponent from './ContentComponent';
 import axios from 'axios';
 import { fetchContent } from './api';
-import { calculateTTL } from './utils';
+import { calculateTTL, flattenTopics } from './utils';
 import { Helmet } from 'react-helmet-async';
 import TimeframeSlider from './TimeframeSlider';
 import generateQueryPrompt from './prompt';
 import fetchAll from './fetch-all';
+import { topics } from './topics'; // Import the topics data from your topics.js file
 
 const appName = 'AI Trends';
 
 const Home = () => {
-  const [topicsDrawerOpen, setTopicsDrawerOpen] = useState(false);
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [topicsDrawerOpen, setTopicsDrawerOpen] = useState(isMobile);
   const [timeframe, setTimeframe] = useState('last two weeks');
   const [topic, setTopic] = useState('All AI Topics');
   const [content, setContent] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [displayedTopic, setDisplayedTopic] = useState(appName);
+  const [currentTopicIndex, setCurrentTopicIndex] = useState(0);
+  const allTopics = flattenTopics(topics.clusters);
 
   const handleTopicsDrawerToggle = () => {
     setTopicsDrawerOpen(!topicsDrawerOpen);
@@ -90,6 +94,24 @@ const Home = () => {
     };
   }, [topic]);
 
+  // Update useEffect to fetch content when currentTopicIndex changes
+  useEffect(() => {
+    const newTopic = allTopics[currentTopicIndex];
+    setTopic(newTopic); // Assuming setTopic updates the topic state used to fetch content
+  }, [currentTopicIndex]);
+
+  const onSwipeLeft = () => {
+    if (currentTopicIndex < allTopics.length - 1) {
+      setCurrentTopicIndex(currentTopicIndex + 1);
+    }
+  };
+
+  const onSwipeRight = () => {
+    if (currentTopicIndex > 0) {
+      setCurrentTopicIndex(currentTopicIndex - 1);
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -115,7 +137,7 @@ const Home = () => {
           <Paper elevation={3} sx={{ padding: '1rem', marginBottom: '.8rem', backgroundColor: '#bed3e7' }}>
             <Typography variant="h1" sx={{ fontSize: '2rem' }} className="title">{topic}</Typography>
           </Paper>
-          <ContentComponent isLoading={isLoading} content={content} />
+	  <ContentComponent isLoading={isLoading} content={content} onSwipeLeft={onSwipeLeft} onSwipeRight={onSwipeRight} />
         </Box>
       </Box>
       <TimeframeSlider

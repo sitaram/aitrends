@@ -32,3 +32,12 @@ export const calculateTTL = (timeframe) => {
       return 0; // Default or error case
   }
 }
+
+// This could be placed in a utility file or directly in your component file
+export const flattenTopics = (clusters) => {
+  let flatTopics = [];
+  clusters.forEach(cluster => {
+    flatTopics = [...flatTopics, ...cluster.topics];
+  });
+  return flatTopics;
+};
