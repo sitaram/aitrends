@@ -6,6 +6,7 @@ import { topics } from './topics'; // Import topics object
 import { calculateTTL } from './utils';
 import { fetchContent } from './api'; // Import the fetchContent function
 import generateQueryPrompt from './prompt'; // Import the generateQueryPrompt function
+import * as Constants from './constants';
 
 const fetchAll = async () => {
   const fetch = async (topic, timeframe) => {
@@ -33,7 +34,7 @@ const fetchAll = async () => {
   };
 
   for (const timeframeUC of timeframes) {
-    fetch('All AI Topics', timeframeUC.toLowerCase());
+    fetch(Constants.ALLTOPICS, timeframeUC.toLowerCase());
   }
   for (const cluster of topics.clusters) {
     for (const topic of cluster.topics) {

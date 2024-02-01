@@ -7,6 +7,7 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { topics } from './topics'; // Import the topics data from your topics.js file
+import * as Constants from './constants';
 
 const StyledList = styled(List)(({ theme }) => ({
   width: 240, // Set a fixed width for the drawer
@@ -57,8 +58,8 @@ const TopicBrowser = ({ onSelect, selectedTopic }) => {
 
   return (
     <StyledList>
-      <StyledListItem button onClick={() => onSelect("All AI Topics")} selected={selectedTopic === "All AI Topics"}>
-        <ListItemText primary="All AI Topics" />
+      <StyledListItem button onClick={() => onSelect(Constants.ALLTOPICS)} selected={selectedTopic === Constants.ALLTOPICS}>
+        <ListItemText primary={Constants.ALLTOPICS} />
       </StyledListItem>
       {topics.clusters.map((cluster, clusterIndex) => (
         <div key={cluster.name}>
