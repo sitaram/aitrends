@@ -5,7 +5,7 @@ import CustomMarkdown from './CustomMarkdown';
 import { useSwipeable } from 'react-swipeable';
 import SwipeTooltip from './SwipeTooltip'; // Assuming SwipeTooltip is correctly imported
 
-const ContentComponent = ({ isLoading, content, handleSwitchTopic }) => {
+const ContentComponent = ({ theme, isLoading, content, handleSwitchTopic }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [feedback, setFeedback] = useState(''); // 'Next', 'Previous', or ''
   
@@ -21,14 +21,14 @@ const ContentComponent = ({ isLoading, content, handleSwitchTopic }) => {
     setTimeout(() => setFeedback(''), 500); // Reset feedback after 500ms
   };
 
-  const handlers = isMobile ? useSwipeable({
+  const handlers = useSwipeable({
     onSwiped: handleSwipe,
     preventDefaultTouchmoveEvent: true,
     trackMouse: true
-  }) : {};
+  });
 
   return (
-    <div {...handlers} style={{ paddingBottom: '64px' }}>
+    <div {...(isMobile ? handlers : {})} style={{ paddingBottom: '64px' }}>
       {isMobile && <SwipeTooltip />}
       {feedback && (
         <Box sx={{

@@ -131,6 +131,7 @@ const Home = () => {
             <Typography variant="h1" sx={{ fontSize: '2rem' }} className="title">{topic}</Typography>
           </Paper>
 	  <ContentComponent
+	    theme={theme}
 	    isLoading={isLoading}
 	    content={content}
 	    currentTopicIndex={currentTopicIndex}
