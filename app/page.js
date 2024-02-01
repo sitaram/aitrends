@@ -24,6 +24,7 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [displayedTopic, setDisplayedTopic] = useState(Constants.APPNAME);
   const [currentTopicIndex, setCurrentTopicIndex] = useState(0);
+  const [openClusterIndex, setOpenClusterIndex] = useState(null);
   const allTopics = [Constants.ALLTOPICS, ...flattenTopics(topics.clusters)];
 
   const handleTopicsDrawerToggle = () => {
@@ -38,12 +39,22 @@ const Home = () => {
     setTopic(newTopic);
   };
 
+  const findClusterIndexForTopic = (topic) => {
+    return topics.clusters.findIndex(cluster =>
+      cluster.topics.includes(topic)
+    );
+  };
+
   const handleSwitchTopic = (direction) => {
-    if (direction === 'Previous')
-      setCurrentTopicIndex((currentTopicIndex - 1 + allTopics.length) % allTopics.length);
-    else
-      setCurrentTopicIndex((currentTopicIndex + 1) % allTopics.length);
-  }
+    let newIndex = direction === 'Previous' ?
+      (currentTopicIndex - 1 + allTopics.length) % allTopics.length :
+      (currentTopicIndex + 1) % allTopics.length;
+
+    setCurrentTopicIndex(newIndex);
+    const newTopic = allTopics[newIndex];
+    const clusterIndex = findClusterIndexForTopic(newTopic);
+    setOpenClusterIndex(clusterIndex);
+  };
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -91,6 +102,9 @@ const Home = () => {
       window.addEventListener('scroll', handleScroll);
     }
 
+    const clusterIndex = findClusterIndexForTopic(topic);
+    setOpenClusterIndex(clusterIndex);
+
     return () => {
       // Remove the scroll event listener when the component unmounts
       if (typeof window !== 'undefined') {
@@ -113,8 +127,9 @@ const Home = () => {
         <DrawerComponent
           topicsDrawerOpen={topicsDrawerOpen}
           handleTopicsDrawerToggle={handleTopicsDrawerToggle}
-          topic={topic}
           timeframe={timeframe}
+          topic={topic}
+	  openClusterIndex={openClusterIndex}
           handleTopicChange={handleTopicChange}
         />
         <Box

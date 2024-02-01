@@ -6,11 +6,12 @@ import TopicBrowser from './TopicBrowser';
 
 const drawerWidth = 240;
 
-const DrawerComponent = ({ topicsDrawerOpen, handleTopicsDrawerToggle, topic, handleTopicChange }) => {
+const DrawerComponent = ({ topicsDrawerOpen, handleTopicsDrawerToggle, timeframe, topic,
+			   openClusterIndex, handleTopicChange }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const drawerContent = (
-    <TopicBrowser onSelect={handleTopicChange} selectedTopic={topic} />
+    <TopicBrowser onSelect={handleTopicChange} selectedTopic={topic} openClusterIndex={openClusterIndex} />
   );
 
   return (

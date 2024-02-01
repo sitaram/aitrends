@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { styled } from '@mui/material/styles';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -45,8 +45,9 @@ const CollapseWrapper = styled(Collapse)(({ theme }) => ({
   overflowX: 'hidden', // Hide horizontal overflow for collapsing section
 }));
 
-const TopicBrowser = ({ onSelect, selectedTopic }) => {
+const TopicBrowser = ({ onSelect, selectedTopic, openClusterIndex }) => {
   const [openTopicIndex, setOpenTopicIndex] = React.useState(null);
+  const topicRefs = useRef([]);
 
   const handleClick = (index) => {
     if (openTopicIndex === index) {
@@ -55,6 +56,21 @@ const TopicBrowser = ({ onSelect, selectedTopic }) => {
       setOpenTopicIndex(index); // Open the clicked topic
     }
   };
+
+  // Use openClusterIndex to control the open state of clusters
+  useEffect(() => {
+    setOpenTopicIndex(openClusterIndex);
+  }, [openClusterIndex]);
+
+  useEffect(() => {
+    const selectedRef = topicRefs.current[selectedTopic];
+    if (selectedRef) {
+      selectedRef.scrollIntoView({
+	behavior: 'smooth',
+	block: 'nearest'
+      });
+    }
+  }, [selectedTopic]);
 
   return (
     <StyledList>
@@ -73,6 +89,7 @@ const TopicBrowser = ({ onSelect, selectedTopic }) => {
                 <SubListItem
                   button
                   key={topicIndex}
+		  ref={el => topicRefs.current[topic] = el}
                   onClick={() => onSelect(topic)}
                   selected={selectedTopic === topic}
                 >
