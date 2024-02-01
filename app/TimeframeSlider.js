@@ -44,13 +44,14 @@ const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
 }));
 
 const TimeframeSlider = ({ theme, value, onChange, handleTopicsDrawerToggle }) => {
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const handleTimeframeChange = (event, newTimeframe) => {
     if (newTimeframe !== null) {
       onChange(newTimeframe);
     }
   };
 
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <Paper elevation={3} sx={{ margin: '-8px' }}>
       <Box
@@ -60,6 +61,7 @@ const TimeframeSlider = ({ theme, value, onChange, handleTopicsDrawerToggle }) =
 	   zIndex: 999, // Ensure the slider is above other content
 	   left: !isMobile ? '240px' : 0,
 	   width: !isMobile ? 'calc(100% - 240px)' : '100%',
+	   paddingLeft: !isMobile ? '240px' : 0,
 	   display: 'flex',
 	   justifyContent: 'space-between',
 	   alignItems: 'center',
@@ -99,6 +101,7 @@ const TimeframeSlider = ({ theme, value, onChange, handleTopicsDrawerToggle }) =
             minWidth: 'auto',
             padding: '15px 10px',
 	    margin: '6px',
+	    marginRight: !isMobile ? '60px' : 0,
             fontSize: '0.875rem',
             textTransform: 'none',
             zIndex: 1201,

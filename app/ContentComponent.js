@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Paper, Box } from '@mui/material';
+import { Paper, Box, useMediaQuery } from '@mui/material';
 import { ThreeDots } from 'react-loader-spinner';
 import CustomMarkdown from './CustomMarkdown';
 import { useSwipeable } from 'react-swipeable';
 import SwipeTooltip from './SwipeTooltip'; // Assuming SwipeTooltip is correctly imported
 
 const ContentComponent = ({ isLoading, content, handleSwitchTopic }) => {
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [feedback, setFeedback] = useState(''); // 'Next', 'Previous', or ''
   
   const handleSwipe = (eventData) => {
@@ -20,15 +21,15 @@ const ContentComponent = ({ isLoading, content, handleSwitchTopic }) => {
     setTimeout(() => setFeedback(''), 500); // Reset feedback after 500ms
   };
 
-  const handlers = useSwipeable({
+  const handlers = isMobile ? useSwipeable({
     onSwiped: handleSwipe,
     preventDefaultTouchmoveEvent: true,
     trackMouse: true
-  });
+  }) : {};
 
   return (
     <div {...handlers} style={{ paddingBottom: '64px' }}>
-      <SwipeTooltip />
+      {isMobile && <SwipeTooltip />}
       {feedback && (
         <Box sx={{
           position: 'absolute',
