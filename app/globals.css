@@ -57,3 +57,15 @@ body {
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
+.desktopdrawer {
+  display: block; /* Default to visible for larger screens */
+}
+
+/* Hide the desktop drawer on screens smaller than 600px */
+@media (max-width: 599px) {
+  .desktopdrawer {
+    display: none;
+  }
+}
+

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Typography, Paper, Box, Toolbar, CssBaseline, ThemeProvider, useMediaQuery } from '@mui/material';
+import { Typography, Paper, Box, Toolbar, CssBaseline, ThemeProvider } from '@mui/material';
 import { theme } from './theme';
 import AppBarComponent from './AppBarComponent';
 import DrawerComponent from './DrawerComponent';
@@ -17,8 +17,7 @@ import { topics } from './topics';
 import * as Constants from './constants';
 
 const Home = () => {
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const [topicsDrawerOpen, setTopicsDrawerOpen] = useState(isMobile);
+  const [topicsDrawerOpen, setTopicsDrawerOpen] = useState(false);
   const [timeframe, setTimeframe] = useState('last two weeks');
   const [topic, setTopic] = useState(Constants.ALLTOPICS);
   const [content, setContent] = useState([]);

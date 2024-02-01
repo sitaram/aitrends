@@ -35,6 +35,7 @@ const DrawerComponent = ({ topicsDrawerOpen, handleTopicsDrawerToggle, topic, ha
       ) : (
         <Drawer
           variant="permanent"
+	  className="desktopdrawer"
           sx={{
             width: drawerWidth,
             flexShrink: 0,
