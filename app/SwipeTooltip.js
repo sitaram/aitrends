@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useSwipeable } from 'react-swipeable';
 
-const SwipeTooltip = () => {
-  const [hasSwiped, setHasSwiped] = useState(false);
-
-  // Example useSwipeable hook usage
-  const handlers = useSwipeable({
-    onSwiped: () => {
-      setHasSwiped(true); // Hide instructions after the first swipe
-    },
-  });
+const SwipeTooltip = ({ topicsDrawerOpen }) => {
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Optionally hide instructions after a delay or based on user interaction
-    const timer = setTimeout(() => setHasSwiped(true), 2000);
-    return () => clearTimeout(timer);
-  }, []);
+    if (!topicsDrawerOpen) {
+      setVisible(true);
+      const timer = setTimeout(() => {
+        setVisible(false); // Optionally hide after 2 seconds
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [topicsDrawerOpen]);
 
-  if (hasSwiped) return null;
+  if (!visible) return null;
 
   const tooltipStyle = {
     position: 'fixed',
@@ -36,11 +32,7 @@ const SwipeTooltip = () => {
     // For animation, ensure you define keyframes in a global CSS if needed
   };
 
-  return (
-    <div {...handlers} style={tooltipStyle}>
-      Swipe left/right for previous/next topic
-    </div>
-  );
+  return <div style={tooltipStyle}>Swipe left/right for previous/next topic</div>;
 };
 
 export default SwipeTooltip;

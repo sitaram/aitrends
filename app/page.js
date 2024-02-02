@@ -14,6 +14,7 @@ import TimeframeSlider from './TimeframeSlider';
 import generateQueryPrompt from './prompt';
 import { topics } from './topics';
 import { Snackbar } from '@mui/material';
+
 import * as Constants from './constants';
 
 const Home = () => {

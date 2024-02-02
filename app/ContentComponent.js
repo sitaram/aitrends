@@ -3,7 +3,6 @@ import { Paper, Box, useMediaQuery } from '@mui/material';
 import { ThreeDots } from 'react-loader-spinner';
 import CustomMarkdown from './CustomMarkdown';
 import { useSwipeable } from 'react-swipeable';
-import SwipeTooltip from './SwipeTooltip'; // Assuming SwipeTooltip is correctly imported
 
 const ContentComponent = ({ theme, isLoading, content, handleSwitchTopic }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -33,7 +32,6 @@ const ContentComponent = ({ theme, isLoading, content, handleSwitchTopic }) => {
 
   return (
     <div {...(isMobile ? handlers : {})} style={{ paddingBottom: '64px' }}>
-      {isMobile && <SwipeTooltip />}
       {feedback && (
         <Box
           sx={{

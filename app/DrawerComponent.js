@@ -3,6 +3,7 @@ import { Drawer, useMediaQuery, Button, SwipeableDrawer } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { theme } from './theme';
 import TopicBrowser from './TopicBrowser';
+import SwipeTooltip from './SwipeTooltip';
 
 const drawerWidth = 240;
 
@@ -38,6 +39,7 @@ const DrawerComponent = ({
           >
             {drawerContent}
           </SwipeableDrawer>
+          <SwipeTooltip topicsDrawerOpen={topicsDrawerOpen} />
         </>
       ) : (
         <Drawer
