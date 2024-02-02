@@ -28,12 +28,12 @@ export default async (req, res) => {
     }
 
     const completion = await openai.chat.completions.create({
-      messages: [{ role: "system", content: prompt }],
+      messages: [{ role: 'system', content: prompt }],
       model: 'gpt-4-turbo-preview',
     });
 
     const responseData = completion.choices[0]?.message?.content || '';
-    
+
     // Save the new response to Redis cache with an expiration time
     await redis.setex(cacheKey, ttl, responseData); // Expires in the timeframe period
 
