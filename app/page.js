@@ -12,8 +12,8 @@ import { calculateTTL, flattenTopics } from './utils';
 import { Helmet } from 'react-helmet-async';
 import TimeframeSlider from './TimeframeSlider';
 import generateQueryPrompt from './prompt';
-import Reload from './reload';
 import { topics } from './topics';
+import { Snackbar } from '@mui/material';
 import * as Constants from './constants';
 
 const Home = () => {
