@@ -95,10 +95,10 @@ const TimeframeSlider = ({ theme, value, onChange, handleTopicsDrawerToggle, han
               aria-label={timeframeItem.toLowerCase()}
               sx={{
 		flexGrow: 1,
-		height: isMobile ? 'initial' : '36px',
+		minHeight: isMobile ? 'initial' : '36px',
 		paddingTop: '3px',
 		paddingBottom: '3px',
-		lineHeight: '22px'
+		lineHeight: '20px'
 	      }}
             >
               {timeframeItem}
