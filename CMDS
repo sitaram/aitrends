@@ -52,6 +52,7 @@ later: vercel deploy
 
 
 
-for each topic in this json, add a thumbnail image url, and a wikipedia page url. do it in chunks, say for all topics in one category at a time, and i'll hit next. definitely output json.
-
+beef up this AI topics hierarchy to about 10 categories and 10 subitems per category, based on current AI advancements,
+building on the hierarchy I have so far, prioritizing what's more interesting and important and trending areas of
+interest to an AI expert trying to keep up
 
