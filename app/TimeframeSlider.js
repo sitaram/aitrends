@@ -35,7 +35,7 @@ const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
     backgroundColor: theme.palette.primary.main,
   },
   '&.Mui-selected:hover': {
-    backgroundColor: theme.palette.primary.dark,
+    backgroundColor: theme.palette.primary.main,
   },
   '&:not(.Mui-selected):hover': {
     background: `linear-gradient(45deg, ${theme.palette.grey[50]} 10%, ${theme.palette.grey[300]} 90%)`,
@@ -117,7 +117,7 @@ const TimeframeSlider = ({ theme, value, onChange, handleTopicsDrawerToggle, han
               minWidth: 'auto',
               padding: '15px 10px',
               margin: '6px',
-              marginRight: !isMobile ? '60px' : 0,
+              marginRight: !isMobile ? '60px' : '5px',
               fontSize: '0.875rem',
               textTransform: 'none',
               zIndex: 1201,
