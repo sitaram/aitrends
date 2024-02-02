@@ -12,7 +12,7 @@ import { calculateTTL, flattenTopics } from './utils';
 import { Helmet } from 'react-helmet-async';
 import TimeframeSlider from './TimeframeSlider';
 import generateQueryPrompt from './prompt';
-import fetchAll from './fetch-all';
+import Reload from './reload';
 import { topics } from './topics';
 import * as Constants from './constants';
 
