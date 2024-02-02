@@ -21,8 +21,8 @@ const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic }) => {
             {displayedTopic}
           </Typography>
           <Typography variant="h6" noWrap>
-            <a href="https://aitrends.live/" target="_blank" rel="noopener noreferrer">
-              aitrends.live
+            <a href="https://aitrends.live/" target="_blank" rel="noopener noreferrer" aria-label="aitrends live">
+              &nbsp;aitrends.live
             </a>
           </Typography>
         </Box>

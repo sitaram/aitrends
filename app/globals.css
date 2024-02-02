@@ -24,12 +24,7 @@ html {
 body {
   width: 100%;
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to right,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: linear-gradient(to right, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
@@ -54,8 +49,12 @@ body {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .desktopdrawer {
@@ -68,4 +67,3 @@ body {
     display: none;
   }
 }
-

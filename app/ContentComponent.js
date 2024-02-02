@@ -21,7 +21,8 @@ const ContentComponent = ({ theme, isLoading, content, handleSwitchTopic }) => {
         handleSwitchTopic('Next');
       }
     }
-    setTimeout(() => setFeedback(''), 500); // Reset feedback after 500ms
+    const timeoutId = setTimeout(() => setFeedback(''), 500);
+    return () => clearTimeout(timeoutId); // Cleanup timeout
   };
 
   const handlers = useSwipeable({

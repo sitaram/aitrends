@@ -93,7 +93,7 @@ const TimeframeSlider = ({ theme, value, onChange, handleTopicsDrawerToggle, han
             <StyledToggleButton
               key={timeframeItem.toLowerCase()}
               value={timeframeItem.toLowerCase()}
-              aria-label={timeframeItem.toLowerCase()}
+              aria-label={`Select timeframe: ${timeframeItem}`}
               sx={{
                 flexGrow: 1,
                 minHeight: isMobile ? 'initial' : '36px',

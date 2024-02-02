@@ -38,6 +38,12 @@ const Home = () => {
   const handleTopicChange = (newTopic) => {
     setTopicsDrawerOpen(false);
     setTopic(newTopic);
+
+    // Find the index of the new topic in the allTopics array
+    const newIndex = allTopics.findIndex((topic) => topic === newTopic);
+    if (newIndex !== -1) {
+      setCurrentTopicIndex(newIndex); // Update the currentTopicIndex with the new index
+    }
   };
 
   const findClusterIndexForTopic = (topic) => {
