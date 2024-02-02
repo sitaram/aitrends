@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { Typography, Paper, Box, Toolbar, CssBaseline, ThemeProvider } from '@mui/material';
@@ -40,15 +40,14 @@ const Home = () => {
   };
 
   const findClusterIndexForTopic = (topic) => {
-    return topics.clusters.findIndex(cluster =>
-      cluster.topics.includes(topic)
-    );
+    return topics.clusters.findIndex((cluster) => cluster.topics.includes(topic));
   };
 
   const handleSwitchTopic = (direction) => {
-    let newIndex = direction === 'Previous' ?
-      (currentTopicIndex - 1 + allTopics.length) % allTopics.length :
-      (currentTopicIndex + 1) % allTopics.length;
+    let newIndex =
+      direction === 'Previous'
+        ? (currentTopicIndex - 1 + allTopics.length) % allTopics.length
+        : (currentTopicIndex + 1) % allTopics.length;
 
     setCurrentTopicIndex(newIndex);
     const newTopic = allTopics[newIndex];
@@ -62,7 +61,7 @@ const Home = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-	const queryPrompt = generateQueryPrompt(timeframe, topic);
+        const queryPrompt = generateQueryPrompt(timeframe, topic);
         await fetchContent(queryPrompt, calculateTTL(timeframe), setContent, setIsLoading, abortController.signal);
       } catch (error) {
         if (axios.isCancel(error)) {
@@ -108,7 +107,7 @@ const Home = () => {
     return () => {
       // Remove the scroll event listener when the component unmounts
       if (typeof window !== 'undefined') {
-	window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('scroll', handleScroll);
       }
     };
   }, [topic]);
@@ -129,7 +128,7 @@ const Home = () => {
           handleTopicsDrawerToggle={handleTopicsDrawerToggle}
           timeframe={timeframe}
           topic={topic}
-	  openClusterIndex={openClusterIndex}
+          openClusterIndex={openClusterIndex}
           handleTopicChange={handleTopicChange}
         />
         <Box
@@ -143,25 +142,28 @@ const Home = () => {
         >
           <Toolbar />
           <Paper elevation={3} sx={{ padding: '1rem', marginBottom: '.8rem', backgroundColor: '#bed3e7' }}>
-            <Typography variant="h1" sx={{ fontSize: '2rem' }} className="title">{topic}</Typography>
+            <Typography variant="h1" sx={{ fontSize: '2rem' }} className="title">
+              {topic}
+            </Typography>
           </Paper>
-	  <ContentComponent
-	    theme={theme}
-	    isLoading={isLoading}
-	    content={content}
-	    currentTopicIndex={currentTopicIndex}
-	    handleSwitchTopic={handleSwitchTopic} />
+          <ContentComponent
+            theme={theme}
+            isLoading={isLoading}
+            content={content}
+            currentTopicIndex={currentTopicIndex}
+            handleSwitchTopic={handleSwitchTopic}
+          />
         </Box>
       </Box>
       <TimeframeSlider
-	theme={theme}
-	value={timeframe}
-	onChange={handleTimeframeChange}
-	handleTopicsDrawerToggle={handleTopicsDrawerToggle}
-	handleSwitchTopic={handleSwitchTopic} />
+        theme={theme}
+        value={timeframe}
+        onChange={handleTimeframeChange}
+        handleTopicsDrawerToggle={handleTopicsDrawerToggle}
+        handleSwitchTopic={handleSwitchTopic}
+      />
     </ThemeProvider>
   );
 };
 
 export default Home;
-

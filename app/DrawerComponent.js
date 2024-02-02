@@ -6,8 +6,14 @@ import TopicBrowser from './TopicBrowser';
 
 const drawerWidth = 240;
 
-const DrawerComponent = ({ topicsDrawerOpen, handleTopicsDrawerToggle, timeframe, topic,
-			   openClusterIndex, handleTopicChange }) => {
+const DrawerComponent = ({
+  topicsDrawerOpen,
+  handleTopicsDrawerToggle,
+  timeframe,
+  topic,
+  openClusterIndex,
+  handleTopicChange,
+}) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const drawerContent = (
@@ -23,12 +29,12 @@ const DrawerComponent = ({ topicsDrawerOpen, handleTopicsDrawerToggle, timeframe
             open={topicsDrawerOpen}
             onClose={handleTopicsDrawerToggle}
             onOpen={handleTopicsDrawerToggle}
-	    sx={{
-	      '.MuiDrawer-paper': {
-		marginTop: '60px', // Add this margin to create space for the title bar
-		height: `calc(100% - 60px)`,
-	      },
-	    }}
+            sx={{
+              '.MuiDrawer-paper': {
+                marginTop: '60px', // Add this margin to create space for the title bar
+                height: `calc(100% - 60px)`,
+              },
+            }}
           >
             {drawerContent}
           </SwipeableDrawer>
@@ -36,7 +42,7 @@ const DrawerComponent = ({ topicsDrawerOpen, handleTopicsDrawerToggle, timeframe
       ) : (
         <Drawer
           variant="permanent"
-	  className="desktopdrawer"
+          className="desktopdrawer"
           sx={{
             width: drawerWidth,
             flexShrink: 0,
@@ -45,7 +51,7 @@ const DrawerComponent = ({ topicsDrawerOpen, handleTopicsDrawerToggle, timeframe
               height: `calc(100% - 64px)`,
               width: drawerWidth,
               boxSizing: 'border-box',
-	      zIndex: 1000,
+              zIndex: 1000,
             },
           }}
         >
@@ -57,4 +63,3 @@ const DrawerComponent = ({ topicsDrawerOpen, handleTopicsDrawerToggle, timeframe
 };
 
 export default DrawerComponent;
-

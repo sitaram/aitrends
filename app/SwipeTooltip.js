@@ -18,7 +18,7 @@ const SwipeTooltip = () => {
   }, []);
 
   if (hasSwiped) return null;
-  
+
   const tooltipStyle = {
     position: 'fixed',
     bottom: '20%', // Adjust as needed

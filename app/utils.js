@@ -18,25 +18,25 @@ export const calculateTTL = (timeframe) => {
   const oneYearInSeconds = 365 * oneDayInSeconds;
   const oneDecadeInSeconds = 10 * oneYearInSeconds;
 
-  switch(timeframe) {
-    case "last two weeks":
+  switch (timeframe) {
+    case 'last two weeks':
       return 2 * oneWeekInSeconds;
-    case "last 3 months":
+    case 'last 3 months':
       return 3 * oneMonthInSeconds;
-    case "last year":
+    case 'last year':
       return oneYearInSeconds;
-    case "last decade":
+    case 'last decade':
       return oneDecadeInSeconds;
     default:
-      console.log("Unsupported timeframe");
+      console.log('Unsupported timeframe');
       return 0; // Default or error case
   }
-}
+};
 
 // This could be placed in a utility file or directly in your component file
 export const flattenTopics = (clusters) => {
   let flatTopics = [];
-  clusters.forEach(cluster => {
+  clusters.forEach((cluster) => {
     flatTopics = [...flatTopics, ...cluster.topics];
   });
   return flatTopics;

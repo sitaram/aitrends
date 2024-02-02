@@ -1,50 +1,48 @@
 export const topics = {
   clusters: [
     {
-      name: "Core Machine Learning Concepts",
+      name: 'Core Machine Learning Concepts',
       topics: [
-        "Deep Learning",
-        "Natural Language Processing",
-        "Computer Vision",
-        "Reinforcement Learning",
-        "Generative Adversarial Networks (GANs)",
-        "Transformers in Natural Language Processing (NLP)",
-        "Federated Learning",
-        "Self-Supervised Learning",
+        'Deep Learning',
+        'Natural Language Processing',
+        'Computer Vision',
+        'Reinforcement Learning',
+        'Generative Adversarial Networks (GANs)',
+        'Transformers in Natural Language Processing (NLP)',
+        'Federated Learning',
+        'Self-Supervised Learning',
       ],
     },
     {
-      name: "Emerging AI Technologies",
-      topics: ["Quantum Machine Learning", "AI in Edge Computing"],
+      name: 'Emerging AI Technologies',
+      topics: ['Quantum Machine Learning', 'AI in Edge Computing'],
     },
     {
-      name: "AI Applications in Industries",
+      name: 'AI Applications in Industries',
       topics: [
-        "AI in Healthcare",
-        "AI in Finance and Fintech",
-        "AI for Climate Change",
-        "AI in Autonomous Vehicles and Mobility",
-        "AI in Robotics and Automation",
-        "AI in Cybersecurity",
-        "AI for Drug Discovery",
+        'AI in Healthcare',
+        'AI in Finance and Fintech',
+        'AI for Climate Change',
+        'AI in Autonomous Vehicles and Mobility',
+        'AI in Robotics and Automation',
+        'AI in Cybersecurity',
+        'AI for Drug Discovery',
       ],
     },
     {
-      name: "Ethical and Responsible AI",
-      topics: ["Ethical AI and Fairness"],
+      name: 'Ethical and Responsible AI',
+      topics: ['Ethical AI and Fairness'],
     },
     {
-      name: "AI-Powered User Interaction",
+      name: 'AI-Powered User Interaction',
       topics: [
-        "AI-powered Chatbots and Virtual Assistants",
-        "AI-driven Recommendation Systems",
-        "Explainable AI (XAI)",
+        'AI-powered Chatbots and Virtual Assistants',
+        'AI-driven Recommendation Systems',
+        'Explainable AI (XAI)',
       ],
     },
   ],
 };
-
-
 
 // produce a bullet list of AI subtopics, just the names and prefer short ones, focusing on terms and concepts that are
 // prevalent and important in today's research and discourse, sorted descending order of prevalence and importance,

@@ -21,7 +21,9 @@ const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic }) => {
             {displayedTopic}
           </Typography>
           <Typography variant="h6" noWrap>
-            <a href="https://aitrends.live/" target="_blank" rel="noopener noreferrer">aitrends.live</a>
+            <a href="https://aitrends.live/" target="_blank" rel="noopener noreferrer">
+              aitrends.live
+            </a>
           </Typography>
         </Box>
       </Toolbar>
@@ -30,4 +32,3 @@ const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic }) => {
 };
 
 export default AppBarComponent;
-

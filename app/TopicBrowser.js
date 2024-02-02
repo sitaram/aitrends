@@ -66,22 +66,26 @@ const TopicBrowser = ({ onSelect, selectedTopic, openClusterIndex }) => {
     const selectedRef = topicRefs.current[selectedTopic];
     if (selectedRef) {
       selectedRef.scrollIntoView({
-	behavior: 'smooth',
-	block: 'nearest'
+        behavior: 'smooth',
+        block: 'nearest',
       });
     }
   }, [selectedTopic]);
 
   return (
     <StyledList>
-      <StyledListItem button onClick={() => onSelect(Constants.ALLTOPICS)} selected={selectedTopic === Constants.ALLTOPICS}>
+      <StyledListItem
+        button
+        onClick={() => onSelect(Constants.ALLTOPICS)}
+        selected={selectedTopic === Constants.ALLTOPICS}
+      >
         <ListItemText primary={Constants.ALLTOPICS} />
       </StyledListItem>
       {topics.clusters.map((cluster, clusterIndex) => (
         <div key={cluster.name}>
           <StyledListItem button onClick={() => handleClick(clusterIndex)}>
             <ListItemText primary={cluster.name} />
-	    {openTopicIndex === clusterIndex ? <ExpandLess /> : <ExpandMore />}
+            {openTopicIndex === clusterIndex ? <ExpandLess /> : <ExpandMore />}
           </StyledListItem>
           <CollapseWrapper in={openTopicIndex === clusterIndex} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
@@ -89,7 +93,7 @@ const TopicBrowser = ({ onSelect, selectedTopic, openClusterIndex }) => {
                 <SubListItem
                   button
                   key={topicIndex}
-		  ref={el => topicRefs.current[topic] = el}
+                  ref={(el) => (topicRefs.current[topic] = el)}
                   onClick={() => onSelect(topic)}
                   selected={selectedTopic === topic}
                 >
@@ -105,4 +109,3 @@ const TopicBrowser = ({ onSelect, selectedTopic, openClusterIndex }) => {
 };
 
 export default TopicBrowser;
-

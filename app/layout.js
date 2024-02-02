@@ -1,15 +1,15 @@
 // layout.js
 
-import React from "react";
-import { Inter } from "next/font/google";
-import Head from "next/head"; // Import Head from next/head
-import "./globals.css";
+import React from 'react';
+import { Inter } from 'next/font/google';
+import Head from 'next/head'; // Import Head from next/head
+import './globals.css';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: "AI Trends",
-  description: "Keep up with latest trends in AI with this dynamic and interactive newsletter",
+  title: 'AI Trends',
+  description: 'Keep up with latest trends in AI with this dynamic and interactive newsletter',
 };
 
 export default function RootLayout({ children }) {

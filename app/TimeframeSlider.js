@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React from 'react';
 import { IconButton } from '@mui/material';
@@ -58,88 +58,90 @@ const TimeframeSlider = ({ theme, value, onChange, handleTopicsDrawerToggle, han
   return (
     <Paper elevation={3} sx={{ margin: '-8px' }}>
       <Box
-	 sx={{
-	   position: 'fixed',
-	   bottom: 0,
-	   zIndex: 999, // Ensure the slider is above other content
-	   left: !isMobile ? '240px' : 0,
-	   width: !isMobile ? 'calc(100% - 240px)' : '100%',
-	   padding: !isMobile ? '0 40px' : 0,
-	   display: 'flex',
-	   justifyContent: 'space-between',
-	   alignItems: 'center',
-	   backgroundColor: '#bed3e7',
-	 }}
-       >
-        {!isMobile &&
-	 (<IconButton onClick={() => handleSwitchTopic('Previous')}>
-	    <NavigateBeforeIcon />
-	  </IconButton>)}
+        sx={{
+          position: 'fixed',
+          bottom: 0,
+          zIndex: 999, // Ensure the slider is above other content
+          left: !isMobile ? '240px' : 0,
+          width: !isMobile ? 'calc(100% - 240px)' : '100%',
+          padding: !isMobile ? '0 40px' : 0,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          backgroundColor: '#bed3e7',
+        }}
+      >
+        {!isMobile && (
+          <IconButton onClick={() => handleSwitchTopic('Previous')}>
+            <NavigateBeforeIcon />
+          </IconButton>
+        )}
 
-	<StyledToggleButtonGroup
-	  value={value}
-	  exclusive
-	  onChange={handleTimeframeChange}
-	  aria-label="timeframe"
-	  sx={{
-	    bottom: 0,
-	    display: 'flex',
-	    justifyContent: 'space-between',
-	    alignItems: 'center',
-	  }}
-	>
-	  {timeframes.map((timeframeItem) => (
+        <StyledToggleButtonGroup
+          value={value}
+          exclusive
+          onChange={handleTimeframeChange}
+          aria-label="timeframe"
+          sx={{
+            bottom: 0,
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          {timeframes.map((timeframeItem) => (
             <StyledToggleButton
               key={timeframeItem.toLowerCase()}
               value={timeframeItem.toLowerCase()}
               aria-label={timeframeItem.toLowerCase()}
               sx={{
-		flexGrow: 1,
-		minHeight: isMobile ? 'initial' : '36px',
-		paddingTop: '3px',
-		paddingBottom: '3px',
-		lineHeight: '20px'
-	      }}
+                flexGrow: 1,
+                minHeight: isMobile ? 'initial' : '36px',
+                paddingTop: '3px',
+                paddingBottom: '3px',
+                lineHeight: '20px',
+              }}
             >
               {timeframeItem}
             </StyledToggleButton>
           ))}
-	</StyledToggleButtonGroup>
+        </StyledToggleButtonGroup>
 
-	{isMobile &&
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleTopicsDrawerToggle}
-          sx={{
-            borderRadius: '32px 32px',
-            minWidth: 'auto',
-            padding: '15px 10px',
-	    margin: '6px',
-	    marginRight: !isMobile ? '60px' : 0,
-            fontSize: '0.875rem',
-            textTransform: 'none',
-            zIndex: 1201,
-            backgroundColor: '#3a506b !important',
-            color: '#fff',
-            opacity: 1,
-            '&:hover': {
-              backgroundColor: '#1976d2',
+        {isMobile && (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleTopicsDrawerToggle}
+            sx={{
+              borderRadius: '32px 32px',
+              minWidth: 'auto',
+              padding: '15px 10px',
+              margin: '6px',
+              marginRight: !isMobile ? '60px' : 0,
+              fontSize: '0.875rem',
+              textTransform: 'none',
+              zIndex: 1201,
+              backgroundColor: '#3a506b !important',
+              color: '#fff',
               opacity: 1,
-            },
-          }}
-        >
-          Topics
-        </Button>}
+              '&:hover': {
+                backgroundColor: '#1976d2',
+                opacity: 1,
+              },
+            }}
+          >
+            Topics
+          </Button>
+        )}
 
-	{!isMobile &&
-	 (<IconButton onClick={() => handleSwitchTopic('Next')}>
-	    <NavigateNextIcon />
-	  </IconButton>)}
+        {!isMobile && (
+          <IconButton onClick={() => handleSwitchTopic('Next')}>
+            <NavigateNextIcon />
+          </IconButton>
+        )}
       </Box>
     </Paper>
   );
 };
 
 export default TimeframeSlider;
-

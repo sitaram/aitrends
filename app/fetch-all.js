@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import axios from 'axios';
 import { timeframes } from './timeframes'; // Import timeframes array
@@ -13,22 +13,22 @@ const fetchAll = async () => {
     try {
       const queryPrompt = generateQueryPrompt(timeframe, topic);
       await fetchContent(
-	queryPrompt,
-	calculateTTL(timeframe), // Make sure calculateTTL is defined
-	(content) => {
-	  // Handle the fetched content here
-	  console.log(`"${timeframe}" in "${topic}":`, content);
-	},
-	(isLoading) => {
-	  // Handle loading state if needed
-	},
-	new AbortController().signal // You can pass a signal if required
+        queryPrompt,
+        calculateTTL(timeframe), // Make sure calculateTTL is defined
+        (content) => {
+          // Handle the fetched content here
+          console.log(`"${timeframe}" in "${topic}":`, content);
+        },
+        (isLoading) => {
+          // Handle loading state if needed
+        },
+        new AbortController().signal, // You can pass a signal if required
       );
     } catch (error) {
       if (axios.isCancel(error)) {
-	console.log('Request was cancelled');
+        console.log('Request was cancelled');
       } else {
-	console.error('An error occurred:', error);
+        console.error('An error occurred:', error);
       }
     }
   };

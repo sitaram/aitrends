@@ -9,7 +9,7 @@ export const fetchContent = async (queryPrompt, ttl, setContent, setIsLoading, s
       method: 'post',
       url: '/api/query-openai',
       data: { prompt: queryPrompt, ttl: ttl },
-      signal: signal // Correctly using just the signal here.
+      signal: signal, // Correctly using just the signal here.
     });
     const data = response.data.data;
     setContent(splitChat(data));
@@ -23,4 +23,3 @@ export const fetchContent = async (queryPrompt, ttl, setContent, setIsLoading, s
     setIsLoading(false);
   }
 };
-
