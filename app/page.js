@@ -17,7 +17,7 @@ import { topics } from './topics';
 import * as Constants from './constants';
 
 const Home = () => {
-  const [topicsDrawerOpen, setTopicsDrawerOpen] = useState(false);
+  const [topicsDrawerOpen, setTopicsDrawerOpen] = useState(true);
   const [timeframe, setTimeframe] = useState('last two weeks');
   const [topic, setTopic] = useState(Constants.ALLTOPICS);
   const [content, setContent] = useState([]);
@@ -36,6 +36,7 @@ const Home = () => {
   };
 
   const handleTopicChange = (newTopic) => {
+    setTopicsDrawerOpen(false);
     setTopic(newTopic);
   };
 
