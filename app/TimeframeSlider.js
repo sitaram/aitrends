@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import { IconButton } from '@mui/material';
+import { IconButton, Box, ToggleButtonGroup, ToggleButton, Paper, Button, useMediaQuery } from '@mui/material';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { Box, ToggleButtonGroup, ToggleButton, Paper, Button, useMediaQuery } from '@mui/material';
 import { styled } from '@mui/material/styles';
+
 import { timeframes } from './timeframes';
 
 // Custom Styling for ToggleButtonGroup
@@ -49,6 +49,7 @@ const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
 const TimeframeSlider = ({ theme, value, onChange, handleTopicsDrawerToggle, handleSwitchTopic }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+  // Function to handle timeframe change
   const handleTimeframeChange = (event, newTimeframe) => {
     if (newTimeframe !== null) {
       onChange(newTimeframe);
@@ -61,10 +62,10 @@ const TimeframeSlider = ({ theme, value, onChange, handleTopicsDrawerToggle, han
         sx={{
           position: 'fixed',
           bottom: 0,
-          zIndex: 999, // Ensure the slider is above other content
-          left: !isMobile ? '240px' : 0,
-          width: !isMobile ? 'calc(100% - 240px)' : '100%',
-          padding: !isMobile ? '0 40px' : 0,
+          zIndex: 999,
+          left: isMobile ? 0 : '240px',
+          width: isMobile ? '100%' : 'calc(100% - 240px)',
+          padding: isMobile ? 0 : '0 40px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -77,37 +78,19 @@ const TimeframeSlider = ({ theme, value, onChange, handleTopicsDrawerToggle, han
           </IconButton>
         )}
 
-        <StyledToggleButtonGroup
-          value={value}
-          exclusive
-          onChange={handleTimeframeChange}
-          aria-label="timeframe"
-          sx={{
-            bottom: 0,
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
+        <StyledToggleButtonGroup value={value} exclusive onChange={handleTimeframeChange} aria-label="timeframe">
           {timeframes.map((timeframeItem) => (
             <StyledToggleButton
               key={timeframeItem.toLowerCase()}
               value={timeframeItem.toLowerCase()}
               aria-label={`Select timeframe: ${timeframeItem}`}
-              sx={{
-                flexGrow: 1,
-                minHeight: isMobile ? 'initial' : '36px',
-                paddingTop: '3px',
-                paddingBottom: '3px',
-                lineHeight: '20px',
-              }}
             >
               {timeframeItem}
             </StyledToggleButton>
           ))}
         </StyledToggleButtonGroup>
 
-        {isMobile && (
+        {isMobile ? (
           <Button
             variant="contained"
             color="primary"
@@ -117,24 +100,20 @@ const TimeframeSlider = ({ theme, value, onChange, handleTopicsDrawerToggle, han
               minWidth: 'auto',
               padding: '10px 10px',
               margin: '4px',
-              marginRight: !isMobile ? '60px' : '6px',
+              marginRight: '6px',
               fontSize: '0.875rem',
               textTransform: 'none',
               zIndex: 1201,
               backgroundColor: '#3a506b !important',
               color: '#fff',
-              opacity: 1,
               '&:hover': {
                 backgroundColor: '#1976d2',
-                opacity: 1,
               },
             }}
           >
             Topics
           </Button>
-        )}
-
-        {!isMobile && (
+        ) : (
           <IconButton onClick={() => handleSwitchTopic('Next')}>
             <NavigateNextIcon />
           </IconButton>
