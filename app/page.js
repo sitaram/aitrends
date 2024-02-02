@@ -1,23 +1,23 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { Typography, Paper, Box, Toolbar, CssBaseline, ThemeProvider } from '@mui/material';
-import { theme } from './theme';
+import React, { useState, useEffect } from 'react';
+import { Typography, Paper, Box, Toolbar, CssBaseline, ThemeProvider, Snackbar } from '@mui/material';
+import axios from 'axios';
+
 import AppBarComponent from './AppBarComponent';
 import DrawerComponent from './DrawerComponent';
 import ContentComponent from './ContentComponent';
-import axios from 'axios';
+import TimeframeSlider from './TimeframeSlider';
+
 import { fetchContent } from './api';
 import { calculateTTL, flattenTopics } from './utils';
-import { Helmet } from 'react-helmet-async';
-import TimeframeSlider from './TimeframeSlider';
-import generateQueryPrompt from './prompt';
 import { topics } from './topics';
-import { Snackbar } from '@mui/material';
-
+import generateQueryPrompt from './prompt';
+import { theme } from './theme';
 import * as Constants from './constants';
 
 const Home = () => {
+  // State hooks for managing the app's state
   const [topicsDrawerOpen, setTopicsDrawerOpen] = useState(true);
   const [timeframe, setTimeframe] = useState('last two weeks');
   const [topic, setTopic] = useState(Constants.ALLTOPICS);
@@ -28,29 +28,26 @@ const Home = () => {
   const [openClusterIndex, setOpenClusterIndex] = useState(null);
   const allTopics = [Constants.ALLTOPICS, ...flattenTopics(topics.clusters)];
 
+  // Toggles the visibility of the drawer
   const handleTopicsDrawerToggle = () => {
     setTopicsDrawerOpen(!topicsDrawerOpen);
+  };
+
+  // Handles topic changes
+  const handleTopicChange = (newTopic) => {
+    setTopicsDrawerOpen(false);
+    setTopic(newTopic);
+    const newIndex = allTopics.findIndex((t) => t === newTopic);
+    if (newIndex !== -1) {
+      setCurrentTopicIndex(newIndex);
+    }
   };
 
   const handleTimeframeChange = (newTimeframe) => {
     setTimeframe(newTimeframe);
   };
 
-  const handleTopicChange = (newTopic) => {
-    setTopicsDrawerOpen(false);
-    setTopic(newTopic);
-
-    // Find the index of the new topic in the allTopics array
-    const newIndex = allTopics.findIndex((topic) => topic === newTopic);
-    if (newIndex !== -1) {
-      setCurrentTopicIndex(newIndex); // Update the currentTopicIndex with the new index
-    }
-  };
-
-  const findClusterIndexForTopic = (topic) => {
-    return topics.clusters.findIndex((cluster) => cluster.topics.includes(topic));
-  };
-
+  // Handles switching between topics
   const handleSwitchTopic = (direction) => {
     let newIndex =
       direction === 'Previous'
@@ -58,72 +55,43 @@ const Home = () => {
         : (currentTopicIndex + 1) % allTopics.length;
 
     setCurrentTopicIndex(newIndex);
-    const newTopic = allTopics[newIndex];
-    const clusterIndex = findClusterIndexForTopic(newTopic);
-    setOpenClusterIndex(clusterIndex);
+    setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newIndex])));
   };
 
+  // Fetches content when timeframe or topic changes
   useEffect(() => {
     const abortController = new AbortController();
+    setIsLoading(true);
 
     const fetchData = async () => {
-      setIsLoading(true);
       try {
         const queryPrompt = generateQueryPrompt(timeframe, topic);
         await fetchContent(queryPrompt, calculateTTL(timeframe), setContent, setIsLoading, abortController.signal);
       } catch (error) {
-        if (axios.isCancel(error)) {
-          console.log('Request was cancelled');
-        } else {
-          console.error('An error occurred:', error);
-        }
-      } finally {
+        console.error('Error fetching content:', error);
         setIsLoading(false);
       }
     };
 
     fetchData();
-
-    return () => {
-      abortController.abort();
-    };
+    return () => abortController.abort();
   }, [timeframe, topic]);
 
+  // Updates the displayed topic based on the scroll position
   useEffect(() => {
-    document.title = Constants.APPNAME + ': ' + topic;
-
-    // Add a scroll event listener to detect when the title scrolls off the page
     const handleScroll = () => {
-      const titleElement = document.querySelector('.title'); // Adjust the selector as needed
+      const titleElement = document.querySelector('.title');
       const titleRect = titleElement.getBoundingClientRect();
-      if (titleRect.bottom < 64) {
-        // Title is no longer visible, update the displayed topic
-        setDisplayedTopic(topic);
-      } else {
-        // Title is still visible, display the default topic
-        setDisplayedTopic(Constants.APPNAME);
-      }
+      setDisplayedTopic(titleRect.bottom < 64 ? topic : Constants.APPNAME);
     };
 
-    if (typeof window !== 'undefined') {
-      window.addEventListener('scroll', handleScroll);
-    }
-
-    const clusterIndex = findClusterIndexForTopic(topic);
-    setOpenClusterIndex(clusterIndex);
-
-    return () => {
-      // Remove the scroll event listener when the component unmounts
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('scroll', handleScroll);
-      }
-    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [topic]);
 
-  // Update useEffect to fetch content when currentTopicIndex changes
+  // Updates the topic when currentTopicIndex changes
   useEffect(() => {
-    const newTopic = allTopics[currentTopicIndex];
-    setTopic(newTopic); // Assuming setTopic updates the topic state used to fetch content
+    setTopic(allTopics[currentTopicIndex]);
   }, [currentTopicIndex]);
 
   return (
