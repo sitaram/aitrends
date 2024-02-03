@@ -10,7 +10,6 @@ const drawerWidth = 240;
 const DrawerComponent = ({
   topicsDrawerOpen,
   handleTopicsDrawerToggle,
-  timeframe,
   topic,
   openClusterIndex,
   handleTopicChange,
@@ -48,6 +47,7 @@ const DrawerComponent = ({
           sx={{
             width: drawerWidth,
             flexShrink: 0,
+            overflowY: 'scroll',
             '& .MuiDrawer-paper': {
               marginTop: '64px',
               height: `calc(100% - 64px)`,

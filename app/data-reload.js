@@ -1,25 +1,23 @@
 'use client';
 
 import axios from 'axios';
-import { timeframes } from './timeframes'; // Import timeframes array
-import { topics } from './topics'; // Import topics object
-import { calculateTTL } from './utils';
-import { fetchContent } from './api'; // Import the fetchContent function
-import generateQueryPrompt from './prompt'; // Import the generateQueryPrompt function
+import { topics } from './topics';
+import { tabs } from './tabs';
+import { fetchContent } from './api';
 import * as Constants from './constants';
 
 const DataReload = async (onSuccess, onError) => {
   try {
-    const fetch = async (topic, timeframe) => {
+    const fetch = async (topic, tab) => {
       try {
-        const queryPrompt = generateQueryPrompt(timeframe, topic);
+        const prompt = tab.prompt.replace('${topic}', topic);
+        const ttl = tab.ttl || 90 * 86400;
+        console.log(topic, prompt);
         await fetchContent(
-          queryPrompt,
-          calculateTTL(timeframe), // Make sure calculateTTL is defined
+          prompt,
+          ttl,
           (content) => {
-            // Handle the fetched content here
-            document.write(`"${timeframe}" in "${topic}":`, content);
-            document.write(`<br><br>`);
+            document.write(`"${topic}" > "${tab.name}": `, content[0], ` ...<br>`);
           },
           (isLoading) => {
             // Handle loading state if needed
@@ -35,17 +33,19 @@ const DataReload = async (onSuccess, onError) => {
       }
     };
 
-    for (const timeframeUC of timeframes) {
-      fetch(Constants.ALLTOPICS, timeframeUC.toLowerCase());
-    }
+    tabs.forEach((tab) => {
+      fetch(Constants.ALLTOPICS, tab);
+    });
+
+    // Iterating through clusters to fetch data for each topic within each tab
     for (const cluster of topics.clusters) {
       for (const topic of cluster.topics) {
-        for (const timeframeUC of timeframes) {
-          fetch(topic, timeframeUC.toLowerCase());
+        for (const tab of tabs) {
+          fetch(topic, tab);
         }
       }
     }
-    // Your fetch logic here
+
     onSuccess(); // Call this when fetching is successfully completed
   } catch (error) {
     onError(error.message); // Pass error message to the onError callback
@@ -53,8 +53,3 @@ const DataReload = async (onSuccess, onError) => {
 };
 
 export default DataReload;
-
-// Call the function to start fetching data
-if (typeof window !== 'undefined') {
-  window.DataReload = DataReload;
-}

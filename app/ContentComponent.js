@@ -58,7 +58,11 @@ const ContentComponent = ({ theme, isLoading, content, handleSwitchTopic }) => {
         </div>
       ) : (
         content.map((part, index) => (
-          <Paper key={index} elevation={2} sx={{ padding: '1rem', marginBottom: '.5rem' }}>
+          <Paper
+            key={index}
+            elevation={1}
+            sx={{ padding: '1rem', marginBottom: '0', borderBottom: 1, borderColor: 'divider', borderRadius: 0 }}
+          >
             <CustomMarkdown text={part} />
           </Paper>
         ))

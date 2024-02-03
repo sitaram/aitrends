@@ -1,32 +1,46 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Typography, Paper, Box, Toolbar, CssBaseline, ThemeProvider, Snackbar } from '@mui/material';
-import axios from 'axios';
-
+import {
+  IconButton,
+  Typography,
+  Paper,
+  Box,
+  Toolbar,
+  CssBaseline,
+  ThemeProvider,
+  Tab,
+  Tabs,
+  useMediaQuery,
+} from '@mui/material';
 import AppBarComponent from './AppBarComponent';
 import DrawerComponent from './DrawerComponent';
+import TabBar from './TabBar';
 import ContentComponent from './ContentComponent';
-import TimeframeSlider from './TimeframeSlider';
-
+import TopicButton from './TopicButton';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { fetchContent } from './api';
 import { calculateTTL, flattenTopics } from './utils';
 import { topics } from './topics';
-import generateQueryPrompt from './prompt';
+import { tabs } from './tabs';
 import { theme } from './theme';
+import axios from 'axios';
 import * as Constants from './constants';
 
 const Home = () => {
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   // State hooks for managing the app's state
   const [topicsDrawerOpen, setTopicsDrawerOpen] = useState(true);
-  const [timeframe, setTimeframe] = useState('last two weeks');
   const [topic, setTopic] = useState(Constants.ALLTOPICS);
+  const [openClusterIndex, setOpenClusterIndex] = useState(null);
+  const [currentTopicIndex, setCurrentTopicIndex] = useState(0);
+  const [displayedTopic, setDisplayedTopic] = useState(Constants.APPNAME);
+  const allTopics = [Constants.ALLTOPICS, ...flattenTopics(topics.clusters)];
+  const [tabIndex, setTabIndex] = useState(0);
   const [content, setContent] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [displayedTopic, setDisplayedTopic] = useState(Constants.APPNAME);
-  const [currentTopicIndex, setCurrentTopicIndex] = useState(0);
-  const [openClusterIndex, setOpenClusterIndex] = useState(null);
-  const allTopics = [Constants.ALLTOPICS, ...flattenTopics(topics.clusters)];
 
   // Toggles the visibility of the drawer
   const handleTopicsDrawerToggle = () => {
@@ -43,10 +57,6 @@ const Home = () => {
     }
   };
 
-  const handleTimeframeChange = (newTimeframe) => {
-    setTimeframe(newTimeframe);
-  };
-
   // Handles switching between topics
   const handleSwitchTopic = (direction) => {
     let newIndex =
@@ -58,24 +68,10 @@ const Home = () => {
     setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newIndex])));
   };
 
-  // Fetches content when timeframe or topic changes
-  useEffect(() => {
-    const abortController = new AbortController();
-    setIsLoading(true);
-
-    const fetchData = async () => {
-      try {
-        const queryPrompt = generateQueryPrompt(timeframe, topic);
-        await fetchContent(queryPrompt, calculateTTL(timeframe), setContent, setIsLoading, abortController.signal);
-      } catch (error) {
-        console.error('Error fetching content:', error);
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-    return () => abortController.abort();
-  }, [timeframe, topic]);
+  // Handle tab change
+  const handleTabChange = (event, newValue) => {
+    setTabIndex(newValue);
+  };
 
   // Updates the displayed topic based on the scroll position
   useEffect(() => {
@@ -84,7 +80,6 @@ const Home = () => {
       const titleRect = titleElement.getBoundingClientRect();
       setDisplayedTopic(titleRect.bottom < 64 ? topic : Constants.APPNAME);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [topic]);
@@ -94,6 +89,25 @@ const Home = () => {
     setTopic(allTopics[currentTopicIndex]);
   }, [currentTopicIndex]);
 
+  // Fetches content when tab or topic changes
+  useEffect(() => {
+    const abortController = new AbortController();
+    setIsLoading(true);
+    const fetchData = async () => {
+      try {
+        const prompt = tabs[tabIndex].prompt.replace('${topic}', topic);
+        const ttl = tabs[tabIndex].ttl || 90 * 86400;
+        console.log(topic, prompt, ttl);
+        await fetchContent(prompt, ttl, setContent, setIsLoading, abortController.signal);
+      } catch (error) {
+        console.error('Error fetching content:', error);
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+    return () => abortController.abort();
+  }, [topic, tabIndex]);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -102,42 +116,54 @@ const Home = () => {
         <DrawerComponent
           topicsDrawerOpen={topicsDrawerOpen}
           handleTopicsDrawerToggle={handleTopicsDrawerToggle}
-          timeframe={timeframe}
           topic={topic}
           openClusterIndex={openClusterIndex}
           handleTopicChange={handleTopicChange}
         />
-        <Box
-          component="main"
-          sx={{
-            flexGrow: 1,
-            p: 3,
-            padding: '12px',
-            width: '100%',
-          }}
-        >
-          <Toolbar />
-          <Paper elevation={3} sx={{ padding: '1rem', marginBottom: '.8rem', backgroundColor: '#bed3e7' }}>
-            <Typography variant="h1" sx={{ fontSize: '2rem' }} className="title">
-              {topic}
-            </Typography>
-          </Paper>
-          <ContentComponent
-            theme={theme}
-            isLoading={isLoading}
-            content={content}
-            currentTopicIndex={currentTopicIndex}
-            handleSwitchTopic={handleSwitchTopic}
-          />
-        </Box>
+        <div style={{ width: '100%', overflowX: 'hidden' }}>
+          <Box
+            component="main"
+            sx={{
+              flexGrow: 1,
+              width: '100%',
+            }}
+          >
+            <Toolbar />
+            <Paper elevation={1} sx={{ padding: '1rem', marginBottom: '.2rem', backgroundColor: '#bed3e7' }}>
+              <Typography
+                variant="h1"
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  fontSize: '2rem',
+                }}
+                className="title"
+              >
+                <IconButton onClick={() => handleSwitchTopic('Previous')}>
+                  <NavigateBeforeIcon />
+                </IconButton>
+                <span>{topic}</span> {/* Ensure the topic is centered by using it within a span if needed */}
+                <IconButton onClick={() => handleSwitchTopic('Next')}>
+                  <NavigateNextIcon />
+                </IconButton>
+              </Typography>
+            </Paper>
+
+            <TabBar tabs={tabs} tabIndex={tabIndex} handleTabChange={handleTabChange} />
+
+            <ContentComponent
+              theme={theme}
+              isLoading={isLoading}
+              content={content}
+              currentTopicIndex={currentTopicIndex}
+              handleSwitchTopic={handleSwitchTopic}
+            />
+
+            <TopicButton handleTopicsDrawerToggle={handleTopicsDrawerToggle} />
+          </Box>
+        </div>
       </Box>
-      <TimeframeSlider
-        theme={theme}
-        value={timeframe}
-        onChange={handleTimeframeChange}
-        handleTopicsDrawerToggle={handleTopicsDrawerToggle}
-        handleSwitchTopic={handleSwitchTopic}
-      />
     </ThemeProvider>
   );
 };

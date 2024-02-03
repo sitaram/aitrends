@@ -32,7 +32,7 @@ const Reload = () => {
       <div>
         <p>Reloading content, please wait...</p>
       </div>
-      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose} message={snackbarMessage} />
+      <Snackbar open={snackbarOpen} autoHideDuration={2000} onClose={handleSnackbarClose} message={snackbarMessage} />
     </>
   );
 };
