@@ -1,4 +1,3 @@
-// LogoComponent.js
 import React from 'react';
 const LogoComponent = () => {
   return (
@@ -6,11 +5,11 @@ const LogoComponent = () => {
       {/* Define the text style and arrowhead style */}
       <style>
         {`.trend-text {
-          font: 22px sans-serif;
+          font: bold 22px sans-serif;
           fill: white;
         }
         .arrowhead {
-          fill: #cf7910;
+          fill: url(#flameGradient); /* Apply the gradient to the arrowhead */
         }
         .flame {
           fill: url(#flameGradient);
@@ -19,7 +18,7 @@ const LogoComponent = () => {
         }
         @keyframes flicker {
           0% {
-            opacity: 0.8;
+            opacity: 0.4;
           }
           100% {
             opacity: 1;
@@ -27,7 +26,7 @@ const LogoComponent = () => {
         }`}
       </style>
 
-      {/* Gradient definition for the flame */}
+      {/* Gradient definition for the flame and now for the arrowhead and the line */}
       <defs>
         <linearGradient id="flameGradient" x1="0%" y1="100%" x2="0%" y2="0%">
           <stop offset="0%" style={{ stopColor: 'red', stopOpacity: 1 }} />
@@ -47,10 +46,10 @@ const LogoComponent = () => {
         </marker>
       </defs>
 
-      {/* Zigzag trendline path with arrowhead */}
+      {/* Zigzag trendline path with arrowhead, now using the gradient */}
       <path
-        d="M10,40 l30,-25 l10,20 l20,-25"
-        stroke="#cf7910"
+        d="M10,40 l22,-25 l10,20 l25,-25"
+        stroke="url(#flameGradient)" /* Apply the gradient to the stroke */
         fill="none"
         strokeWidth="2"
         markerEnd="url(#arrowhead)"
@@ -58,6 +57,10 @@ const LogoComponent = () => {
 
       {/* flame shape */}
       <path d="M100,20 Q115,-20 130,20 Q120,0 110,20 Q115,-5 100,20" className="flame" />
+
+      {/* Adding a translucent rectangle as a halo for the text */}
+
+      <rect x="5" y="15" width="130" height="20" rx="5" fill="rgba(58, 80, 107, 0.5)" />
 
       {/* Text label for aitrends.live */}
       <text x="10" y="30" className="trend-text">
