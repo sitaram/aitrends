@@ -53,10 +53,6 @@ export const tabs = [
       ' institutions, and influential figures shaping the AI landscape.',
   },
   {
-    name: 'Key Players',
-    prompt: 'List the major companies and organizations involved in ${topic} and provide a brief overview of each.',
-  },
-  {
     name: 'Expert Q&A',
     prompt:
       'Host a Q&A session with an AI expert in ${topic}. Allow users to submit questions in advance, and provide' +
