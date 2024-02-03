@@ -2,52 +2,7 @@
 import React from 'react';
 import { AppBar, Toolbar, IconButton, Typography, Box } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-
-const TrendLineSvg = () => {
-  return (
-    <svg width="200" height="50" xmlns="http://www.w3.org/2000/svg">
-      {/* Define the text style and arrowhead style */}
-      <style>
-        {`.trend-text {
-          font: 22px sans-serif;
-          fill: white;
-        }
-        .arrowhead {
-          fill: #cf7910;
-        }`}
-      </style>
-
-      {/* Arrowhead marker definition */}
-      <defs>
-        <marker
-          id="arrowhead"
-          markerWidth="10"
-          markerHeight="10"
-          refX="0"
-          refY="3"
-          orient="auto"
-          markerUnits="strokeWidth"
-        >
-          <path d="M0,0 L6,3 L0,6" className="arrowhead" />
-        </marker>
-      </defs>
-
-      {/* Zigzag trendline path with arrowhead */}
-      <path
-        d="M10,40 l30,-25 l10,20 l20,-25"
-        stroke="#cf7910"
-        fill="none"
-        strokeWidth="2"
-        markerEnd="url(#arrowhead)"
-      />
-
-      {/* Text label for aitrends.live */}
-      <text x="10" y="30" className="trend-text">
-        aitrends.live
-      </text>
-    </svg>
-  );
-};
+import LogoComponent from './LogoComponent';
 
 const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic }) => {
   return (
@@ -75,7 +30,7 @@ const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic }) => {
                 aria-label="aitrends live"
                 style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}
               >
-                <TrendLineSvg />
+                <LogoComponent />
               </a>
             </Typography>
           </Box>
