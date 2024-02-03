@@ -69,10 +69,10 @@ body {
 }
 
 .custom-link {
-  color: #007bff; /* Primary link color */
+  color: #0056b3; /* Darker shade on hover for better visibility */
   text-decoration: none; /* Optional: removes underline */
 }
 .custom-link:hover {
-  color: #0056b3; /* Darker shade on hover for better visibility */
+  color: #007bff; /* Primary link color */
   text-decoration: underline; /* Adds underline on hover */
 }

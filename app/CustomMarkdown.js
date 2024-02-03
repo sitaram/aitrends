@@ -18,9 +18,9 @@ const CustomMarkdown = ({ text, topic }) => {
       .replace(
         sectionRegex,
         (match, p1, p2) =>
-          `<u><b><a class="custom-link" href="https://www.google.com/search?q=${encodeURIComponent(
+          `<b><a class="custom-link" href="https://www.google.com/search?q=${encodeURIComponent(
             topic + ': ' + p2
-          )}" target="_blank">${p2}</a></b></u>`
+          )}" target="_blank">${p2}</a></b>`
       )
       .replace(bulletRegex, '&emsp;- $1');
   };
