@@ -31,20 +31,26 @@ export const tabs = [
       ' institutions, and influential figures shaping the AI landscape.',
   },
   {
-    name: 'Impact',
-    prompt: 'Analyze the impact of recent advancements in ${topic} in the last year.',
-  },
-  {
     name: 'Comparisons',
     prompt:
       'Compare ${topic} against closely related topics within the last year, highlighting key differences and potential' +
       ' synergies.',
   },
   {
+    name: 'Applications',
+    prompt:
+      'Generate AI use case scenarios tailored to ${topic} based on specific challenges. Include potential benefits,' +
+      ' considerations, and implementation tips.',
+  },
+  {
     name: 'Case Studies',
     prompt:
       'Provide a list of notable case studies related to ${topic} in the last year. Include details on the challenges,' +
       ' solutions, and outcomes for each case study.',
+  },
+  {
+    name: 'Impact',
+    prompt: 'Analyze the impact of recent advancements in ${topic} in the last year.',
   },
   {
     name: 'Expert opinions',
@@ -63,12 +69,6 @@ export const tabs = [
     prompt:
       'Evaluate the ethical considerations of AI implementations of ${topic}. Provide a scorecard with ratings and' +
       ' explanations, addressing transparency, fairness, and privacy.',
-  },
-  {
-    name: 'Use Cases',
-    prompt:
-      'Generate AI use case scenarios tailored to ${topic} based on specific challenges. Include potential benefits,' +
-      ' considerations, and implementation tips.',
   },
 ];
 
