@@ -1,0 +1,9 @@
+sed 's/{.title.:/\n&/g' conversations.json > xx
+
+extract interesting conversations to aitrends.chats
+wc -l aitrends.chats = 61 conversations
+
+sed 's/..parts/\n&/g' xx | less
+
+sed 's/..parts/\n&/g' aitrends.chats | grep -v role....user | wc -l
+1077 messages from me
