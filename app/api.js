@@ -2,24 +2,25 @@
 import axios from 'axios';
 import { splitChat } from './utils';
 
-export const fetchContent = async (queryPrompt, ttl, setContent, setIsLoading, signal) => {
+export const fetchContent = async (prompt, ttl, setContent, setIsLoading, signal) => {
+  console.log(prompt);
   try {
-    setContent([]);
+    if (setContent) setContent([]);
     const response = await axios({
       method: 'post',
       url: '/api/query-openai',
-      data: { prompt: queryPrompt, ttl: ttl },
+      data: { prompt: prompt, ttl: ttl },
       signal: signal,
     });
     const data = response.data.data;
-    setContent(splitChat(data));
-    setIsLoading(false);
+    if (setContent) setContent(splitChat(data));
+    if (setIsLoading) setIsLoading(false);
   } catch (error) {
     if (axios.isCancel(error)) {
       console.log('Request canceled:', error.message);
     } else {
       console.error('Error fetching content:', error);
     }
-    setIsLoading(false);
+    if (setIsLoading) setIsLoading(false);
   }
 };
