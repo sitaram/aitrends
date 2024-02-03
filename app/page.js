@@ -141,11 +141,11 @@ const Home = () => {
                 className="title"
               >
                 <IconButton onClick={() => handleSwitchTopic('Previous')}>
-                  <NavigateBeforeIcon />
+                  <NavigateBeforeIcon sx={{ fontSize: '2rem' }} />
                 </IconButton>
                 <span>{topic}</span> {/* Ensure the topic is centered by using it within a span if needed */}
                 <IconButton onClick={() => handleSwitchTopic('Next')}>
-                  <NavigateNextIcon />
+                  <NavigateNextIcon sx={{ fontSize: '2rem' }} />
                 </IconButton>
               </Typography>
             </Paper>
