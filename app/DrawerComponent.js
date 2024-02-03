@@ -48,12 +48,14 @@ const DrawerComponent = ({
             width: drawerWidth,
             flexShrink: 0,
             overflowY: 'scroll',
+            overflowX: 'hidden',
             '& .MuiDrawer-paper': {
               marginTop: '64px',
               height: `calc(100% - 64px)`,
               width: drawerWidth,
               boxSizing: 'border-box',
               zIndex: 1000,
+              overflowX: 'hidden',
             },
           }}
         >
