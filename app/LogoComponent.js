@@ -5,7 +5,7 @@ const LogoComponent = () => {
       {/* Define the text style and arrowhead style */}
       <style>
         {`.trend-text {
-          font: bold 22px sans-serif;
+          font: 22px sans-serif;
           fill: white;
         }
         .arrowhead {
@@ -28,10 +28,10 @@ const LogoComponent = () => {
 
       {/* Gradient definition for the flame and now for the arrowhead and the line */}
       <defs>
-        <linearGradient id="flameGradient" x1="0%" y1="100%" x2="0%" y2="0%">
-          <stop offset="0%" style={{ stopColor: 'red', stopOpacity: 1 }} />
+        <linearGradient id="flameGradient" x1="50%" y1="100%" x2="0%" y2="0%">
+          <stop offset="0%" style={{ stopColor: 'yellow', stopOpacity: 1 }} />
           <stop offset="50%" style={{ stopColor: 'orange', stopOpacity: 1 }} />
-          <stop offset="100%" style={{ stopColor: 'yellow', stopOpacity: 1 }} />
+          <stop offset="100%" style={{ stopColor: 'red', stopOpacity: 1 }} />
         </linearGradient>
         <marker
           id="arrowhead"
@@ -56,7 +56,7 @@ const LogoComponent = () => {
       />
 
       {/* flame shape */}
-      <path d="M100,20 Q115,-20 130,20 Q120,0 110,20 Q115,-5 100,20" className="flame" />
+      <path d="M100,-5 Q115,35 130,-5 Q120,15 110,-5 Q115,20 100,-5" className="flame" />
 
       {/* Adding a translucent rectangle as a halo for the text */}
 
