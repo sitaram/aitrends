@@ -4,7 +4,7 @@ import { ThreeDots } from 'react-loader-spinner';
 import CustomMarkdown from './CustomMarkdown';
 import { useSwipeable } from 'react-swipeable';
 
-const ContentComponent = ({ theme, isLoading, content, handleSwitchTopic }) => {
+const ContentComponent = ({ theme, topic, isLoading, content, handleSwitchTopic }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [feedback, setFeedback] = useState(''); // 'Next', 'Previous', or ''
 
@@ -63,7 +63,7 @@ const ContentComponent = ({ theme, isLoading, content, handleSwitchTopic }) => {
             elevation={1}
             sx={{ padding: '1rem', marginBottom: '0', borderBottom: 1, borderColor: 'divider', borderRadius: 0 }}
           >
-            <CustomMarkdown text={part} />
+            <CustomMarkdown text={part} topic={topic} />
           </Paper>
         ))
       )}

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 
-const CustomMarkdown = ({ text }) => {
+const CustomMarkdown = ({ text, topic }) => {
   // Function to replace bold markdown with <b> tags
   const replaceBoldMarkdown = (markdownText) => {
     const boldRegex = /(\*\*?|__)(.*?)\1/g;
@@ -11,12 +11,16 @@ const CustomMarkdown = ({ text }) => {
       .replace(
         boldRegex,
         (match, p1, p2) =>
-          `<b><a href="https://www.google.com/search?q=${encodeURIComponent(p2)}" target="_blank">${p2}</a></b>`
+          `<b><a href="https://www.google.com/search?q=${encodeURIComponent(
+            topic + ': ' + p2
+          )}" target="_blank">${p2}</a></b>`
       )
       .replace(
         sectionRegex,
         (match, p1, p2) =>
-          `<u><b><a href="https://www.google.com/search?q=${encodeURIComponent(p2)}" target="_blank">${p2}</a></b></u>`
+          `<u><b><a href="https://www.google.com/search?q=${encodeURIComponent(
+            topic + ': ' + p2
+          )}" target="_blank">${p2}</a></b></u>`
       )
       .replace(bulletRegex, '&emsp;- $1');
   };

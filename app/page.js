@@ -154,6 +154,7 @@ const Home = () => {
 
             <ContentComponent
               theme={theme}
+              topic={topic}
               isLoading={isLoading}
               content={content}
               currentTopicIndex={currentTopicIndex}
