@@ -1,8 +1,9 @@
-freshen: rag (web pages input to api) via langchain
+freshen: rag (web pages input to api) via langchain; https://chat.openai.com/share/3490887b-f162-49e4-9ff3-451ba5799f06
 videos
 routes and hash parameters (stashed)
 click to read more
 hero images
+input box in topic browser
 infinite scroll
 mobile app via Flutter
 wikipedia links to topic
@@ -12,6 +13,20 @@ share icon, email subscription
 
 yes, I used AI to build a tool to use AI to help me learn AI
 AI built, AI powered, AI learning tool.
+
+
+
+from googleapiclient.discovery import build
+# Replace with your API key
+api_key = 'YOUR_API_KEY'
+youtube = build('youtube', 'v3', developerKey=api_key)
+request = youtube.search().list(
+    q='search term',
+    part='snippet',
+    maxResults=10
+)
+response = request.execute()
+print(response)
 
 
 
