@@ -19,6 +19,18 @@ export const tabs = [
       ' insights, key milestones, advancements, and significant changes that have shaped its development.',
   },
   {
+    name: 'Future roadmap',
+    prompt:
+      'Create a roadmap for the future of ${topic}. Highlight key milestones, developments, and expected impacts over' +
+      ' the next few years.',
+  },
+  {
+    name: 'Ecosystem',
+    prompt:
+      'Generate an overview of the AI ecosystem around ${topic}. Identify the key players, startups, research' +
+      ' institutions, and influential figures shaping the AI landscape.',
+  },
+  {
     name: 'Impact',
     prompt: 'Analyze the impact of recent advancements in ${topic} in the last year.',
   },
@@ -35,22 +47,10 @@ export const tabs = [
       ' solutions, and outcomes for each case study.',
   },
   {
-    name: 'Future roadmap',
-    prompt:
-      'Create a roadmap for the future of ${topic}. Highlight key milestones, developments, and expected impacts over' +
-      ' the next few years.',
-  },
-  {
     name: 'Expert opinions',
     prompt:
       'Summarize expert opinions on the recent advancements in ${topic}, including any debates or controversies, from' +
       ' the last year, boosting recent opinions.',
-  },
-  {
-    name: 'Ecosystem',
-    prompt:
-      'Generate an overview of the AI ecosystem around ${topic}. Identify the key players, startups, research' +
-      ' institutions, and influential figures shaping the AI landscape.',
   },
   {
     name: 'Expert Q&A',
