@@ -8,8 +8,16 @@ const CustomMarkdown = ({ text }) => {
     const sectionRegex = /#+ (\d+\.)?(.*)/g;
     const bulletRegex = /^ *- (.*)/g;
     return (markdownText || '')
-      .replace(boldRegex, '<b>$2</b>')
-      .replace(sectionRegex, '<u><b>$2</b></u>')
+      .replace(
+        boldRegex,
+        (match, p1, p2) =>
+          `<b><a href="https://www.google.com/search?q=${encodeURIComponent(p2)}" target="_blank">${p2}</a></b>`
+      )
+      .replace(
+        sectionRegex,
+        (match, p1, p2) =>
+          `<u><b><a href="https://www.google.com/search?q=${encodeURIComponent(p2)}" target="_blank">${p2}</a></b></u>`
+      )
       .replace(bulletRegex, '&emsp;- $1');
   };
 
