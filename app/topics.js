@@ -6,6 +6,8 @@ export const topics = {
         'Deep Learning',
         'Natural Language Processing',
         'Computer Vision',
+        'Speech Recognition',
+        'Speech Synthesis',
         'Reinforcement Learning',
         'Generative Adversarial Networks (GANs)',
         'Transformers in NLP',
