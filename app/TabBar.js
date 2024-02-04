@@ -30,6 +30,12 @@ const ElevationScroll = ({ children, window }) => {
   });
 };
 
+const DividerTab = () => (
+  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', px: 1 }}>
+    <Divider orientation="vertical" flexItem />
+  </Box>
+);
+
 const TabBar = ({ tabs, tabIndex, handleTabChange, window }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -42,7 +48,7 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window }) => {
           bgcolor: theme.palette.background.paper,
           borderBottom: 1,
           borderColor: 'divider',
-          ...(!isMobile && { boxShadow: 'none' }), // Remove box shadow for non-mobile views if desired
+          ...(!isMobile && { boxShadow: 'none' }),
         }}
       >
         <Tabs
@@ -63,17 +69,14 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window }) => {
           centered={false}
           onChange={handleTabChange}
         >
-          {tabs.map((item, index) => (
-            <React.Fragment key={index}>
-              {item.name !== 'Divider' ? (
-                <Tab label={item.name} />
-              ) : (
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', px: 2 }}>
-                  <Divider orientation="vertical" flexItem />
-                </Box>
-              )}
-            </React.Fragment>
-          ))}
+          {tabs.map((item, index) =>
+            item.name !== 'Divider' ? (
+              <Tab key={index} label={item.name} />
+            ) : (
+              // Render a Tab styled as a divider
+              <DividerTab key={`divider-${index}`} />
+            )
+          )}
         </Tabs>
       </AppBar>
     </ElevationScroll>
