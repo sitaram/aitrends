@@ -74,29 +74,33 @@ const Home = () => {
   };
 
   const handleSwitchTab = (direction) => {
-    let newIndex = tabIndex;
+    let oldIndex = tabIndex;
+    let newIndex = oldIndex; // Initialize newIndex with oldIndex to start the comparison.
 
-    if (direction === 'Previous') {
-      // Move to the previous tab if not at the beginning; otherwise switch topic.
-      if (tabIndex > 0) {
-        newIndex = tabIndex - 1;
-      } else {
-        handleSwitchTopic(direction);
-        newIndex = tabs.length - 1;
+    do {
+      if (direction === 'Previous') {
+        // Move to the previous tab if not at the beginning; otherwise switch topic.
+        if (newIndex > 0) {
+          newIndex--;
+        } else {
+          handleSwitchTopic(direction); // Switch topic when reaching the start.
+          newIndex = tabs.length - 1; // Move to the last tab after switching topic.
+        }
+      } else if (direction === 'Next') {
+        // Move to the next tab if not at the end; otherwise switch topic.
+        if (newIndex < tabs.length - 1) {
+          newIndex++;
+        } else {
+          handleSwitchTopic(direction); // Switch topic when reaching the end.
+          newIndex = 0; // Move to the first tab after switching topic.
+        }
       }
-    } else if (direction === 'Next') {
-      // Move to the next tab if not at the end; otherwise switch topic.
-      newIndex = tabIndex < tabs.length - 1 ? tabIndex + 1 : tabs.length - 1;
-      if (tabIndex < tabs.length - 1) {
-        newIndex = tabIndex + 1;
-      } else {
-        handleSwitchTopic(direction);
-        newIndex = 0;
-      }
-    }
 
-    // Update the tabIndex state to switch to the new tab.
-    setTabIndex(newIndex);
+      // Check if the new tab is a 'Divider', if so, continue looping to find a valid tab.
+    } while (tabs[newIndex].name === 'Divider' && tabs.length > 1); // Ensure there's more than one tab to prevent infinite loop.
+
+    // Once a valid tab is found or if 'Divider' is the only option, update the tabIndex state.
+    if (tabIndex !== newIndex) setTabIndex(newIndex);
   };
 
   // Updates the displayed topic based on the scroll position
