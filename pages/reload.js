@@ -130,7 +130,10 @@ const Reload = () => {
           {topics.clusters.map((cluster, clusterIndex) => (
             <React.Fragment key={`cluster-${clusterIndex}`}>
               <TableRow>
-                <TableCell colSpan={tabs.length + 1} style={{ fontWeight: 'bold', borderTop: '2px solid black' }}>
+                <TableCell
+                  colSpan={tabs.length + 1}
+                  style={{ fontWeight: 'bold', backgroundColor: '#E5E9F0', borderTop: '2px solid black' }}
+                >
                   {cluster.name}
                 </TableCell>
               </TableRow>
