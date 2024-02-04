@@ -23,7 +23,7 @@ const TopicButton = ({ handleTopicsDrawerToggle }) => {
             width: '70px',
             fontSize: '1rem',
             textTransform: 'none',
-            boxShadow: '0 8px 12px rgba(100,100,100,0.7)',
+            boxShadow: '2px 6px 12px rgba(100,100,100,0.7)',
           }}
         >
           Topics
