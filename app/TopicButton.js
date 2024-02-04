@@ -14,7 +14,7 @@ const TopicButton = ({ handleTopicsDrawerToggle }) => {
           aria-label="add"
           onClick={handleTopicsDrawerToggle}
           sx={{
-            backgroundColor: '#3a506b !important',
+            backgroundColor: '#5E81AC !important',
             color: '#fff',
             position: 'fixed',
             right: '30px',

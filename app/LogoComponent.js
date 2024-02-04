@@ -60,7 +60,7 @@ const LogoComponent = () => {
 
       {/* Adding a translucent rectangle as a halo for the text */}
 
-      <rect x="5" y="15" width="130" height="20" rx="5" fill="rgba(58, 80, 107, 0.5)" />
+      <rect x="5" y="15" width="130" height="20" rx="5" fill="rgba(94, 129, 172, 0.5)" />
 
       {/* Text label for aitrends.live */}
       <text x="10" y="30" className="trend-text">

@@ -7,6 +7,7 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { topics } from './topics'; // Import the topics data from your topics.js file
+import { theme } from './theme';
 import * as Constants from './constants';
 
 const StyledList = styled(List)(({ theme }) => ({
@@ -19,7 +20,6 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
   padding: '5px 10px',
   borderRadius: theme.shape.borderRadius,
   color: theme.palette.grey[600],
-  backgroundColor: '#fafafa',
   '&.Mui-selected': {
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.common.white,
