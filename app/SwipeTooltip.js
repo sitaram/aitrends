@@ -18,6 +18,7 @@ const SwipeTooltip = ({ topicsDrawerOpen }) => {
   const tooltipStyle = {
     position: 'fixed',
     bottom: '20%', // Adjust as needed
+    width: '270px',
     left: '50%',
     transform: 'translateX(-50%)',
     backgroundColor: 'rgba(0,0,0,0.7)',
@@ -32,7 +33,14 @@ const SwipeTooltip = ({ topicsDrawerOpen }) => {
     // For animation, ensure you define keyframes in a global CSS if needed
   };
 
-  return <div style={tooltipStyle}>Swipe left/right for previous/next topic</div>;
+  return (
+    <div style={tooltipStyle}>
+      Swipe left/right to switch between tabs and then topics.
+      <br />
+      <br />
+      Or use arrows on the header to just switch topics.
+    </div>
+  );
 };
 
 export default SwipeTooltip;

@@ -73,6 +73,32 @@ const Home = () => {
     setTabIndex(newValue);
   };
 
+  const handleSwitchTab = (direction) => {
+    let newIndex = tabIndex;
+
+    if (direction === 'Previous') {
+      // Move to the previous tab if not at the beginning; otherwise switch topic.
+      if (tabIndex > 0) {
+        newIndex = tabIndex - 1;
+      } else {
+        handleSwitchTopic(direction);
+        newIndex = tabs.length - 1;
+      }
+    } else if (direction === 'Next') {
+      // Move to the next tab if not at the end; otherwise switch topic.
+      newIndex = tabIndex < tabs.length - 1 ? tabIndex + 1 : tabs.length - 1;
+      if (tabIndex < tabs.length - 1) {
+        newIndex = tabIndex + 1;
+      } else {
+        handleSwitchTopic(direction);
+        newIndex = 0;
+      }
+    }
+
+    // Update the tabIndex state to switch to the new tab.
+    setTabIndex(newIndex);
+  };
+
   // Updates the displayed topic based on the scroll position
   useEffect(() => {
     const handleScroll = () => {
@@ -158,7 +184,7 @@ const Home = () => {
               isLoading={isLoading}
               content={content}
               currentTopicIndex={currentTopicIndex}
-              handleSwitchTopic={handleSwitchTopic}
+              handleSwitchTab={handleSwitchTab}
             />
 
             <TopicButton handleTopicsDrawerToggle={handleTopicsDrawerToggle} />

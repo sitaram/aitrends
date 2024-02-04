@@ -4,7 +4,7 @@ import { ThreeDots } from 'react-loader-spinner';
 import CustomMarkdown from './CustomMarkdown';
 import { useSwipeable } from 'react-swipeable';
 
-const ContentComponent = ({ theme, topic, isLoading, content, handleSwitchTopic }) => {
+const ContentComponent = ({ theme, topic, isLoading, content, handleSwitchTab }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [feedback, setFeedback] = useState(''); // 'Next', 'Previous', or ''
 
@@ -14,10 +14,10 @@ const ContentComponent = ({ theme, topic, isLoading, content, handleSwitchTopic 
     if (deltaY < 50 && deltaY > -50) {
       if (deltaX > 100) {
         setFeedback('Previous');
-        handleSwitchTopic('Previous');
+        handleSwitchTab('Previous');
       } else if (deltaX < -100) {
         setFeedback('Next');
-        handleSwitchTopic('Next');
+        handleSwitchTab('Next');
       }
     }
     const timeoutId = setTimeout(() => setFeedback(''), 500);
@@ -49,7 +49,7 @@ const ContentComponent = ({ theme, topic, isLoading, content, handleSwitchTopic 
             opacity: feedback ? 1 : 0,
           }}
         >
-          {feedback} topic
+          {feedback} Tab
         </Box>
       )}
       {isLoading ? (
