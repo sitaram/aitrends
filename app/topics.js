@@ -49,7 +49,7 @@ export const topics = {
         'AI in Retail',
         'AI in Education',
         'AI in Employment',
-        'AI in Social Equity',
+        'AI in Legal',
         'AI in Content Creation',
         'AI in Manufacturing',
         'AI in Supply Chain Management',
