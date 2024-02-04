@@ -23,7 +23,7 @@ const SwipeTooltip = ({ topicsDrawerOpen }) => {
     transform: 'translateX(-50%)',
     backgroundColor: 'rgba(0,0,0,0.7)',
     color: 'white',
-    padding: '8px 16px',
+    padding: '16px 16px',
     borderRadius: '4px',
     fontSize: '1rem',
     transition: 'opacity 0.5s ease',
