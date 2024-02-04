@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { fetchContent } from '../app/api';
 import { topics } from '../app/topics';
-import { tabs } from '../app/tabs';
+import { tabs as origTabs } from '../app/tabs';
 import axios from 'axios';
 
 const Reload = () => {
@@ -105,6 +105,8 @@ const Reload = () => {
       activeRequests.current.clear();
     };
   }, []);
+
+  const tabs = origTabs.filter((tab) => tab.name !== 'Divider');
 
   return (
     <>
