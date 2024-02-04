@@ -70,6 +70,63 @@ export const tabs = [
       'Evaluate the ethical considerations of AI implementations of ${topic}. Provide a scorecard with ratings and' +
       ' explanations, addressing transparency, fairness, and privacy.',
   },
+  // experimental
+  {
+    name: 'Tech Stack',
+    prompt:
+      'Prompt: Detail the technology stack and tools commonly used in ${topic}, including software, libraries, frameworks, and platforms. Offer insights into choosing the right stack for various projects.',
+  },
+  {
+    name: 'Tech Deep Dive',
+    prompt:
+      'Delve into the technical aspects of ${topic}, breaking down the algorithms, architectures, and data structures that underpin AI technologies. Provide code snippets, implementation challenges, and optimization strategies.',
+  },
+  {
+    name: 'AI Tools and Platforms',
+    prompt:
+      'Review AI tools and platforms that support development in ${topic}. Compare features, usability, and performance across different solutions.',
+  },
+
+  {
+    name: 'Policy and Regulation',
+    prompt:
+      'Explore how policy and regulation impact the development and deployment of AI in ${topic}. Analyze current legislation, potential regulatory changes, and the implications for privacy, security, and innovation.',
+  },
+  {
+    name: 'Funding and Investment',
+    prompt:
+      'Track the funding and investment landscape for AI in ${topic}. Highlight recent funding rounds, notable investors, and trends in venture capital and government funding.',
+  },
+  {
+    name: 'Skill Development',
+    prompt:
+      'Provide resources and guidance for skill development in ${topic}. Include courses, workshops, books, and online resources for beginners to experts.',
+  },
+  {
+    name: 'Community and Events',
+    prompt:
+      'List upcoming events, conferences, and meetups related to ${topic}. Feature interviews with community leaders and summaries of past events.',
+  },
+  {
+    name: 'Innovative Use Cases',
+    prompt:
+      'Showcase innovative and unconventional use cases of AI in ${topic}. Highlight novel applications, experimental projects, and creative integrations.',
+  },
+  {
+    name: 'Challenges and Solutions',
+    prompt:
+      'Discuss common and emerging challenges in ${topic} and present solutions. Include technical hurdles, ethical dilemmas, and real-world case solutions.',
+  },
+  {
+    name: 'Career Paths',
+    prompt:
+      'Outline potential career paths and job opportunities in the field of ${topic}. Include the skills required, typical roles, and advice on how to start or advance a career in this area.',
+  },
+  {
+    name: 'Global Perspectives',
+    prompt:
+      'Provide insights into how different regions of the world are approaching AI in ${topic}. Compare and contrast the strategies, investments, and innovations globally.',
+  },
 ];
 
 export const tabmap = {
