@@ -4,6 +4,7 @@ import { fetchContent } from '../app/api';
 import { topics } from '../app/topics';
 import { tabs as origTabs } from '../app/tabs';
 import axios from 'axios';
+import * as Constants from '../app/constants';
 
 const Reload = () => {
   const [reloadState, setReloadState] = useState({});
@@ -67,6 +68,15 @@ const Reload = () => {
     if (!loading) {
       setLoading(true);
 
+      tabs.forEach((tab) => {
+        const topic = Constants.ALLTOPICS;
+        const key = `${topic}-${tab.name}`;
+        setReloadState((prevState) => ({ ...prevState, [key]: 'loading' }));
+
+        // Queue the request
+        requestQueue.current.push({ topic, tab, key });
+      });
+
       topics.clusters.forEach((cluster) => {
         cluster.topics.forEach((topic) => {
           tabs.forEach((tab) => {
@@ -127,6 +137,25 @@ const Reload = () => {
           </TableRow>
         </TableHead>
         <TableBody>
+          {/* Standalone topic rendering */}
+          <TableRow>
+            <TableCell
+              colSpan={tabs.length + 1}
+              style={{ fontWeight: 'bold', backgroundColor: '#E5E9F0', borderTop: '2px solid black' }}
+            >
+              All AI Topics
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>All AI Topics</TableCell>
+            {tabs.map((tab, tabIndex) => (
+              <TableCell key={`alltopics-${tabIndex}`}>
+                {renderStatusIcon(reloadState[`${Constants.ALLTOPICS}-${tab.name}`])}
+              </TableCell>
+            ))}
+          </TableRow>
+
+          {/* Clusters and topics rendering */}
           {topics.clusters.map((cluster, clusterIndex) => (
             <React.Fragment key={`cluster-${clusterIndex}`}>
               <TableRow>
