@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Tabs, Tab, Box, useScrollTrigger, useTheme, useMediaQuery } from '@mui/material';
+import { AppBar, Tabs, Tab, Box, Divider, useScrollTrigger, useTheme, useMediaQuery } from '@mui/material';
 import { theme } from './theme';
 
 const ElevationScroll = ({ children, window }) => {
@@ -64,7 +64,15 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window }) => {
           onChange={handleTabChange}
         >
           {tabs.map((item, index) => (
-            <Tab key={index} label={item.name} />
+            <React.Fragment key={index}>
+              {item.name !== 'Divider' ? (
+                <Tab label={item.name} />
+              ) : (
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', px: 2 }}>
+                  <Divider orientation="vertical" flexItem />
+                </Box>
+              )}
+            </React.Fragment>
           ))}
         </Tabs>
       </AppBar>
