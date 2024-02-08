@@ -28,7 +28,7 @@ const DrawerComponent = ({
             anchor="right"
             open={topicsDrawerOpen}
             onClose={handleTopicsDrawerToggle}
-            onOpen={handleTopicsDrawerToggle}
+            // onOpen prop removed to disable swipe to open functionality
             sx={{
               '.MuiDrawer-paper': {
                 marginTop: '60px', // Add this margin to create space for the title bar
