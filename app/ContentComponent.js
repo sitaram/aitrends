@@ -61,7 +61,7 @@ const ContentComponent = ({ theme, topic, isLoading, content, handleSwitchTab })
           <Paper
             key={index}
             elevation={1}
-            sx={{ padding: '1rem', marginBottom: '0', borderBottom: 0, borderColor: 'divider', borderRadius: 0 }}
+            sx={{ padding: '10px 16px', marginBottom: '0', borderBottom: 0, borderColor: 'divider', borderRadius: 0 }}
           >
             <CustomMarkdown text={part} topic={topic} />
           </Paper>
