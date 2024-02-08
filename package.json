@@ -14,11 +14,16 @@
     "@mui/icons-material": "^5.15.6",
     "@mui/material": "^5.15.6",
     "axios": "^1.6.7",
+    "dgram": "^1.0.1",
+    "dns": "^0.2.2",
     "dotenv": "^16.4.1",
     "fab": "^1.0.0-rc.9",
+    "fs": "^0.0.1-security",
     "helmet": "^7.1.0",
     "ioredis": "^5.3.2",
+    "net": "^1.0.2",
     "next": "14.1.0",
+    "node-cron": "^3.0.3",
     "openai": "^4.26.0",
     "react": "^18",
     "react-dom": "^18",
@@ -29,7 +34,8 @@
     "react-swipeable": "^7.0.1",
     "redis-cli": "^2.1.2",
     "rehype-raw": "^7.0.0",
-    "remark-gfm": "^4.0.0"
+    "remark-gfm": "^4.0.0",
+    "tls": "^0.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",
