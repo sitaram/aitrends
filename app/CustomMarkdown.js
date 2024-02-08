@@ -19,11 +19,14 @@ const CustomMarkdown = ({ text, topic }) => {
         typeof child === 'string' ? removeLeadingNumbers(child) : child
       );
 
-      const link = createGoogleSearchLink(props.children.toString());
-
       return (
         <Tag {...props} style={{ ...style, fontWeight: style.fontWeight || 'normal' }}>
-          <a href={link} target="_blank" rel="noopener noreferrer" style={{ color: style.color || 'inherit' }}>
+          <a
+            href={createGoogleSearchLink(props.children.toString())}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: style.color || 'inherit' }}
+          >
             {processedChildren}
           </a>
         </Tag>
