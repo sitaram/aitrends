@@ -38,7 +38,7 @@ export const topics = {
       ],
     },
     {
-      name: 'AI Applications in Industries',
+      name: 'AI Industry Applications',
       topics: [
         'AI in Healthcare',
         'AI in Finance and Fintech',
