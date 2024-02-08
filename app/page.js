@@ -20,6 +20,7 @@ import ContentComponent from './ContentComponent';
 import TopicButton from './TopicButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import Tooltip from './Tooltip';
 import { fetchContent } from './api';
 import { calculateTTL, flattenTopics, parseHashParams } from './utils';
 import { topics } from './topics';
@@ -208,6 +209,8 @@ const Home = () => {
             <ContentComponent topic={topic} isLoading={isLoading} content={content} handleSwitchTab={handleSwitchTab} />
 
             <TopicButton handleTopicsDrawerToggle={handleTopicsDrawerToggle} />
+
+            <Tooltip topicsDrawerOpen={topicsDrawerOpen} />
           </Box>
         </div>
       </Box>

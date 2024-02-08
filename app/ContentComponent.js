@@ -31,7 +31,7 @@ const ContentComponent = ({ topic, isLoading, content, handleSwitchTab }) => {
     trackMouse: true,
   });
 
-  console.log(content);
+  // console.log(content);
 
   return (
     <div {...(isMobile ? handlers : {})} style={{ paddingBottom: '64px' }}>
