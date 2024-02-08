@@ -37,8 +37,7 @@ const DividerTab = () => (
   </Box>
 );
 
-const tabContainerStyle = () => {
-  const theme = useTheme();
+const tabContainerStyle = (theme) => {
   return {
     position: 'relative',
     '&::before, &::after': {
