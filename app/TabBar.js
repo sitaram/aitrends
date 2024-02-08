@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AppBar, Tabs, Tab, Box, Divider, useScrollTrigger, useTheme, useMediaQuery } from '@mui/material';
-import { theme } from './theme';
 
-const ElevationScroll = ({ children, window }) => {
+const ElevationScroll = ({ theme, children, window }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const trigger = useScrollTrigger({
@@ -61,7 +60,7 @@ const tabContainerStyle = {
   overflowX: 'auto', // Ensure this is scrollable
 };
 
-const TabBar = ({ tabs, tabIndex, handleTabChange, window }) => {
+const TabBar = ({ theme, tabs, tabIndex, handleTabChange, window }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const tabsRef = useRef(null);
 
@@ -84,7 +83,7 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window }) => {
   }, [tabIndex]);
 
   return (
-    <ElevationScroll window={window}>
+    <ElevationScroll theme={theme} window={window}>
       <AppBar
         position="static"
         color="default"

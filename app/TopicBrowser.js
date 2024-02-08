@@ -7,7 +7,6 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { topics } from './topics'; // Import the topics data from your topics.js file
-import { theme } from './theme';
 import * as Constants from './constants';
 
 const StyledList = styled(List)(({ theme }) => ({
@@ -45,7 +44,7 @@ const CollapseWrapper = styled(Collapse)(({ theme }) => ({
   overflowX: 'hidden', // Hide horizontal overflow for collapsing section
 }));
 
-const TopicBrowser = ({ onSelect, selectedTopic, openClusterIndex }) => {
+const TopicBrowser = ({ theme, onSelect, selectedTopic, openClusterIndex }) => {
   const [openTopicIndex, setOpenTopicIndex] = React.useState(null);
   const topicRefs = useRef([]);
 

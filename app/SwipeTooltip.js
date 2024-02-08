@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { theme } from './theme';
 
-const SwipeTooltip = ({ topicsDrawerOpen }) => {
+const SwipeTooltip = ({ theme, topicsDrawerOpen }) => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -19,7 +18,7 @@ const SwipeTooltip = ({ topicsDrawerOpen }) => {
   const tooltipStyle = {
     position: 'fixed',
     bottom: '20%', // Adjust as needed
-    width: '320px',
+    width: '350px',
     left: '50%',
     transform: 'translateX(-50%)',
     backgroundColor: theme.palette.secondary.main,
@@ -36,8 +35,13 @@ const SwipeTooltip = ({ topicsDrawerOpen }) => {
 
   return (
     <div style={tooltipStyle}>
-      There is a large grid of topics and tabs. Swipe left/right to switch tabs, or use arrows in the header to switch
-      topics while keeping tab constant.
+      Imagine a large grid of topics and tabs.
+      <br />
+      <br />
+      Swipe left/right to switch tabs.
+      <br />
+      <br />
+      or use arrows in the header to switch topics while keeping tab constant.
     </div>
   );
 };

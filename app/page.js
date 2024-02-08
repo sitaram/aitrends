@@ -24,11 +24,12 @@ import { fetchContent } from './api';
 import { calculateTTL, flattenTopics, parseHashParams } from './utils';
 import { topics } from './topics';
 import { tabs } from './tabs';
-import { theme } from './theme';
+import { getTheme } from './theme';
 import axios from 'axios';
 import * as Constants from './constants';
 
 const Home = () => {
+  const theme = getTheme(useMediaQuery('(prefers-color-scheme: dark)') ? 'dark' : 'light');
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   // State hooks for managing the app's state
@@ -163,6 +164,7 @@ const Home = () => {
       <Box sx={{ display: 'flex' }}>
         <AppBarComponent handleTopicsDrawerToggle={handleTopicsDrawerToggle} displayedTopic={displayedTopic} />
         <DrawerComponent
+          theme={theme}
           topicsDrawerOpen={topicsDrawerOpen}
           handleTopicsDrawerToggle={handleTopicsDrawerToggle}
           topic={topic}
@@ -199,7 +201,7 @@ const Home = () => {
               </Typography>
             </Paper>
 
-            <TabBar tabs={tabs} tabIndex={tabIndex} handleTabChange={handleTabChange} />
+            <TabBar theme={theme} tabs={tabs} tabIndex={tabIndex} handleTabChange={handleTabChange} />
 
             <ContentComponent
               theme={theme}
@@ -209,7 +211,7 @@ const Home = () => {
               handleSwitchTab={handleSwitchTab}
             />
 
-            <TopicButton handleTopicsDrawerToggle={handleTopicsDrawerToggle} />
+            <TopicButton theme={theme} handleTopicsDrawerToggle={handleTopicsDrawerToggle} />
           </Box>
         </div>
       </Box>

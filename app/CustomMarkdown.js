@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
-import { theme } from './theme';
 
 const CustomMarkdown = ({ text, topic }) => {
   const createGoogleSearchLink = (keyword) =>

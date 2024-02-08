@@ -1,13 +1,13 @@
 import React from 'react';
 import { Drawer, useMediaQuery, Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { theme } from './theme';
 import TopicBrowser from './TopicBrowser';
 import SwipeTooltip from './SwipeTooltip';
 
 const drawerWidth = 240;
 
 const DrawerComponent = ({
+  theme,
   topicsDrawerOpen,
   handleTopicsDrawerToggle,
   topic,
@@ -17,7 +17,12 @@ const DrawerComponent = ({
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const drawerContent = (
-    <TopicBrowser onSelect={handleTopicChange} selectedTopic={topic} openClusterIndex={openClusterIndex} />
+    <TopicBrowser
+      theme={theme}
+      onSelect={handleTopicChange}
+      selectedTopic={topic}
+      openClusterIndex={openClusterIndex}
+    />
   );
 
   return (
@@ -40,7 +45,7 @@ const DrawerComponent = ({
           >
             {drawerContent}
           </Drawer>
-          <SwipeTooltip topicsDrawerOpen={topicsDrawerOpen} />
+          <SwipeTooltip theme={theme} topicsDrawerOpen={topicsDrawerOpen} />
         </>
       ) : (
         <Drawer
