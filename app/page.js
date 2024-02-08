@@ -43,6 +43,7 @@ const Home = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const [content, setContent] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   // Function to update the URL hash for topic and tab
   function updateUrlHash(topic, tab) {
@@ -159,11 +160,19 @@ const Home = () => {
     return () => abortController.abort();
   }, [topic, tabIndex]);
 
+  useEffect(() => {
+    setShowTooltip(true);
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box sx={{ display: 'flex' }}>
-        <AppBarComponent handleTopicsDrawerToggle={handleTopicsDrawerToggle} displayedTopic={displayedTopic} />
+        <AppBarComponent
+          handleTopicsDrawerToggle={handleTopicsDrawerToggle}
+          displayedTopic={displayedTopic}
+          setShowTooltip={setShowTooltip}
+        />
         <DrawerComponent
           topicsDrawerOpen={topicsDrawerOpen}
           handleTopicsDrawerToggle={handleTopicsDrawerToggle}
@@ -203,14 +212,10 @@ const Home = () => {
                 </IconButton>
               </Typography>
             </Paper>
-
             <TabBar tabs={tabs} tabIndex={tabIndex} handleTabChange={handleTabChange} />
-
             <ContentComponent topic={topic} isLoading={isLoading} content={content} handleSwitchTab={handleSwitchTab} />
-
             <TopicButton handleTopicsDrawerToggle={handleTopicsDrawerToggle} />
-
-            <Tooltip topicsDrawerOpen={topicsDrawerOpen} />
+            {showTooltip && <Tooltip setShowTooltip={setShowTooltip} />}
           </Box>
         </div>
       </Box>
