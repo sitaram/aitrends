@@ -1,5 +1,5 @@
 import React from 'react';
-import { Drawer, useMediaQuery, Button, SwipeableDrawer } from '@mui/material';
+import { Drawer, useMediaQuery, Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { theme } from './theme';
 import TopicBrowser from './TopicBrowser';
@@ -24,11 +24,13 @@ const DrawerComponent = ({
     <>
       {isMobile ? (
         <>
-          <SwipeableDrawer
+          <Drawer
             anchor="right"
             open={topicsDrawerOpen}
             onClose={handleTopicsDrawerToggle}
-            // onOpen prop removed to disable swipe to open functionality
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
             sx={{
               '.MuiDrawer-paper': {
                 marginTop: '60px', // Add this margin to create space for the title bar
@@ -37,7 +39,7 @@ const DrawerComponent = ({
             }}
           >
             {drawerContent}
-          </SwipeableDrawer>
+          </Drawer>
           <SwipeTooltip topicsDrawerOpen={topicsDrawerOpen} />
         </>
       ) : (

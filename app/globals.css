@@ -76,3 +76,7 @@ body {
   color: #bB8B4B;
   text-decoration: underline;
 }
+
+.MuiTabs-scroller {
+  scroll-behavior: smooth;
+}

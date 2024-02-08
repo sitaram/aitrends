@@ -21,7 +21,7 @@ import TopicButton from './TopicButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { fetchContent } from './api';
-import { calculateTTL, flattenTopics } from './utils';
+import { calculateTTL, flattenTopics, parseHashParams } from './utils';
 import { topics } from './topics';
 import { tabs } from './tabs';
 import { theme } from './theme';
@@ -35,12 +35,18 @@ const Home = () => {
   const [topicsDrawerOpen, setTopicsDrawerOpen] = useState(true);
   const [topic, setTopic] = useState(Constants.ALLTOPICS);
   const [openClusterIndex, setOpenClusterIndex] = useState(null);
-  const [currentTopicIndex, setCurrentTopicIndex] = useState(0);
+  const [topicIndex, setTopicIndex] = useState(0);
   const [displayedTopic, setDisplayedTopic] = useState(Constants.APPNAME);
   const allTopics = [Constants.ALLTOPICS, ...flattenTopics(topics.clusters)];
   const [tabIndex, setTabIndex] = useState(0);
   const [content, setContent] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  // Function to update the URL hash for topic and tab
+  function updateUrlHash(topic, tab) {
+    const newHash = `#topic=${encodeURIComponent(topic)}&tab=${encodeURIComponent(tab)}`;
+    window.location.hash = newHash;
+  }
 
   // Toggles the visibility of the drawer
   const handleTopicsDrawerToggle = () => {
@@ -50,27 +56,28 @@ const Home = () => {
   // Handles topic changes
   const handleTopicChange = (newTopic) => {
     setTopicsDrawerOpen(false);
-    setTopic(newTopic);
     const newIndex = allTopics.findIndex((t) => t === newTopic);
-    if (newIndex !== -1) {
-      setCurrentTopicIndex(newIndex);
-    }
+    if (newIndex !== -1) setTopicIndex(newIndex);
+    setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newIndex])));
+    updateUrlHash(newTopic, tabs[tabIndex].name);
   };
 
   // Handles switching between topics
   const handleSwitchTopic = (direction) => {
     let newIndex =
       direction === 'Previous'
-        ? (currentTopicIndex - 1 + allTopics.length) % allTopics.length
-        : (currentTopicIndex + 1) % allTopics.length;
+        ? (topicIndex - 1 + allTopics.length) % allTopics.length
+        : (topicIndex + 1) % allTopics.length;
 
-    setCurrentTopicIndex(newIndex);
+    setTopicIndex(newIndex);
     setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newIndex])));
+    updateUrlHash(allTopics[newIndex], tabs[tabIndex].name);
   };
 
   // Handle tab change
-  const handleTabChange = (event, newValue) => {
-    setTabIndex(newValue);
+  const handleTabChange = (event, newTabIndex) => {
+    setTabIndex(newTabIndex);
+    updateUrlHash(topic, tabs[newTabIndex].name);
   };
 
   const handleSwitchTab = (direction) => {
@@ -83,7 +90,7 @@ const Home = () => {
         if (newIndex > 0) {
           newIndex--;
         } else {
-          handleSwitchTopic(direction); // Switch topic when reaching the start.
+          // handleSwitchTopic(direction); // Switch topic when reaching the start.
           newIndex = tabs.length - 1; // Move to the last tab after switching topic.
         }
       } else if (direction === 'Next') {
@@ -91,7 +98,7 @@ const Home = () => {
         if (newIndex < tabs.length - 1) {
           newIndex++;
         } else {
-          handleSwitchTopic(direction); // Switch topic when reaching the end.
+          // handleSwitchTopic(direction); // Switch topic when reaching the end.
           newIndex = 0; // Move to the first tab after switching topic.
         }
       }
@@ -101,7 +108,19 @@ const Home = () => {
 
     // Once a valid tab is found or if 'Divider' is the only option, update the tabIndex state.
     if (tabIndex !== newIndex) setTabIndex(newIndex);
+    updateUrlHash(topic, tabs[newIndex].name);
   };
+
+  // Parse the initial hash parameters
+  useEffect(() => {
+    const { topic, tab } = parseHashParams(window.location.hash);
+
+    const newTopicIndex = allTopics.findIndex((t) => t === topic);
+    if (newTopicIndex !== -1) setTopicIndex(newTopicIndex);
+
+    const newTabIndex = tabs.findIndex((t) => t.name === tab);
+    if (newTabIndex !== -1) setTabIndex(newTabIndex);
+  }, []);
 
   // Updates the displayed topic based on the scroll position
   useEffect(() => {
@@ -114,10 +133,10 @@ const Home = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [topic]);
 
-  // Updates the topic when currentTopicIndex changes
+  // Updates the topic when topicIndex changes
   useEffect(() => {
-    setTopic(allTopics[currentTopicIndex]);
-  }, [currentTopicIndex]);
+    setTopic(allTopics[topicIndex]);
+  }, [topicIndex]);
 
   // Fetches content when tab or topic changes
   useEffect(() => {
@@ -187,7 +206,6 @@ const Home = () => {
               topic={topic}
               isLoading={isLoading}
               content={content}
-              currentTopicIndex={currentTopicIndex}
               handleSwitchTab={handleSwitchTab}
             />
 

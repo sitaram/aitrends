@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AppBar, Tabs, Tab, Box, Divider, useScrollTrigger, useTheme, useMediaQuery } from '@mui/material';
 import { theme } from './theme';
 
@@ -63,6 +63,26 @@ const tabContainerStyle = {
 
 const TabBar = ({ tabs, tabIndex, handleTabChange, window }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const tabsRef = useRef(null);
+
+  useEffect(() => {
+    const adjustScroll = () => {
+      if (tabsRef.current) {
+        const flexContainer = tabsRef.current.querySelector('.MuiTabs-flexContainer');
+        if (flexContainer) {
+          const activeTab = flexContainer.children[tabIndex]; // Assuming tabIndex is your active tab index
+          if (activeTab) {
+            console.log(activeTab);
+            // Scroll the selected tab into view
+            activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          }
+        }
+      }
+    };
+    // Delay the scroll adjustment slightly to allow other scroll adjustments to settle
+    const timer = setTimeout(adjustScroll, 400); // Adjust the delay as needed
+    return () => clearTimeout(timer);
+  }, [tabIndex]);
 
   return (
     <ElevationScroll window={window}>
@@ -82,6 +102,7 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window }) => {
             variant="scrollable"
             scrollButtons="auto"
             allowScrollButtonsMobile
+            ref={tabsRef} // Apply the ref to the Tabs component
             sx={{
               '& .MuiTabs-indicator': {
                 backgroundColor: theme.palette.primary.main,
