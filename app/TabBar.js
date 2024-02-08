@@ -36,6 +36,31 @@ const DividerTab = () => (
   </Box>
 );
 
+const tabContainerStyle = {
+  position: 'relative',
+  '&::before, &::after': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    zIndex: 1,
+    pointerEvents: 'none',
+  },
+  '&::before': {
+    left: '35px',
+    width: '30px',
+    height: '45px',
+    background: `linear-gradient(to right, rgba(245,245,245,1) 0%, rgba(245,245,245,0) 100%)`,
+  },
+  '&::after': {
+    right: '35px',
+    width: '30px',
+    height: '45px',
+    background: `linear-gradient(to left, rgba(245,245,245,1) 0%, rgba(245,245,245,0) 100%)`,
+  },
+  overflowX: 'auto', // Ensure this is scrollable
+};
+
 const TabBar = ({ tabs, tabIndex, handleTabChange, window }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -51,33 +76,35 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window }) => {
           ...(!isMobile && { boxShadow: 'none' }),
         }}
       >
-        <Tabs
-          value={tabIndex}
-          variant="scrollable"
-          scrollButtons="auto"
-          allowScrollButtonsMobile
-          sx={{
-            '& .MuiTabs-indicator': {
-              backgroundColor: theme.palette.primary.main,
-            },
-            '& .MuiTab-root': {
-              textTransform: 'none',
-              fontWeight: 'bold',
-              fontSize: '0.875rem',
-            },
-          }}
-          centered={false}
-          onChange={handleTabChange}
-        >
-          {tabs.map((item, index) =>
-            item.name !== 'Divider' ? (
-              <Tab key={index} label={item.name} />
-            ) : (
-              // Render a Tab styled as a divider
-              <DividerTab key={`divider-${index}`} />
-            )
-          )}
-        </Tabs>
+        <Box sx={tabContainerStyle}>
+          <Tabs
+            value={tabIndex}
+            variant="scrollable"
+            scrollButtons="auto"
+            allowScrollButtonsMobile
+            sx={{
+              '& .MuiTabs-indicator': {
+                backgroundColor: theme.palette.primary.main,
+              },
+              '& .MuiTab-root': {
+                textTransform: 'none',
+                fontWeight: 'bold',
+                fontSize: '0.875rem',
+              },
+            }}
+            centered={false}
+            onChange={handleTabChange}
+          >
+            {tabs.map((item, index) =>
+              item.name !== 'Divider' ? (
+                <Tab key={index} label={item.name} />
+              ) : (
+                // Render a Tab styled as a divider
+                <DividerTab key={`divider-${index}`} />
+              )
+            )}
+          </Tabs>
+        </Box>
       </AppBar>
     </ElevationScroll>
   );
