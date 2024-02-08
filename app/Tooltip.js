@@ -54,7 +54,7 @@ const Tooltip = () => {
         <br />
         {isMobile ? (
           <>
-            - Swipe the content left/right to navigate between tabs, or swipe the tab bar to see them.
+            - Swipe the content left/right to switch tabs, or swipe the tab bar to see them.
             <br />
             <br />- Tap on arrows in the header to switch topics keeping the tab constant, or see all topics with the
             floating button below.

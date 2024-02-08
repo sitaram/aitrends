@@ -13,7 +13,7 @@ export const getTheme = (mode) =>
               contrastText: '#ffffff',
             },
             secondary: {
-              main: '#fBDBAB',
+              main: '#fBE0CB',
               contrastText: '#000',
             },
             tertiary: {
