@@ -12,27 +12,28 @@ const CustomMarkdown = ({ text, topic }) => {
     return text.replace(/^\d+\.\s+/, ''); // Remove digits followed by a dot and whitespace
   };
 
-  // A helper function to create component definitions with preprocessing
+  // Enhanced helper function for component creation with preprocessing and displayName
   const createComponent = (Tag, style = {}) => {
-    return ({ node, ...props }) => {
-      // Process children within the component function scope
-      const processedChildren = React.Children.map(props.children, (child) =>
+    const Component = ({ children, ...props }) => {
+      const processedChildren = React.Children.map(children, (child) =>
         typeof child === 'string' ? removeLeadingNumbers(child) : child
       );
 
+      const link = createGoogleSearchLink(props.children.toString());
+
       return (
         <Tag {...props} style={{ ...style, fontWeight: style.fontWeight || 'normal' }}>
-          <a
-            href={createGoogleSearchLink(props.children.toString())}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: style.color || 'inherit' }}
-          >
+          <a href={link} target="_blank" rel="noopener noreferrer" style={{ color: style.color || 'inherit' }}>
             {processedChildren}
           </a>
         </Tag>
       );
     };
+
+    // Assign a displayName to enhance debugging and identification in dev tools
+    Component.displayName = `Custom${Tag.charAt(0).toUpperCase() + Tag.slice(1)}`;
+
+    return Component;
   };
 
   // Use the helper function to define custom components
@@ -52,4 +53,3 @@ const CustomMarkdown = ({ text, topic }) => {
 };
 
 export default CustomMarkdown;
-CustomMarkdown.displayName = 'CustomMarkdown';
