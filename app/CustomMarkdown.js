@@ -14,8 +14,8 @@ const CustomMarkdown = ({ text, topic }) => {
 
   // Enhanced helper function for component creation with preprocessing and displayName
   const createComponent = (Tag, style = {}) => {
-    const Component = ({ children, ...props }) => {
-      const processedChildren = React.Children.map(children, (child) =>
+    const Component = ({ node, ...props }) => {
+      const processedChildren = React.Children.map(props.children, (child) =>
         typeof child === 'string' ? removeLeadingNumbers(child) : child
       );
 
