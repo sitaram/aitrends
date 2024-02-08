@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import LightbulbOutline from '@mui/icons-material/Info'; // For an information icon
 import { theme } from './theme';
 
 const SwipeTooltip = ({ topicsDrawerOpen }) => {
@@ -37,7 +36,6 @@ const SwipeTooltip = ({ topicsDrawerOpen }) => {
 
   return (
     <div style={tooltipStyle}>
-      <LightbulbOutline />
       There is a large grid of topics and tabs. Swipe left/right to switch tabs, or use arrows in the header to switch
       topics while keeping tab constant.
     </div>

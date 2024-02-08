@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
+import { theme } from './theme';
 
 const CustomMarkdown = ({ text, topic }) => {
   const createGoogleSearchLink = (keyword) =>
@@ -20,7 +21,7 @@ const CustomMarkdown = ({ text, topic }) => {
       );
 
       return (
-        <Tag {...props} style={{ ...style, textDecoration: 'underline', fontWeight: style.fontWeight || 'normal' }}>
+        <Tag {...props} style={{ ...style, fontWeight: style.fontWeight || 'normal' }}>
           <a
             href={createGoogleSearchLink(props.children.toString())}
             target="_blank"
@@ -36,7 +37,7 @@ const CustomMarkdown = ({ text, topic }) => {
 
   // Use the helper function to define custom components
   const markdownComponents = {
-    strong: createComponent('strong', { fontWeight: 'bold' }),
+    strong: createComponent('strong', { color: '#0056a3', fontWeight: 'bold' }),
     h1: createComponent('h1', { color: 'red', textDecoration: 'underline' }),
     h2: createComponent('h2', { color: 'green', textDecoration: 'underline' }),
     h3: createComponent('h3', { color: 'tomato', fontWeight: 'bold', borderTop: 1, borderColor: 'divider' }),
