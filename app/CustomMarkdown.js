@@ -11,6 +11,21 @@ const CustomMarkdown = ({ text, topic }) => {
     return text.replace(/^\d+\.\s+/, ''); // Remove digits followed by a dot and whitespace
   };
 
+  // Preprocess the markdown to adjust indented list items
+  const preprocessMarkdown = (markdown) => {
+    return markdown
+      .split('\n')
+      .map((line) => {
+        // Check if line is indented in a way that causes it to be formatted as a code block
+        if (/^\s{4}\-/.test(line)) {
+          // Adjust indentation or transform the line as needed
+          return line.slice(4); // Removes 4 spaces from the start of the line
+        }
+        return line;
+      })
+      .join('\n');
+  };
+
   // Enhanced helper function for component creation with preprocessing and displayName
   const createComponent = (Tag, style = {}) => {
     const Component = ({ node, ...props }) => {
@@ -49,7 +64,7 @@ const CustomMarkdown = ({ text, topic }) => {
 
   return (
     <ReactMarkdown components={markdownComponents} rehypePlugins={[rehypeRaw]}>
-      {text}
+      {preprocessMarkdown(text)}
     </ReactMarkdown>
   );
 };

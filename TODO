@@ -2,11 +2,12 @@ app-index.js:35 Warning: validateDOMNesting(...): <a> cannot appear as a descend
 
 GANs tech deep dive: <PRE> on some blocks. print value to debug
 
+dark mode blue color
+
 
 freshen: rag (web pages input to api) via langchain; https://chat.openai.com/share/3490887b-f162-49e4-9ff3-451ba5799f06
 yt videos
 hamburger menu with share, subscribe, feedback, about, blog post
-formatting code
 
 click to read more
 hero images
@@ -15,10 +16,6 @@ infinite scroll
 mobile app via Flutter
 wikipedia links to topic
 extract topics from content
-
-
-dark mode
-
 
 
 from googleapiclient.discovery import build
