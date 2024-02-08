@@ -29,7 +29,7 @@ export default async (req, res) => {
     }
 
     const { prompt, ttl } = req.body;
-    console.log('PROMPT:', prompt);
+    // console.log('PROMPT:', prompt);
 
     if (!prompt) {
       return res.status(400).json({ error: 'Prompt is required' });
