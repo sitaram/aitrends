@@ -72,7 +72,6 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window }) => {
         if (flexContainer) {
           const activeTab = flexContainer.children[tabIndex]; // Assuming tabIndex is your active tab index
           if (activeTab) {
-            console.log(activeTab);
             // Scroll the selected tab into view
             activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
           }
@@ -80,7 +79,7 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window }) => {
       }
     };
     // Delay the scroll adjustment slightly to allow other scroll adjustments to settle
-    const timer = setTimeout(adjustScroll, 400); // Adjust the delay as needed
+    const timer = setTimeout(adjustScroll, 600); // Adjust the delay as needed
     return () => clearTimeout(timer);
   }, [tabIndex]);
 
