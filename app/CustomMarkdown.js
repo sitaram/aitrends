@@ -52,3 +52,4 @@ const CustomMarkdown = ({ text, topic }) => {
 };
 
 export default CustomMarkdown;
+CustomMarkdown.displayName = 'CustomMarkdown';
