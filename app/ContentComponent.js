@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Paper, Box, useMediaQuery } from '@mui/material';
+import { Paper, Box, useMediaQuery, useTheme } from '@mui/material';
 import { ThreeDots } from 'react-loader-spinner';
 import CustomMarkdown from './CustomMarkdown';
 import { useSwipeable } from 'react-swipeable';
 
-const ContentComponent = ({ theme, topic, isLoading, content, handleSwitchTab }) => {
+const ContentComponent = ({ topic, isLoading, content, handleSwitchTab }) => {
+  const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [feedback, setFeedback] = useState(''); // 'Next', 'Previous', or ''
 

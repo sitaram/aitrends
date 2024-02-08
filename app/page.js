@@ -164,7 +164,6 @@ const Home = () => {
       <Box sx={{ display: 'flex' }}>
         <AppBarComponent handleTopicsDrawerToggle={handleTopicsDrawerToggle} displayedTopic={displayedTopic} />
         <DrawerComponent
-          theme={theme}
           topicsDrawerOpen={topicsDrawerOpen}
           handleTopicsDrawerToggle={handleTopicsDrawerToggle}
           topic={topic}
@@ -180,7 +179,10 @@ const Home = () => {
             }}
           >
             <Toolbar />
-            <Paper elevation={1} sx={{ padding: '1rem', marginBottom: '.2rem', backgroundColor: '#bed3e7' }}>
+            <Paper
+              elevation={1}
+              sx={{ padding: '1rem', marginBottom: '.2rem', backgroundColor: theme.palette.tertiary.main }}
+            >
               <Typography
                 variant="h1"
                 sx={{
@@ -201,17 +203,11 @@ const Home = () => {
               </Typography>
             </Paper>
 
-            <TabBar theme={theme} tabs={tabs} tabIndex={tabIndex} handleTabChange={handleTabChange} />
+            <TabBar tabs={tabs} tabIndex={tabIndex} handleTabChange={handleTabChange} />
 
-            <ContentComponent
-              theme={theme}
-              topic={topic}
-              isLoading={isLoading}
-              content={content}
-              handleSwitchTab={handleSwitchTab}
-            />
+            <ContentComponent topic={topic} isLoading={isLoading} content={content} handleSwitchTab={handleSwitchTab} />
 
-            <TopicButton theme={theme} handleTopicsDrawerToggle={handleTopicsDrawerToggle} />
+            <TopicButton handleTopicsDrawerToggle={handleTopicsDrawerToggle} />
           </Box>
         </div>
       </Box>

@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AppBar, Tabs, Tab, Box, Divider, useScrollTrigger, useTheme, useMediaQuery } from '@mui/material';
+import { hexToRgba } from './utils';
 
-const ElevationScroll = ({ theme, children, window }) => {
+const ElevationScroll = ({ children, window }) => {
+  const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const trigger = useScrollTrigger({
@@ -35,32 +37,42 @@ const DividerTab = () => (
   </Box>
 );
 
-const tabContainerStyle = {
-  position: 'relative',
-  '&::before, &::after': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    zIndex: 1,
-    pointerEvents: 'none',
-  },
-  '&::before': {
-    left: '35px',
-    width: '30px',
-    height: '45px',
-    background: `linear-gradient(to right, rgba(245,245,245,1) 0%, rgba(245,245,245,0) 100%)`,
-  },
-  '&::after': {
-    right: '35px',
-    width: '30px',
-    height: '45px',
-    background: `linear-gradient(to left, rgba(245,245,245,1) 0%, rgba(245,245,245,0) 100%)`,
-  },
-  overflowX: 'auto', // Ensure this is scrollable
+const tabContainerStyle = () => {
+  const theme = useTheme();
+  return {
+    position: 'relative',
+    '&::before, &::after': {
+      content: '""',
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      zIndex: 1,
+      pointerEvents: 'none',
+    },
+    '&::before': {
+      left: '35px',
+      width: '30px',
+      height: '45px',
+      background: `linear-gradient(to right, ${hexToRgba(theme.palette.background.tabbar, 1)} 0%, ${hexToRgba(
+        theme.palette.background.tabbar,
+        0
+      )} 100%)`,
+    },
+    '&::after': {
+      right: '35px',
+      width: '30px',
+      height: '45px',
+      background: `linear-gradient(to left, ${hexToRgba(theme.palette.background.tabbar, 1)} 0%, ${hexToRgba(
+        theme.palette.background.tabbar,
+        0
+      )} 100%)`,
+    },
+    overflowX: 'auto', // Ensure this is scrollable
+  };
 };
 
-const TabBar = ({ theme, tabs, tabIndex, handleTabChange, window }) => {
+const TabBar = ({ tabs, tabIndex, handleTabChange, window }) => {
+  const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const tabsRef = useRef(null);
 
@@ -83,18 +95,18 @@ const TabBar = ({ theme, tabs, tabIndex, handleTabChange, window }) => {
   }, [tabIndex]);
 
   return (
-    <ElevationScroll theme={theme} window={window}>
+    <ElevationScroll window={window}>
       <AppBar
         position="static"
         color="default"
         sx={{
-          bgcolor: theme.palette.background.paper,
+          backgroundColor: theme.palette.background.paper,
           borderBottom: 1,
           borderColor: 'divider',
           ...(!isMobile && { boxShadow: 'none' }),
         }}
       >
-        <Box sx={tabContainerStyle}>
+        <Box sx={tabContainerStyle(theme)}>
           <Tabs
             value={tabIndex}
             variant="scrollable"
@@ -106,9 +118,16 @@ const TabBar = ({ theme, tabs, tabIndex, handleTabChange, window }) => {
                 backgroundColor: theme.palette.primary.main,
               },
               '& .MuiTab-root': {
+                backgroundColor: theme.palette.background.tabbar,
                 textTransform: 'none',
                 fontWeight: 'bold',
                 fontSize: '0.875rem',
+              },
+              '& .MuiButtonBase-root': {
+                backgroundColor: theme.palette.background.tabbar,
+              },
+              '& .MuiBox-root': {
+                backgroundColor: theme.palette.background.tabbar,
               },
             }}
             centered={false}

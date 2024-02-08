@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-import { useMediaQuery } from '@mui/material';
+import { useMediaQuery, useTheme } from '@mui/material';
 import Fab from '@mui/material/Fab'; // Corrected import statement for MUI version 5 or later
 import AddIcon from '@mui/icons-material/Add'; // Import an icon that suits your use case
+import { hexToRgba } from './utils';
 
-const TopicButton = ({ theme, handleTopicsDrawerToggle }) => {
+const TopicButton = ({ handleTopicsDrawerToggle }) => {
+  const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
@@ -13,8 +15,9 @@ const TopicButton = ({ theme, handleTopicsDrawerToggle }) => {
           aria-label="add"
           onClick={handleTopicsDrawerToggle}
           sx={{
-            backgroundColor: '#5E81AC !important',
-            color: '#fff',
+            backgroundColor: theme.palette.primary.main + '!important',
+            color: 'white', // theme.palette.primary.text,
+            fontWeight: 'bold',
             position: 'fixed',
             right: '30px',
             bottom: '30px',
@@ -22,7 +25,7 @@ const TopicButton = ({ theme, handleTopicsDrawerToggle }) => {
             width: '70px',
             fontSize: '1rem',
             textTransform: 'none',
-            boxShadow: '2px 6px 12px rgba(100,100,100,0.7)',
+            boxShadow: `4px 4px 8px ${hexToRgba(theme.palette.primary.main, 0.7)}`,
           }}
         >
           Topics

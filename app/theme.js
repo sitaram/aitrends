@@ -16,9 +16,14 @@ export const getTheme = (mode) =>
               main: '#EBCB8B',
               contrastText: '#000',
             },
+            tertiary: {
+              main: '#bed3e7',
+              contrastText: '#000',
+            },
             background: {
               default: '#E5E9F0',
               paper: '#ffffff',
+              tabbar: '#f5f5f5',
             },
             text: {
               primary: '#2E3440',
@@ -32,12 +37,17 @@ export const getTheme = (mode) =>
               contrastText: '#ffffff',
             },
             secondary: {
-              main: '#EBCB8B',
+              main: '#aB7B4B',
+              contrastText: '#ffffff', // Adjusted for better visibility in dark mode
+            },
+            tertiary: {
+              main: '#416191',
               contrastText: '#ffffff', // Adjusted for better visibility in dark mode
             },
             background: {
               default: '#2E3440', // Darker shade for the main background
               paper: '#3B4252', // Slightly lighter shade for components backgrounds like Card, Paper
+              tabbar: '#3B4252',
             },
             text: {
               primary: '#ECEFF4', // Lighter text for better readability in dark mode
@@ -47,3 +57,6 @@ export const getTheme = (mode) =>
     },
     // Add other theme customizations that are independent of mode here
   });
+
+// nice green
+// main: '#81a161',

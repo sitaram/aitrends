@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useTheme } from '@mui/material';
 
-const SwipeTooltip = ({ theme, topicsDrawerOpen }) => {
+const SwipeTooltip = ({ topicsDrawerOpen }) => {
+  const theme = useTheme();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -35,7 +37,7 @@ const SwipeTooltip = ({ theme, topicsDrawerOpen }) => {
 
   return (
     <div style={tooltipStyle}>
-      Imagine a large grid of topics and tabs.
+      This is a large grid of topics and tabs.
       <br />
       <br />
       Swipe left/right to switch tabs.

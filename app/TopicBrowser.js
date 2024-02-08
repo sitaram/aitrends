@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -18,7 +19,7 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
   width: '100%', // Set the width to 100% to prevent horizontal expansion
   padding: '5px 10px',
   borderRadius: theme.shape.borderRadius,
-  color: theme.palette.grey[600],
+  color: theme.palette.text.secondary,
   '&.Mui-selected': {
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.common.white,
@@ -44,7 +45,8 @@ const CollapseWrapper = styled(Collapse)(({ theme }) => ({
   overflowX: 'hidden', // Hide horizontal overflow for collapsing section
 }));
 
-const TopicBrowser = ({ theme, onSelect, selectedTopic, openClusterIndex }) => {
+const TopicBrowser = ({ onSelect, selectedTopic, openClusterIndex }) => {
+  const theme = useTheme();
   const [openTopicIndex, setOpenTopicIndex] = React.useState(null);
   const topicRefs = useRef([]);
 
