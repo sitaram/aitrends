@@ -24,7 +24,7 @@ const Reload = () => {
       const controller = new AbortController();
       fetchData(topic, tab, controller.signal);
     }
-    if (!activeRequests.current && !requestQueue.current) {
+    if (activeRequests.current.size == 0 && requestQueue.current.length == 0) {
       setLoading(false);
     }
   };
@@ -94,7 +94,6 @@ const Reload = () => {
 
   const processSummary = (topic, signal) => {
     console.log('processSummary', topic, contentResults);
-    return;
     const allTabsContent = Object.entries(contentResults.current[topic])
       .map(([tabName, content]) => `\n\nTAB: [[${tabName}]] CONTENT: ${content}`)
       .join(', ');
@@ -135,19 +134,20 @@ const Reload = () => {
         enqueueRequest(topic, tab);
       });
 
-      topics.clusters.forEach((cluster) => {
-        cluster.topics.forEach((topic) => {
-          if (0 || /* hack */ topic === 'AI in Retail' || topic === 'Computer Vision') {
-            // Initialize the tab count for this topic
-            topicTabCount.current[topic] = notabs.length;
-            notabs.forEach((tab) => {
-              const key = `${topic}-${tab.name}`;
-              setReloadState((prevState) => ({ ...prevState, [key]: 'loading' }));
-              enqueueRequest(topic, tab);
-            });
-          }
+      if (1)
+        topics.clusters.forEach((cluster) => {
+          cluster.topics.forEach((topic) => {
+            if (1 || /* hack */ topic === 'AI in Retail' || topic === 'Computer Vision') {
+              // Initialize the tab count for this topic
+              topicTabCount.current[topic] = notabs.length;
+              notabs.forEach((tab) => {
+                const key = `${topic}-${tab.name}`;
+                setReloadState((prevState) => ({ ...prevState, [key]: 'loading' }));
+                enqueueRequest(topic, tab);
+              });
+            }
+          });
         });
-      });
     } else {
       // Abort logic if needed or reset state to stop
       setLoading(false);
@@ -157,7 +157,7 @@ const Reload = () => {
       tabs.forEach((tab) => {
         tabs.forEach((tab) => {
           const key = `${topic}-${tab.name}`;
-          if (reloadState[key] !== 'success') {
+          if (reloadState[key] === 'loading') {
             setReloadState((prevState) => ({ ...prevState, [key]: 'error' }));
           }
         });
@@ -166,7 +166,7 @@ const Reload = () => {
         cluster.topics.forEach((topic) => {
           tabs.forEach((tab) => {
             const key = `${topic}-${tab.name}`;
-            if (reloadState[key] !== 'success') {
+            if (reloadState[key] === 'loading') {
               setReloadState((prevState) => ({ ...prevState, [key]: 'error' }));
             }
           });

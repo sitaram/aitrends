@@ -10,14 +10,17 @@ export const tabs = [
       ' reader as well as the expert, and engagement potential to both groups. Your objective is to construct a single,' +
       ' cohesive narrative that integrates these elements, offering a comprehensive and captivating overview of the topic.' +
       " This narrative should draw on the diversity of content available, blending it to highlight the topic's multifaceted" +
-      ' nature. Aim for about 3 short paragraphs with clear <h3> section headers using ### to break the flow and avoid' +
-      ' producing a wall of text. Lists or other structure within these sections is okay too. Be concise, factual, matter' +
-      ' of fact, objective, and use simple and clear language.' +
+      ' nature. Aim for about 3 short sections with clear <h3> section headers using ### to break the flow and avoid' +
+      ' producing a wall of text. Within each section use bullet points with description list format for easy scannability.' +
+      ' Do not use more than 3 bullet points per section.' +
+      ' Be concise, factual, matter-of-fact, objective, and use simple and clear language.' +
       ' (2) Content Annotation and Integration: As you craft this unified narrative, ensure you tie back specific' +
       ' ideas, insights, or pieces of information to their original tabs. Annotate these elements within the narrative by' +
-      ' prefacing them with the tab name in brackets, like this: [[Tab Name]]. This method will maintain a ' +
-      ' connection to the source material, allowing readers to understand where each piece of the story originates.' +
-      ' The final output' +
+      ' prefacing them with the tab name in brackets, like this: [[Tab Name]]. Always have the tab annotation after the text' +
+      ' being annotated, like at the end of a sentence or paragraph and not immediately after a description list header' +
+      ' where it breaks the flow, and do not use the tab annotations as description list headers.' +
+      ' This method will maintain a connection to the source material, allowing readers to understand where each piece of' +
+      ' the story originates. The final output' +
       ' should not only inform but also intrigue a general audience, making complex information accessible and engaging, but' +
       ' without flowery or clickbaity language.' +
       ' Your challenge is to transcend the boundaries of individual tabs to tell a story that captures the essence of the' +

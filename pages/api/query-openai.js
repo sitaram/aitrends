@@ -13,15 +13,14 @@ const BASE_TTL = 60 * 60 * 24 * 365 * 10; // 10 years in seconds, as a large TTL
 
 // Helper function to fetch data from OpenAI and update cache
 async function fetchAndUpdate(prompt, cacheKey, ttl) {
-  console.log('GPT REQUEST DISABLED:', prompt.substr(0, 50));
-  return 'DISABLED';
+  console.log('------------------------------- GPT REQUEST:', prompt.substr(0, 50));
   const completion = await openai.chat.completions.create({
     messages: [{ role: 'system', content: prompt }],
     model: 'gpt-4-turbo-preview',
   });
 
   const responseData = completion.choices[0]?.message?.content || '';
-  console.log('GPT RESPONSE:', responseData.substr(0, 50));
+  console.log('------------------------------- GPT RESPONSE:', responseData.substr(0, 50));
   await redis.setex(cacheKey, ttl + BASE_TTL, responseData); // Set with elevated TTL
   return responseData;
 }
