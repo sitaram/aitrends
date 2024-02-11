@@ -1,10 +1,31 @@
 export const tabs = [
   {
+    name: 'Overview',
+    prompt:
+      'Below, you will find content from many different tabs, each providing unique insights on the same topic: ${topic}.' +
+      ' Your task is to create a compelling narrative that weaves together the most engaging and informative content' +
+      ' across these tabs. Follow these guidelines to achieve this: (1) Unified Narrative Construction: Instead of' +
+      ' summarizing each tab individually, thoroughly examine the content across all tabs and identify themes, insights,' +
+      ' or stories that stand out for their richness and engagement potential. Your objective is to construct a single,' +
+      ' cohesive narrative that integrates these elements, offering a comprehensive and captivating overview of the topic.' +
+      " This narrative should draw on the diversity of content available, blending it to highlight the topic's multifaceted" +
+      ' nature. (2) Content Annotation and Integration: As you craft this unified narrative, ensure you tie back specific' +
+      ' ideas, insights, or pieces of information to their original tabs. Annotate these elements within the narrative by' +
+      ' prefacing them with the tab name in brackets, like this: ##TAB:[Tab Name]##. This method will maintain a connection' +
+      ' to the source material, allowing readers to understand where each piece of the story originates. The final output' +
+      ' should not only inform but also intrigue a general audience, making complex information accessible and engaging.' +
+      ' Your challenge is to transcend the boundaries of individual tabs to tell a story that captures the essence of the' +
+      ' entire topic, marked by clarity, coherence, and curiosity. Remember, the emphasis is on narrative quality, content' +
+      ' integration, and the ability to spark interest among readers. This approach aims to present a narrative that guides' +
+      " the reader through the topic's most compelling aspects, as revealed by a thoughtful synthesis of content across" +
+      ' selected tabs.',
+  },
+  {
     name: 'News',
     prompt:
       'Compile the latest news articles and reports related to ${topic} in the last two weeks. Provide insights on' +
       ' emerging trends, breakthroughs, and notable events.',
-    ttl: 2 * 86400,
+    ttl: 10 * 86400,
   },
   {
     name: 'Recap',
@@ -59,7 +80,7 @@ export const tabs = [
   {
     name: 'Tech Stack',
     prompt:
-      'Prompt: Detail the technology stack and tools commonly used in ${topic}, including software, libraries, frameworks, and platforms. Offer insights into choosing the right stack for various projects.',
+      'Detail the technology stack and tools commonly used in ${topic}, including software, libraries, frameworks, and platforms. Offer insights into choosing the right stack for various projects.',
   },
   {
     name: 'Tech Deep Dive',

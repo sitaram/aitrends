@@ -9,50 +9,58 @@ dotenv.config(); // Load environment variables from .env file
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const redis = new Redis(process.env.REDIS_URL); // Redis connection URL
 
+const BASE_TTL = 60 * 60 * 24 * 365 * 10; // 10 years in seconds, as a large TTL value
+
 // Helper function to fetch data from OpenAI and update cache
-async function fetchAndUpdate(prompt, cacheKey, ttl) {
-  const completion = await openai.chat.completions.create({
-    messages: [{ role: 'system', content: prompt }],
-    model: 'gpt-4-turbo-preview',
-  });
+async function fetchAndUpdate(prompt, cacheKey, ttl, responseData) {
+  console.log(
+    'MAYBE GPT REQUEST:',
+    prompt.substr(0, 30),
+    cacheKey.substr(0, 30),
+    responseData ? responseData.substr(0, 30) : 0
+  );
+  if (!responseData) {
+    console.log('GPT REQUEST:', prompt.substr(0, 30), cacheKey.substr(0, 30));
+    const completion = await openai.chat.completions.create({
+      messages: [{ role: 'system', content: prompt }],
+      model: 'gpt-4-turbo-preview',
+    });
 
-  const responseData = completion.choices[0]?.message?.content || '';
-  await redis.setex(cacheKey, ttl, responseData); // Save to Redis with TTL
+    responseData = completion.choices[0]?.message?.content || '';
+  }
+  await redis.setex(cacheKey, ttl + BASE_TTL, responseData); // Set with elevated TTL
+  return responseData;
 }
-
-const refreshThresholdInSeconds = 60 * 60 * 24; // refresh if about to expire in one day
 
 export default async (req, res) => {
   try {
-    if (req.method !== 'POST') {
-      return res.status(405).json({ error: 'Method not allowed' });
-    }
+    if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-    const { prompt, ttl } = req.body;
-    // console.log('PROMPT:', prompt);
+    const { prompt, payload, ttl, isOverview, isOnline } = req.body;
+    console.log('REQUEST:', prompt);
 
-    if (!prompt) {
-      return res.status(400).json({ error: 'Prompt is required' });
-    }
+    if (!prompt) return res.status(400).json({ error: 'Prompt is required' });
 
+    const fullPrompt = payload ? `${prompt}: ${payload}` : prompt;
     const cacheKey = `prompt:${prompt}`;
     const cachedResponse = await redis.get(cacheKey);
-
-    // Check TTL of the cached response
     const ttlRemaining = await redis.ttl(cacheKey);
+    console.log(ttlRemaining, BASE_TTL);
 
-    if (cachedResponse) {
-      // Schedule a non-blocking refresh if TTL is within the defined threshold
-      if (ttlRemaining <= refreshThresholdInSeconds) {
+    if (cachedResponse && (isOnline || ttlRemaining < BASE_TTL)) {
+      // Schedule a non-blocking refresh if TTL expired
+      if (!isOverview && ttlRemaining < BASE_TTL) {
         setImmediate(() => fetchAndUpdate(prompt, cacheKey, ttl));
       }
       return res.status(200).json({ data: cachedResponse });
-    } else {
-      // If not cached, fetch, cache, and return the response
-      await fetchAndUpdate(prompt, cacheKey, ttl);
-      const newCachedResponse = await redis.get(cacheKey);
-      return res.status(200).json({ data: newCachedResponse });
     }
+
+    console.log('fetchAndUpdate', prompt.substr(0, 30), ttl, cachedResponse ? cachedResponse.substr(0, 30) : 0);
+    const data =
+      isOnline && isOverview
+        ? 'visit /reload to construct overview'
+        : await fetchAndUpdate(fullPrompt, cacheKey, ttl, /* hack */ cachedResponse);
+    return res.status(200).json({ data: data });
   } catch (error) {
     console.error('Error making request to OpenAI:', error);
     res.status(500).json({ error: 'An error occurred' });

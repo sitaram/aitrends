@@ -20,7 +20,7 @@ import BlogIcon from '@mui/icons-material/Article';
 import CloseIcon from '@mui/icons-material/Close';
 import LogoComponent from './LogoComponent';
 
-const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic, setShowTooltip }) => {
+const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic, setShowAbout }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = (open) => (event) => {
@@ -59,7 +59,7 @@ const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic, setShowTool
   };
 
   const handleAbout = () => {
-    setShowTooltip(true);
+    setShowAbout(true);
   };
 
   const handleBlogPost = () => {

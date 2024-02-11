@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   IconButton,
   Typography,
@@ -20,7 +20,7 @@ import ContentComponent from './ContentComponent';
 import TopicButton from './TopicButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import Tooltip from './Tooltip';
+import About from './About';
 import { fetchContent } from './api';
 import { calculateTTL, flattenTopics, parseHashParams } from './utils';
 import { topics } from './topics';
@@ -43,7 +43,8 @@ const Home = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const [content, setContent] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [showTooltip, setShowTooltip] = useState(false);
+  const [showAbout, setShowAbout] = useState(false);
+  const updateScheduled = useRef(false);
 
   // Function to update the URL hash for topic and tab
   function updateUrlHash(topic, tab) {
@@ -143,26 +144,43 @@ const Home = () => {
 
   // Fetches content when tab or topic changes
   useEffect(() => {
-    const abortController = new AbortController();
-    setIsLoading(true);
-    const fetchData = async () => {
-      try {
-        const prompt = tabs[tabIndex].prompt.replace('${topic}', topic);
-        const ttl = tabs[tabIndex].ttl || 90 * 86400;
-        console.log(topic, prompt, ttl);
-        await fetchContent(prompt, ttl, setContent, setIsLoading, abortController.signal);
-      } catch (error) {
-        console.error('Error fetching content:', error);
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-    return () => abortController.abort();
-  }, [topic, tabIndex]);
+    if (!updateScheduled.current) {
+      updateScheduled.current = true;
 
-  useEffect(() => {
-    setShowTooltip(true);
-  }, []);
+      const abortController = new AbortController();
+      setIsLoading(true);
+
+      const fetchData = async () => {
+        try {
+          const prompt = tabs[tabIndex].prompt.replace('${topic}', topic);
+          const ttl = tabs[tabIndex].ttl || 90 * 86400;
+          await fetchContent(
+            prompt,
+            null, // payload
+            ttl,
+            tabIndex == 0, // isOverview
+            true, // isOnline
+            setContent,
+            setIsLoading,
+            abortController.signal
+          );
+        } catch (error) {
+          console.error('Error fetching content:', error);
+          setIsLoading(false);
+        }
+      };
+
+      fetchData().then(() => {
+        updateScheduled.current = false; // Reset after async operation
+      });
+
+      // Cleanup
+      return () => {
+        abortController.abort();
+        updateScheduled.current = false; // Ensure reset if unmount occurs before fetch completes
+      };
+    }
+  }, [topic, tabIndex]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -171,7 +189,7 @@ const Home = () => {
         <AppBarComponent
           handleTopicsDrawerToggle={handleTopicsDrawerToggle}
           displayedTopic={displayedTopic}
-          setShowTooltip={setShowTooltip}
+          setShowAbout={setShowAbout}
         />
         <DrawerComponent
           topicsDrawerOpen={topicsDrawerOpen}
@@ -215,7 +233,7 @@ const Home = () => {
             <TabBar tabs={tabs} tabIndex={tabIndex} handleTabChange={handleTabChange} />
             <ContentComponent topic={topic} isLoading={isLoading} content={content} handleSwitchTab={handleSwitchTab} />
             <TopicButton handleTopicsDrawerToggle={handleTopicsDrawerToggle} />
-            {showTooltip && <Tooltip setShowTooltip={setShowTooltip} />}
+            {showAbout && <About setShowAbout={setShowAbout} />}
           </Box>
         </div>
       </Box>

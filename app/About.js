@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
 
-const Tooltip = ({ setShowTooltip }) => {
+const About = ({ setShowAbout }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const tooltipStyle = {
     position: 'fixed',
-    bottom: '20%', // Adjust as needed
+    bottom: '3%',
     left: '50%',
     transform: 'translateX(-50%)',
     width: isMobile ? '85%' : 'initial',
@@ -26,7 +26,7 @@ const Tooltip = ({ setShowTooltip }) => {
   // Function to handle OK click
   const handleOkClick = (e) => {
     e.preventDefault(); // Prevent default anchor behavior
-    setShowTooltip(false);
+    setShowAbout(false);
   };
 
   return (
@@ -39,11 +39,9 @@ const Tooltip = ({ setShowTooltip }) => {
         <br />
         Picture a large grid of AI topics and tabs:
         <br />
-        <br />
         {isMobile ? (
           <>
             &emsp;- Swipe the content left/right to switch tabs, or swipe the tab bar to see them.
-            <br />
             <br />
             &emsp;- Tap on arrows in the header to switch topics keeping the tab constant, or see all topics with the
             floating button below.
@@ -52,17 +50,37 @@ const Tooltip = ({ setShowTooltip }) => {
           <>
             &emsp;- Use the tab bar to explore all the tabs.
             <br />
-            <br />
             &emsp;- Use arrows in the header to switch topics while keeping tab constant, or see all topics on the left.
           </>
         )}
         <br />
         <br />
-        Written by Sitaram Iyer, sitaram@gmail.
+        Written by Sitaram Iyer, sitaram dot gmail. Techniques used:
+        <br />
+        &emsp;- GPT-4 with Redis cache
+        <br />
+        &emsp;- Bing API for freshness
+        <br />
+        &emsp;- Recursive summarization
+        <br />
+        &emsp;- AI-generated trending AI topics
+        <br />
+        &emsp;- AI-generated tabs concept and ideas
+        <br />
+        &emsp;- AI-generated high-quality prompts
+        <br />
+        &emsp;- AI-designed UI and concept mocks
+        <br />
+        &emsp;- AI-written code
+        <br />
+        <br />
+        <img src="concept1.webp" style={{ height: '100px', display: 'inline-block' }} />
+        <img src="concept2.webp" style={{ height: '100px', display: 'inline-block' }} />
+        <br />
         <div style={{ float: 'right', fontWeight: 'bold', textDecoration: 'underline', color: 'darkgreen' }}>OK</div>
       </div>
     </a>
   );
 };
 
-export default Tooltip;
+export default About;
