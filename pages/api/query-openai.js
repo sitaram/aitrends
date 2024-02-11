@@ -55,7 +55,7 @@ export default async (req, res) => {
     const data =
       isOnline && isOverview
         ? 'visit /reload to construct overview'
-        : await fetchAndUpdate(fullPrompt, cacheKey, ttl, /* hack */ !isOnline && !isOverview ? cachedResponse : null);
+        : await fetchAndUpdate(fullPrompt, cacheKey, ttl, /* hack */ true || !isOverview ? cachedResponse : null);
     return res.status(200).json({ data: data });
   } catch (error) {
     console.error('Error making request to OpenAI:', error);
