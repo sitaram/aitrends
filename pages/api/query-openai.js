@@ -13,7 +13,7 @@ const BASE_TTL = 60 * 60 * 24 * 365 * 10; // 10 years in seconds, as a large TTL
 
 // Helper function to fetch data from OpenAI and update cache
 async function fetchAndUpdate(prompt, cacheKey, ttl) {
-  console.log('GPT REQUEST:', prompt.substr(0, 50));
+  console.log('GPT REQUEST DISABLED:', prompt.substr(0, 50));
   return 'DISABLED';
   const completion = await openai.chat.completions.create({
     messages: [{ role: 'system', content: prompt }],
@@ -41,7 +41,7 @@ export default async (req, res) => {
     const ttlRemaining = await redis.ttl(cacheKey);
     // DEBUG console.log(ttlRemaining, BASE_TTL);
 
-    if (cachedResponse && (isOnline || ttlRemaining < BASE_TTL)) {
+    if (cachedResponse && (isOnline || ttlRemaining > BASE_TTL)) {
       // Schedule a non-blocking refresh if TTL expired
       if (!isOverview && ttlRemaining < BASE_TTL) {
         setImmediate(() => fetchAndUpdate(prompt, cacheKey, ttl));
