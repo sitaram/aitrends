@@ -13,18 +13,14 @@ const BASE_TTL = 60 * 60 * 24 * 365 * 10; // 10 years in seconds, as a large TTL
 
 // Helper function to fetch data from OpenAI and update cache
 async function fetchAndUpdate(prompt, cacheKey, ttl, responseData) {
-  console.log(
-    'MAYBE GPT REQUEST:',
-    prompt.substr(0, 30),
-    cacheKey.substr(0, 30),
-    responseData ? responseData.substr(0, 30) : 0
-  );
+  // DEBUG console.log('MAYBE GPT REQUEST:', prompt.substr(0, 30), cacheKey.substr(0, 30), responseData ? responseData.substr(0, 30) : 0);
   if (!responseData) {
-    console.log('GPT REQUEST:', prompt.substr(0, 30), cacheKey.substr(0, 30));
+    // DEBUG console.log('GPT REQUEST:', prompt.substr(0, 30), cacheKey.substr(0, 30));
     const completion = await openai.chat.completions.create({
       messages: [{ role: 'system', content: prompt }],
       model: 'gpt-4-turbo-preview',
     });
+    // DEBUG console.log('GPT RESP', completion);
 
     responseData = completion.choices[0]?.message?.content || '';
   }
@@ -45,7 +41,7 @@ export default async (req, res) => {
     const cacheKey = `prompt:${prompt}`;
     const cachedResponse = await redis.get(cacheKey);
     const ttlRemaining = await redis.ttl(cacheKey);
-    console.log(ttlRemaining, BASE_TTL);
+    // DEBUG console.log(ttlRemaining, BASE_TTL);
 
     if (cachedResponse && (isOnline || ttlRemaining < BASE_TTL)) {
       // Schedule a non-blocking refresh if TTL expired
@@ -55,11 +51,11 @@ export default async (req, res) => {
       return res.status(200).json({ data: cachedResponse });
     }
 
-    console.log('fetchAndUpdate', prompt.substr(0, 30), ttl, cachedResponse ? cachedResponse.substr(0, 30) : 0);
+    // DEBUG console.log('fetchAndUpdate', prompt.substr(0, 30), ttl, ttlRemaining, cachedResponse ? cachedResponse.substr(0, 30) : 0);
     const data =
       isOnline && isOverview
         ? 'visit /reload to construct overview'
-        : await fetchAndUpdate(fullPrompt, cacheKey, ttl, /* hack */ cachedResponse);
+        : await fetchAndUpdate(fullPrompt, cacheKey, ttl, /* hack */ !isOnline && !isOverview ? cachedResponse : null);
     return res.status(200).json({ data: data });
   } catch (error) {
     console.error('Error making request to OpenAI:', error);

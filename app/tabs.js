@@ -11,14 +11,14 @@ export const tabs = [
       " This narrative should draw on the diversity of content available, blending it to highlight the topic's multifaceted" +
       ' nature. (2) Content Annotation and Integration: As you craft this unified narrative, ensure you tie back specific' +
       ' ideas, insights, or pieces of information to their original tabs. Annotate these elements within the narrative by' +
-      ' prefacing them with the tab name in brackets, like this: ##TAB:[Tab Name]##. This method will maintain a connection' +
-      ' to the source material, allowing readers to understand where each piece of the story originates. The final output' +
+      ' prefacing them with the tab name in brackets, like this: TAB: ##[Tab Name]## CONTENT: ... This method will maintain a ' +
+      ' connection to the source material, allowing readers to understand where each piece of the story originates. The final output' +
       ' should not only inform but also intrigue a general audience, making complex information accessible and engaging.' +
       ' Your challenge is to transcend the boundaries of individual tabs to tell a story that captures the essence of the' +
       ' entire topic, marked by clarity, coherence, and curiosity. Remember, the emphasis is on narrative quality, content' +
       ' integration, and the ability to spark interest among readers. This approach aims to present a narrative that guides' +
       " the reader through the topic's most compelling aspects, as revealed by a thoughtful synthesis of content across" +
-      ' selected tabs.',
+      ' selected tabs. Keep the language and tone matter of fact and non-grandiose.',
   },
   {
     name: 'News',

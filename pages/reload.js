@@ -93,7 +93,7 @@ const Reload = () => {
   const processSummary = (topic, signal) => {
     console.log('processSummary', topic, contentResults);
     const allTabsContent = Object.entries(contentResults.current[topic])
-      .map(([tabName, content]) => `##TAB:[${tabName}]##CONTENT: ${content}`)
+      .map(([tabName, content]) => `\n\nTAB: ##[${tabName}]## CONTENT: ${content}`)
       .join(', ');
     const summaryKey = `${topic}-Overview`;
     // Call the OpenAI API with the concatenated content for a summary
@@ -122,17 +122,16 @@ const Reload = () => {
       setLoading(true);
       topics.clusters.forEach((cluster) => {
         cluster.topics.forEach((topic) => {
-          if (topic === 'Computer Vision') {
-            // XXX
-            // Initialize the tab count for this topic
-            const notabs = tabs.filter((tab) => tab.name !== 'Overview');
-            topicTabCount.current[topic] = notabs.length;
-            notabs.forEach((tab) => {
-              const key = `${topic}-${tab.name}`;
-              setReloadState((prevState) => ({ ...prevState, [key]: 'loading' }));
-              enqueueRequest(topic, tab);
-            });
-          }
+          // DEBUG if (topic === 'Computer Vision') {
+          // Initialize the tab count for this topic
+          const notabs = tabs.filter((tab) => tab.name !== 'Overview');
+          topicTabCount.current[topic] = notabs.length;
+          notabs.forEach((tab) => {
+            const key = `${topic}-${tab.name}`;
+            setReloadState((prevState) => ({ ...prevState, [key]: 'loading' }));
+            enqueueRequest(topic, tab);
+          });
+          // }
         });
       });
     } else {
