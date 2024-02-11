@@ -6,19 +6,24 @@ export const tabs = [
       ' Your task is to create a compelling narrative that weaves together the most engaging and informative content' +
       ' across these tabs. Follow these guidelines to achieve this: (1) Unified Narrative Construction: Instead of' +
       ' summarizing each tab individually, thoroughly examine the content across all tabs and identify themes, insights,' +
-      ' or stories that stand out for their richness and engagement potential. Your objective is to construct a single,' +
+      ' or stories that stand out for their richness, uniqueness compared to other AI topics, non-obviousness to the lay' +
+      ' reader as well as the expert, and engagement potential to both groups. Your objective is to construct a single,' +
       ' cohesive narrative that integrates these elements, offering a comprehensive and captivating overview of the topic.' +
       " This narrative should draw on the diversity of content available, blending it to highlight the topic's multifaceted" +
-      ' nature. (2) Content Annotation and Integration: As you craft this unified narrative, ensure you tie back specific' +
+      ' nature. Aim for about 3 short paragraphs with clear <h3> section headers using ### to break the flow and avoid' +
+      ' producing a wall of text. Lists or other structure within these sections is okay too. Be concise, factual, matter' +
+      ' of fact, objective, and use simple and clear language.' +
+      ' (2) Content Annotation and Integration: As you craft this unified narrative, ensure you tie back specific' +
       ' ideas, insights, or pieces of information to their original tabs. Annotate these elements within the narrative by' +
-      ' prefacing them with the tab name in brackets, like this: TAB: ##[Tab Name]## CONTENT: ... This method will maintain a ' +
-      ' connection to the source material, allowing readers to understand where each piece of the story originates. The final output' +
-      ' should not only inform but also intrigue a general audience, making complex information accessible and engaging.' +
+      ' prefacing them with the tab name in brackets, like this: [[Tab Name]]. This method will maintain a ' +
+      ' connection to the source material, allowing readers to understand where each piece of the story originates.' +
+      ' The final output' +
+      ' should not only inform but also intrigue a general audience, making complex information accessible and engaging, but' +
+      ' without flowery or clickbaity language.' +
       ' Your challenge is to transcend the boundaries of individual tabs to tell a story that captures the essence of the' +
-      ' entire topic, marked by clarity, coherence, and curiosity. Remember, the emphasis is on narrative quality, content' +
-      ' integration, and the ability to spark interest among readers. This approach aims to present a narrative that guides' +
+      ' entire topic, marked by clarity, coherence, and curiosity. This approach aims to present a narrative that guides' +
       " the reader through the topic's most compelling aspects, as revealed by a thoughtful synthesis of content across" +
-      ' selected tabs. Keep the language and tone matter of fact and non-grandiose.',
+      ' selected tabs. Again, keep the language and tone matter of fact, non-grandiose, and non-clickbaity.',
   },
   {
     name: 'News',

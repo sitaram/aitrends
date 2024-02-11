@@ -12,18 +12,15 @@ const redis = new Redis(process.env.REDIS_URL); // Redis connection URL
 const BASE_TTL = 60 * 60 * 24 * 365 * 10; // 10 years in seconds, as a large TTL value
 
 // Helper function to fetch data from OpenAI and update cache
-async function fetchAndUpdate(prompt, cacheKey, ttl, responseData) {
-  // DEBUG console.log('MAYBE GPT REQUEST:', prompt.substr(0, 30), cacheKey.substr(0, 30), responseData ? responseData.substr(0, 30) : 0);
-  if (!responseData) {
-    // DEBUG console.log('GPT REQUEST:', prompt.substr(0, 30), cacheKey.substr(0, 30));
-    const completion = await openai.chat.completions.create({
-      messages: [{ role: 'system', content: prompt }],
-      model: 'gpt-4-turbo-preview',
-    });
-    // DEBUG console.log('GPT RESP', completion);
+async function fetchAndUpdate(prompt, cacheKey, ttl) {
+  // DEBUG console.log('GPT REQUEST:', prompt.substr(0, 30), cacheKey.substr(0, 30));
+  const completion = await openai.chat.completions.create({
+    messages: [{ role: 'system', content: prompt }],
+    model: 'gpt-4-turbo-preview',
+  });
+  // DEBUG console.log('GPT RESP', completion);
 
-    responseData = completion.choices[0]?.message?.content || '';
-  }
+  const responseData = completion.choices[0]?.message?.content || '';
   await redis.setex(cacheKey, ttl + BASE_TTL, responseData); // Set with elevated TTL
   return responseData;
 }
@@ -53,9 +50,7 @@ export default async (req, res) => {
 
     // DEBUG console.log('fetchAndUpdate', prompt.substr(0, 30), ttl, ttlRemaining, cachedResponse ? cachedResponse.substr(0, 30) : 0);
     const data =
-      isOnline && isOverview
-        ? 'visit /reload to construct overview'
-        : await fetchAndUpdate(fullPrompt, cacheKey, ttl, /* hack */ true || !isOverview ? cachedResponse : null);
+      isOnline && isOverview ? 'visit /reload to construct overview' : await fetchAndUpdate(fullPrompt, cacheKey, ttl);
     return res.status(200).json({ data: data });
   } catch (error) {
     console.error('Error making request to OpenAI:', error);

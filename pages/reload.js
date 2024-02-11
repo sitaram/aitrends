@@ -24,6 +24,9 @@ const Reload = () => {
       const controller = new AbortController();
       fetchData(topic, tab, controller.signal);
     }
+    if (!activeRequests.current && !requestQueue.current) {
+      setLoading(false);
+    }
   };
 
   const renderStatusIcon = (status) => {
@@ -50,7 +53,6 @@ const Reload = () => {
     const ttl = tab.ttl || 90 * 86400;
     console.log('fetchData', topic, tab.name, prompt, ttl);
     try {
-      setLoading(true);
       activeRequests.current.add(key);
       const content = await fetchContent(
         prompt,
@@ -94,10 +96,11 @@ const Reload = () => {
     console.log('processSummary', topic, contentResults);
     return;
     const allTabsContent = Object.entries(contentResults.current[topic])
-      .map(([tabName, content]) => `\n\nTAB: ##[${tabName}]## CONTENT: ${content}`)
+      .map(([tabName, content]) => `\n\nTAB: [[${tabName}]] CONTENT: ${content}`)
       .join(', ');
     const summaryKey = `${topic}-Overview`;
     // Call the OpenAI API with the concatenated content for a summary
+    setReloadState((prevState) => ({ ...prevState, [summaryKey]: 'loading' }));
     const summaryPrompt = tabs[0].prompt.replace('${topic}', topic);
     const content = fetchContent(
       summaryPrompt,
@@ -119,13 +122,23 @@ const Reload = () => {
   };
 
   const handleReloadClick = () => {
+    const notabs = tabs.filter((tab) => tab.name !== 'Overview');
     if (!loading) {
       setLoading(true);
+      setReloadState({});
+
+      const topic = Constants.ALLTOPICS;
+      topicTabCount.current[topic] = notabs.length;
+      notabs.forEach((tab) => {
+        const key = `${topic}-${tab.name}`;
+        setReloadState((prevState) => ({ ...prevState, [key]: 'loading' }));
+        enqueueRequest(topic, tab);
+      });
+
       topics.clusters.forEach((cluster) => {
         cluster.topics.forEach((topic) => {
-          if (topic === 'AI in Retail') {
+          if (0 || /* hack */ topic === 'AI in Retail') {
             // Initialize the tab count for this topic
-            const notabs = tabs.filter((tab) => tab.name !== 'Overview');
             topicTabCount.current[topic] = notabs.length;
             notabs.forEach((tab) => {
               const key = `${topic}-${tab.name}`;
@@ -138,7 +151,28 @@ const Reload = () => {
     } else {
       // Abort logic if needed or reset state to stop
       setLoading(false);
-      setReloadState({});
+
+      // Reset dashboard.
+      const topic = Constants.ALLTOPICS;
+      tabs.forEach((tab) => {
+        tabs.forEach((tab) => {
+          const key = `${topic}-${tab.name}`;
+          if (reloadState[key] !== 'success') {
+            setReloadState((prevState) => ({ ...prevState, [key]: 'error' }));
+          }
+        });
+      });
+      topics.clusters.forEach((cluster) => {
+        cluster.topics.forEach((topic) => {
+          tabs.forEach((tab) => {
+            const key = `${topic}-${tab.name}`;
+            if (reloadState[key] !== 'success') {
+              setReloadState((prevState) => ({ ...prevState, [key]: 'error' }));
+            }
+          });
+        });
+      });
+
       contentResults.current = {};
       topicTabCount.current = {};
       requestQueue.current = [];
