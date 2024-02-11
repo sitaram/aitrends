@@ -137,7 +137,7 @@ const Reload = () => {
 
       topics.clusters.forEach((cluster) => {
         cluster.topics.forEach((topic) => {
-          if (1 || /* hack */ topic === 'AI in Retail') {
+          if (0 || /* hack */ topic === 'AI in Retail' || topic === 'Computer Vision') {
             // Initialize the tab count for this topic
             topicTabCount.current[topic] = notabs.length;
             notabs.forEach((tab) => {
