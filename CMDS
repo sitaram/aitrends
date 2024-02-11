@@ -18,9 +18,6 @@ npm install nodemailer
 vercel
 later: vercel deploy
 
-export REDIS_PASSWORD=HnpfWgwuZr2tGQA3FIj8gdmEel6jQqyY
-alias redis-cli='redis-cli -u redis://default:HnpfWgwuZr2tGQA3FIj8gdmEel6jQqyY@redis-18289.c281.us-east-1-2.ec2.cloud.redislabs.com:18289'
-
 redis-cli EVAL "$(cat del.lua)" 1 "*List the major companies and org*"
 
 

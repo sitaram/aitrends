@@ -92,6 +92,7 @@ const Reload = () => {
 
   const processSummary = (topic, signal) => {
     console.log('processSummary', topic, contentResults);
+    return;
     const allTabsContent = Object.entries(contentResults.current[topic])
       .map(([tabName, content]) => `\n\nTAB: ##[${tabName}]## CONTENT: ${content}`)
       .join(', ');
@@ -122,16 +123,16 @@ const Reload = () => {
       setLoading(true);
       topics.clusters.forEach((cluster) => {
         cluster.topics.forEach((topic) => {
-          // DEBUG if (topic === 'Computer Vision') {
-          // Initialize the tab count for this topic
-          const notabs = tabs.filter((tab) => tab.name !== 'Overview');
-          topicTabCount.current[topic] = notabs.length;
-          notabs.forEach((tab) => {
-            const key = `${topic}-${tab.name}`;
-            setReloadState((prevState) => ({ ...prevState, [key]: 'loading' }));
-            enqueueRequest(topic, tab);
-          });
-          // }
+          if (topic === 'AI in Retail') {
+            // Initialize the tab count for this topic
+            const notabs = tabs.filter((tab) => tab.name !== 'Overview');
+            topicTabCount.current[topic] = notabs.length;
+            notabs.forEach((tab) => {
+              const key = `${topic}-${tab.name}`;
+              setReloadState((prevState) => ({ ...prevState, [key]: 'loading' }));
+              enqueueRequest(topic, tab);
+            });
+          }
         });
       });
     } else {
