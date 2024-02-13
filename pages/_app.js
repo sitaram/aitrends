@@ -1,13 +1,12 @@
 // _app.js
 import { useEffect } from 'react';
-import { initGA, logPageView } from './analytics'; // Import the utility you created
+import ReactGA from 'react-ga';
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
-    initGA(); // Initialize Google Analytics
-    logPageView(); // Log the initial page view
-
-    // Add additional tracking logic as needed
+    ReactGA.initialize('G-TX2GLY9R4W');
+    ReactGA.set({ page: window.location.pathname });
+    ReactGA.pageview(window.location.pathname);
   }, []);
 
   return <Component {...pageProps} />;
