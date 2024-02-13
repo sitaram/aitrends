@@ -31,22 +31,27 @@ const CustomMarkdown = ({ text, topic, handleTabChange }) => {
   };
 
   // Enhanced helper function for component creation with preprocessing and displayName
-  const createComponent = (Tag, style = {}) => {
+  const createComponent = (Tag, shouldLink, style = {}) => {
     const Component = ({ node, ...props }) => {
+      const theme = useTheme();
       const processedChildren = React.Children.map(props.children, (child) =>
         typeof child === 'string' ? removeLeadingNumbers(child) : child
       );
 
-      return (
+      return shouldLink ? (
         <Tag {...props} style={{ ...style, fontWeight: style.fontWeight || 'normal' }}>
           <a
             href={createGoogleSearchLink(props.children.toString())}
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: style.color || 'inherit' }}
+            style={{ color: style.color === 'primary' ? theme.palette.primary.main : style.color }}
           >
             {processedChildren}
           </a>
+        </Tag>
+      ) : (
+        <Tag {...props} style={{ ...style, fontWeight: style.fontWeight || 'normal' }}>
+          {processedChildren}
         </Tag>
       );
     };
@@ -59,6 +64,7 @@ const CustomMarkdown = ({ text, topic, handleTabChange }) => {
 
   // Custom renderer for list items to replace [[keyword]] with clickable spans
   const listItemComponent = ({ node, ...props }) => {
+    const theme = useTheme();
     // Assuming children is an array of text or inline elements
     const processedChildren = React.Children.map(props.children, (child) => {
       if (typeof child === 'string') {
@@ -97,14 +103,22 @@ const CustomMarkdown = ({ text, topic, handleTabChange }) => {
     return <li>{processedChildren}</li>;
   };
 
-  // Use the helper function to define custom components
   const markdownComponents = {
-    strong: createComponent('strong', { color: '#0056a3', fontWeight: 'bold' }),
-    h1: createComponent('h1', { color: 'red', textDecoration: 'underline' }),
-    h2: createComponent('h2', { color: 'green', fontWeight: 'bold', textDecoration: 'underline' }),
-    h3: createComponent('h3', { color: 'tomato', fontWeight: 'bold', borderTop: 1, borderColor: 'divider' }),
-    h4: createComponent('h4', { color: 'darkred' }),
-    li: listItemComponent,
+    strong: createComponent('strong', true, { color: theme.palette.markdown.strong, fontWeight: 'bold' }),
+    h1: createComponent('h1', true, { color: theme.palette.markdown.h1, textDecoration: 'underline' }),
+    h2: createComponent('h2', true, {
+      color: theme.palette.markdown.h2,
+      fontWeight: 'bold',
+      textDecoration: 'underline',
+    }),
+    h3: createComponent('h3', true, {
+      color: theme.palette.markdown.h3,
+      fontWeight: 'bold',
+      borderTop: 1,
+      borderColor: 'divider',
+    }),
+    h4: createComponent('h4', false, { color: theme.palette.markdown.h4 }),
+    li: listItemComponent, // Assuming listItemComponent is defined elsewhere
   };
 
   return (

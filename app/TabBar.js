@@ -99,6 +99,9 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window }) => {
         position="static"
         color="default"
         sx={{
+          '& .MuiTabs-root': {
+            backgroundColor: 'red',
+          },
           backgroundColor: theme.palette.background.paper,
           borderBottom: 1,
           borderColor: 'divider',
@@ -113,6 +116,9 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window }) => {
             allowScrollButtonsMobile
             ref={tabsRef} // Apply the ref to the Tabs component
             sx={{
+              '& .Mui-selected': {
+                color: theme.palette.primary.main,
+              },
               '& .MuiTabs-indicator': {
                 backgroundColor: theme.palette.primary.main,
               },
