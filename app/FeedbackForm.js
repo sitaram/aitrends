@@ -36,12 +36,13 @@ const FeedbackForm = ({ toggleFeedbackModal }) => {
         transform: 'translate(-50%, -50%)',
         bgcolor: 'background.paper',
         boxShadow: 24,
-        p: 4,
-        maxWidth: 400,
+        padding: '20px',
+        width: '80%',
+        maxWidth: 500,
       }}
     >
       <Typography variant="h6" gutterBottom>
-        Provide Feedback
+        Provide Feedback to Sitaram
       </Typography>
       <TextField
         label="Name"
