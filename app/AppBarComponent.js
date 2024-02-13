@@ -124,12 +124,14 @@ const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic, setShowAbou
                 </ListItemIcon>
                 <ListItemText primary="Share" />
               </ListItem>
+              {/*
               <ListItem button onClick={handleSubscribe}>
                 <ListItemIcon>
                   <SubscribeIcon />
                 </ListItemIcon>
                 <ListItemText primary="Subscribe" />
               </ListItem>
+	      */}
               <ListItem button onClick={toggleFeedbackModal}>
                 <ListItemIcon>
                   <FeedbackIcon />
