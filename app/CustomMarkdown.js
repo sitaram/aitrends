@@ -1,8 +1,12 @@
+import { useTheme } from '@mui/material';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
+import { tabs } from './tabs';
 
-const CustomMarkdown = ({ text, topic }) => {
+const CustomMarkdown = ({ text, topic, handleTabChange }) => {
+  const theme = useTheme();
+
   const createGoogleSearchLink = (keyword) =>
     `https://www.google.com/search?q=${encodeURIComponent(`${topic}: ${keyword}`)}`;
 
@@ -53,6 +57,46 @@ const CustomMarkdown = ({ text, topic }) => {
     return Component;
   };
 
+  // Custom renderer for list items to replace [[keyword]] with clickable spans
+  const listItemComponent = ({ node, ...props }) => {
+    // Assuming children is an array of text or inline elements
+    const processedChildren = React.Children.map(props.children, (child) => {
+      if (typeof child === 'string') {
+        // Splitting the string on [[keyword]] patterns and processing each part
+        const parts = child.split(/\[\[([^\]]+)\]\]/g);
+        return parts.map((part, index) => {
+          // Odd indices are keywords, even indices are regular text
+          if (index % 2 === 1) {
+            // This is a keyword part, return a clickable span
+            return [
+              <>
+                {'['}
+                <span
+                  key={index}
+                  style={{ color: theme.palette.primary.main, textDecoration: 'underline', cursor: 'pointer' }}
+                  onClick={() => {
+                    const index = tabs.findIndex((t) => t.name === part);
+                    if (index !== -1) handleTabChange(null, index);
+                  }}
+                >
+                  {part}
+                </span>
+                {']'}
+              </>,
+            ];
+          }
+          // This is a regular text part, return it directly
+          return part;
+        });
+      }
+      // For non-string children, just return them directly
+      return child;
+    });
+
+    // Return the processed list item with transformed children
+    return <li>{processedChildren}</li>;
+  };
+
   // Use the helper function to define custom components
   const markdownComponents = {
     strong: createComponent('strong', { color: '#0056a3', fontWeight: 'bold' }),
@@ -60,6 +104,7 @@ const CustomMarkdown = ({ text, topic }) => {
     h2: createComponent('h2', { color: 'green', textDecoration: 'underline' }),
     h3: createComponent('h3', { color: 'tomato', fontWeight: 'bold', borderTop: 1, borderColor: 'divider' }),
     h4: createComponent('h4', { color: 'darkred', fontWeight: 'bold' }),
+    li: listItemComponent,
   };
 
   return (

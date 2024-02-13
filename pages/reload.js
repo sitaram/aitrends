@@ -95,7 +95,7 @@ const Reload = () => {
   const processSummary = (topic, signal) => {
     console.log('processSummary', topic, contentResults);
     const allTabsContent = Object.entries(contentResults.current[topic])
-      .map(([tabName, content]) => `\n\nTAB: [[${tabName}]] CONTENT: ${content}`)
+      .map(([tabName, content]) => `\n\n----------------------\n\nTAB NAME: [[${tabName}]]\nCONTENT: ${content}`)
       .join(', ');
     const summaryKey = `${topic}-Overview`;
     // Call the OpenAI API with the concatenated content for a summary

@@ -118,13 +118,24 @@ const Home = () => {
   // Parse the initial hash parameters
   useEffect(() => {
     const { topic, tab } = parseHashParams(window.location.hash);
-
     const newTopicIndex = allTopics.findIndex((t) => t === topic);
     if (newTopicIndex !== -1) setTopicIndex(newTopicIndex);
-
     const newTabIndex = tabs.findIndex((t) => t.name === tab);
     if (newTabIndex !== -1) setTabIndex(newTabIndex);
   }, []);
+
+  // Parse hash parameters on hash change
+  useEffect(() => {
+    const handleHashChange = () => {
+      const { topic, tab } = parseHashParams(window.location.hash);
+      const newTopicIndex = allTopics.findIndex((t) => t === topic);
+      if (newTopicIndex !== -1) setTopicIndex(newTopicIndex);
+      const newTabIndex = tabs.findIndex((t) => t.name === tab);
+      if (newTabIndex !== -1) setTabIndex(newTabIndex);
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, [tabs]);
 
   // Updates the displayed topic based on the scroll position
   useEffect(() => {
@@ -231,7 +242,14 @@ const Home = () => {
               </Typography>
             </Paper>
             <TabBar tabs={tabs} tabIndex={tabIndex} handleTabChange={handleTabChange} />
-            <ContentComponent topic={topic} isLoading={isLoading} content={content} handleSwitchTab={handleSwitchTab} />
+            <ContentComponent
+              topic={topic}
+              tabIndex={tabIndex}
+              isLoading={isLoading}
+              content={content}
+              handleSwitchTab={handleSwitchTab}
+              handleTabChange={handleTabChange}
+            />
             <TopicButton handleTopicsDrawerToggle={handleTopicsDrawerToggle} />
             {showAbout && <About setShowAbout={setShowAbout} />}
           </Box>

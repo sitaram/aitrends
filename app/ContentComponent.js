@@ -4,7 +4,7 @@ import { ThreeDots } from 'react-loader-spinner';
 import CustomMarkdown from './CustomMarkdown';
 import { useSwipeable } from 'react-swipeable';
 
-const ContentComponent = ({ topic, isLoading, content, handleSwitchTab }) => {
+const ContentComponent = ({ topic, tabIndex, isLoading, content, handleSwitchTab, handleTabChange }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [feedback, setFeedback] = useState(''); // 'Next', 'Previous', or ''
@@ -60,15 +60,45 @@ const ContentComponent = ({ topic, isLoading, content, handleSwitchTab }) => {
           <ThreeDots color="#3a506b" />
         </div>
       ) : (
-        content.map((part, index) => (
-          <Paper
-            key={index}
-            elevation={1}
-            sx={{ padding: '10px 16px', marginBottom: '0', borderBottom: 0, borderColor: 'divider', borderRadius: 0 }}
-          >
-            <CustomMarkdown text={part} topic={topic} />
-          </Paper>
-        ))
+        <>
+          {tabIndex != 0 ? (
+            <Paper
+              sx={{
+                padding: '10px 16px',
+                marginBottom: '0',
+                borderBottom: 0,
+                borderColor: 'divider',
+                borderRadius: 0,
+                marginRight: 0,
+              }}
+            >
+              <div
+                style={{
+                  color: theme.palette.primary.main,
+                  textDecoration: 'underline',
+                  cursor: 'pointer',
+                  textAlign: 'right',
+                }}
+                onClick={() => {
+                  handleTabChange(null, 0);
+                }}
+              >
+                &lt; Back to overview tab
+              </div>
+            </Paper>
+          ) : (
+            ''
+          )}
+          {content.map((part, index) => (
+            <Paper
+              key={index}
+              elevation={1}
+              sx={{ padding: '10px 16px', marginBottom: '0', borderBottom: 0, borderColor: 'divider', borderRadius: 0 }}
+            >
+              <CustomMarkdown text={part} topic={topic} handleTabChange={handleTabChange} />
+            </Paper>
+          ))}
+        </>
       )}
     </div>
   );
