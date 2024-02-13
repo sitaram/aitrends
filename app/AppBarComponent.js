@@ -135,14 +135,14 @@ const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic, setShowAbou
                 </ListItemIcon>
                 <ListItemText primary="Feedback" />
               </ListItem>
-              /*
+              {/*
               <ListItem button onClick={handleBlogPost}>
                 <ListItemIcon>
                   <BlogIcon />
                 </ListItemIcon>
                 <ListItemText primary="Blog Post" />
               </ListItem>
-              */
+              */}
             </List>
           </Box>
         </Drawer>
