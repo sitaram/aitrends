@@ -14,7 +14,6 @@ import {
   TextField,
   Button,
 } from '@mui/material';
-import { useTheme } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShareIcon from '@mui/icons-material/Share';
 import SubscribeIcon from '@mui/icons-material/Subscriptions';
@@ -23,9 +22,9 @@ import InfoIcon from '@mui/icons-material/Info';
 import BlogIcon from '@mui/icons-material/Article';
 import CloseIcon from '@mui/icons-material/Close';
 import LogoComponent from './LogoComponent';
+import FeedbackForm from './FeedbackForm';
 
 const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic, setShowAbout }) => {
-  const theme = useTheme();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const [feedbackData, setFeedbackData] = useState('');
@@ -79,27 +78,6 @@ const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic, setShowAbou
     alert(data.message); // Display success message
   };
 
-  const handleFeedback = async (feedbackData) => {
-    // POST request to /api/feedback
-    const response = await fetch('/api/feedback', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(feedbackData),
-    });
-
-    const data = await response.json();
-    alert(data.message); // Display success message
-  };
-
-  const handleFeedbackSubmit = async () => {
-    // Call handleFeedback function with feedbackData
-    await handleFeedback(feedbackData);
-    // Close the feedback modal
-    toggleFeedbackModal();
-  };
-
   const handleAbout = () => {
     setShowAbout(true);
   };
@@ -113,41 +91,7 @@ const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic, setShowAbou
     <AppBar position="fixed">
       {/* App bar content */}
       <Modal open={feedbackModalOpen} onClose={toggleFeedbackModal}>
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            bgcolor: 'background.paper',
-            boxShadow: 24,
-            p: 4,
-            maxWidth: 400,
-          }}
-        >
-          <Typography variant="h6" gutterBottom>
-            Provide Feedback
-          </Typography>
-          <TextField
-            label="Feedback"
-            multiline
-            rows={4}
-            variant="outlined"
-            fullWidth
-            value={feedbackData}
-            onChange={(e) => setFeedbackData(e.target.value)}
-          />
-          <Box sx={{ mt: 2 }}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleFeedbackSubmit}
-              style={{ backgroundColor: theme.palette.primary.main }}
-            >
-              Submit
-            </Button>
-          </Box>
-        </Box>
+        <FeedbackForm toggleFeedbackModal={toggleFeedbackModal} />
       </Modal>
 
       <Toolbar sx={{ paddingRight: '8px' }}>

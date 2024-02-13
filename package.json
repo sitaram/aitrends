@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.6",
     "@mui/material": "^5.15.6",
+    "@sendgrid/mail": "^8.1.0",
     "axios": "^1.6.7",
     "dgram": "^1.0.1",
     "dns": "^0.2.2",
