@@ -35,15 +35,22 @@ const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic, setShowAbou
       try {
         await navigator.share({
           title: 'AITrends.live',
-          url: 'https://aitrends.live',
+          text: 'Keep up with the latest trends in AI with this dynamic and interactive newsletter. Explore now!',
+          url: window.location.href,
         });
         console.log('Content shared successfully');
       } catch (error) {
         console.log('Error sharing the content', error);
       }
     } else {
-      // Fallback for browsers that do not support navigator.share
-      alert('Share not supported on this browser. Please copy the URL manually.');
+      // Improved fallback: Copy URL to clipboard and notify the user
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        alert('URL copied to clipboard. Share it with your friends!');
+      } catch (error) {
+        console.error('Failed to copy URL', error);
+        alert('Unable to copy URL automatically. Please copy the URL manually.');
+      }
     }
   };
 
