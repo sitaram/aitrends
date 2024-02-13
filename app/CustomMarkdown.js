@@ -64,7 +64,6 @@ const CustomMarkdown = ({ text, topic, handleTabChange }) => {
 
   // Custom renderer for list items to replace [[keyword]] with clickable spans
   const listItemComponent = ({ node, ...props }) => {
-    const theme = useTheme();
     // Assuming children is an array of text or inline elements
     const processedChildren = React.Children.map(props.children, (child) => {
       if (typeof child === 'string') {
