@@ -94,6 +94,12 @@ const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic, setShowAbou
         >
           <Box sx={{ width: 200 }} role="presentation" onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
             <List>
+              <ListItem button onClick={handleAbout}>
+                <ListItemIcon>
+                  <InfoIcon />
+                </ListItemIcon>
+                <ListItemText primary="About" />
+              </ListItem>
               <ListItem button onClick={handleShare}>
                 <ListItemIcon>
                   <ShareIcon />
@@ -111,12 +117,6 @@ const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic, setShowAbou
                   <FeedbackIcon />
                 </ListItemIcon>
                 <ListItemText primary="Feedback" />
-              </ListItem>
-              <ListItem button onClick={handleAbout}>
-                <ListItemIcon>
-                  <InfoIcon />
-                </ListItemIcon>
-                <ListItemText primary="About" />
               </ListItem>
               <ListItem button onClick={handleBlogPost}>
                 <ListItemIcon>
