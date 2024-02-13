@@ -1,26 +1,16 @@
-import Script from 'next/script';
+// _app.js
+import { useEffect } from 'react';
+import { initGA, logPageView } from 'api/analytics'; // Import the utility you created
 
 function MyApp({ Component, pageProps }) {
-  return (
-    <>
-      <Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=G-TX2GLY9R4W`} />
-      <Script
-        id="google-analytics-script" // Add an `id` attribute here
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-TX2GLY9R4W', {
-              page_path: window.location.pathname,
-            });
-          `,
-        }}
-      />
-      <Component {...pageProps} />
-    </>
-  );
+  useEffect(() => {
+    initGA(); // Initialize Google Analytics
+    logPageView(); // Log the initial page view
+
+    // Add additional tracking logic as needed
+  }, []);
+
+  return <Component {...pageProps} />;
 }
 
 export default MyApp;
