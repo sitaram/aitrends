@@ -1,6 +1,6 @@
 // _app.js
 import { useEffect } from 'react';
-import { initGA, logPageView } from 'api/analytics'; // Import the utility you created
+import { initGA, logPageView } from './analytics'; // Import the utility you created
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
