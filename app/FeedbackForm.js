@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef } from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { useTheme } from '@mui/material';
 
-const FeedbackForm = ({ toggleFeedbackModal }) => {
+const FeedbackForm = forwardRef(({ toggleFeedbackModal }, ref) => {
   const theme = useTheme();
   const [feedback, setFeedback] = useState('');
   const [name, setName] = useState('');
@@ -29,6 +29,7 @@ const FeedbackForm = ({ toggleFeedbackModal }) => {
 
   return (
     <Box
+      ref={ref}
       sx={{
         position: 'absolute',
         top: '50%',
@@ -45,6 +46,7 @@ const FeedbackForm = ({ toggleFeedbackModal }) => {
         Provide Feedback to Sitaram
       </Typography>
       <TextField
+        autoFocus
         label="Name"
         variant="outlined"
         fullWidth
@@ -82,6 +84,6 @@ const FeedbackForm = ({ toggleFeedbackModal }) => {
       </Box>
     </Box>
   );
-};
+});
 
 export default FeedbackForm;
