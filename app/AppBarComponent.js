@@ -54,15 +54,32 @@ const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic, setShowAbou
     }
   };
 
-  // Placeholder functions for other actions
-  const handleSubscribe = () => {
-    console.log('Navigate to subscribe');
-    // Implement navigation to subscribe
+  const handleSubscribe = async (email) => {
+    // POST request to /api/subscribe
+    const response = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    const data = await response.json();
+    alert(data.message); // Display success message
   };
 
-  const handleFeedback = () => {
-    console.log('Navigate to feedback');
-    // Implement opening a feedback modal or navigating to a feedback page
+  const handleFeedback = async (feedbackData) => {
+    // POST request to /api/feedback
+    const response = await fetch('/api/feedback', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(feedbackData),
+    });
+
+    const data = await response.json();
+    alert(data.message); // Display success message
   };
 
   const handleAbout = () => {
@@ -118,12 +135,14 @@ const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic, setShowAbou
                 </ListItemIcon>
                 <ListItemText primary="Feedback" />
               </ListItem>
+              /*
               <ListItem button onClick={handleBlogPost}>
                 <ListItemIcon>
                   <BlogIcon />
                 </ListItemIcon>
                 <ListItemText primary="Blog Post" />
               </ListItem>
+              */
             </List>
           </Box>
         </Drawer>
