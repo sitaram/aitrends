@@ -101,9 +101,9 @@ const CustomMarkdown = ({ text, topic, handleTabChange }) => {
   const markdownComponents = {
     strong: createComponent('strong', { color: '#0056a3', fontWeight: 'bold' }),
     h1: createComponent('h1', { color: 'red', textDecoration: 'underline' }),
-    h2: createComponent('h2', { color: 'green', textDecoration: 'underline' }),
+    h2: createComponent('h2', { color: 'green', fontWeight: 'bold', textDecoration: 'underline' }),
     h3: createComponent('h3', { color: 'tomato', fontWeight: 'bold', borderTop: 1, borderColor: 'divider' }),
-    h4: createComponent('h4', { color: 'darkred', fontWeight: 'bold' }),
+    h4: createComponent('h4', { color: 'darkred' }),
     li: listItemComponent,
   };
 
