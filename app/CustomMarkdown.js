@@ -80,7 +80,7 @@ const CustomMarkdown = ({ text, topic, handleTabChange }) => {
                   key={index}
                   style={{ color: theme.palette.primary.main, textDecoration: 'underline', cursor: 'pointer' }}
                   onClick={() => {
-                    const index = tabs.findIndex((t) => t.name === part);
+                    const index = tabs.findIndex((t) => t === part);
                     if (index !== -1) handleTabChange(null, index);
                   }}
                 >
