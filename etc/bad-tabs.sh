@@ -7,8 +7,9 @@
 perl -lne '
 
 my @x = (
-'"$(awk -F\' '{print $2}' app/tabs.js | grep -v Divider | grep .)"'
+'"$(awk -F\' '{print $2}' "$(dirname $0)/../app/tabs.js" | grep -v Divider | grep . | sed "s/.*/'&',/")"'
 );
+
 %tab = ();
 foreach (@x) {
 $tab{$_} = 1;

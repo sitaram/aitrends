@@ -36,8 +36,8 @@ const Home = () => {
   // State hooks for managing the app's state
   const [topicsDrawerOpen, setTopicsDrawerOpen] = useState(true);
   const [topic, setTopic] = useState(Constants.ALLTOPICS);
-  // Find the index of "AI Industry Applications" category within topics.clusters
-  const defaultOpenIndex = topics.clusters.findIndex((cluster) => cluster.name === 'AI Industry Applications');
+  // Find the index of "Industry Applications" category within topics.clusters
+  const defaultOpenIndex = topics.clusters.findIndex((cluster) => cluster.name === 'Industry Applications');
   const [openClusterIndex, setOpenClusterIndex] = useState(defaultOpenIndex);
   const [topicIndex, setTopicIndex] = useState(0);
   const [displayedTopic, setDisplayedTopic] = useState(Constants.APPNAME);

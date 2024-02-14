@@ -1,3 +1,18 @@
+reload:
+- don't stop until overview is done too
+- don't overview unless tabs are all successful, not just done
+- hscroll
+- alternate gray
+
+AI Operations (AIOps)
+AI for Content Distribution
+AI for Digital Marketing
+AI for Energy Efficiency
+AI in DevOps
+Advanced Analytics Techniques
+Data Ethics
+Data Security
+
 freshen: rag (web pages input to api) via langchain; https://chat.openai.com/share/3490887b-f162-49e4-9ff3-451ba5799f06
 yt videos
 
