@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AppBar, Tabs, Tab, Box, Divider, useScrollTrigger, useTheme, useMediaQuery } from '@mui/material';
 import { hexToRgba } from './utils';
 
-const ElevationScroll = ({ children, window }) => {
+const ElevationScroll = ({ children, window, setIsTabBarSticky }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -11,6 +11,10 @@ const ElevationScroll = ({ children, window }) => {
     threshold: 93,
     target: window ? window() : undefined,
   });
+
+  useEffect(() => {
+    setIsTabBarSticky(trigger);
+  }, [trigger, setIsTabBarSticky]);
 
   return React.cloneElement(children, {
     elevation: trigger ? 4 : 0,
@@ -70,7 +74,7 @@ const tabContainerStyle = (theme) => {
   };
 };
 
-const TabBar = ({ tabs, tabIndex, handleTabChange, window }) => {
+const TabBar = ({ tabs, tabIndex, handleTabChange, window, setIsTabBarSticky }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const tabsRef = useRef(null);
@@ -94,7 +98,7 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window }) => {
   }, [tabIndex]);
 
   return (
-    <ElevationScroll window={window}>
+    <ElevationScroll window={window} setIsTabBarSticky={setIsTabBarSticky}>
       <AppBar
         position="static"
         color="default"

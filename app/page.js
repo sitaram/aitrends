@@ -46,6 +46,7 @@ const Home = () => {
   const [content, setContent] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
+  const [isTabBarSticky, setIsTabBarSticky] = useState(false);
   const updateScheduled = useRef(false);
 
   // Function to update the URL hash for topic and tab
@@ -241,11 +242,17 @@ const Home = () => {
                 </IconButton>
               </Typography>
             </Paper>
-            <TabBar tabs={tabs} tabIndex={tabIndex} handleTabChange={handleTabChange} />
+            <TabBar
+              tabs={tabs}
+              tabIndex={tabIndex}
+              handleTabChange={handleTabChange}
+              setIsTabBarSticky={setIsTabBarSticky}
+            />
             <ContentComponent
               topic={topic}
               tabIndex={tabIndex}
               isLoading={isLoading}
+              isTabBarSticky={isTabBarSticky}
               content={content}
               handleSwitchTab={handleSwitchTab}
               handleTabChange={handleTabChange}

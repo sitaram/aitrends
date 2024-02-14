@@ -4,7 +4,15 @@ import { ThreeDots } from 'react-loader-spinner';
 import CustomMarkdown from './CustomMarkdown';
 import { useSwipeable } from 'react-swipeable';
 
-const ContentComponent = ({ topic, tabIndex, isLoading, content, handleSwitchTab, handleTabChange }) => {
+const ContentComponent = ({
+  topic,
+  tabIndex,
+  isLoading,
+  isTabBarSticky,
+  content,
+  handleSwitchTab,
+  handleTabChange,
+}) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [feedback, setFeedback] = useState(''); // 'Next', 'Previous', or ''
@@ -60,11 +68,18 @@ const ContentComponent = ({ topic, tabIndex, isLoading, content, handleSwitchTab
           <ThreeDots color="#3a506b" />
         </div>
       ) : (
-        <>
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            width: '100%',
+            marginTop: isTabBarSticky ? '52px' : '0px',
+          }}
+        >
           {tabIndex != 0 ? (
             <Paper
               sx={{
-                padding: '10px 16px',
+                padding: '30px 16px',
                 marginBottom: '0',
                 borderBottom: 0,
                 borderColor: 'divider',
@@ -112,7 +127,7 @@ const ContentComponent = ({ topic, tabIndex, isLoading, content, handleSwitchTab
               'relevance, OpenAI does not guarantee the correctness or currentness of the AI-generated information. It is ' +
               'intended for informational purposes only and should not be taken as professional advice.'}
           </div>
-        </>
+        </Box>
       )}
     </div>
   );
