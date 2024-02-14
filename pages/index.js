@@ -13,21 +13,21 @@ import {
   Tabs,
   useMediaQuery,
 } from '@mui/material';
-import AppBarComponent from './AppBarComponent';
-import DrawerComponent from './DrawerComponent';
-import TabBar from './TabBar';
-import ContentComponent from './ContentComponent';
-import TopicButton from './TopicButton';
+import AppBarComponent from './src/AppBarComponent';
+import DrawerComponent from './src/DrawerComponent';
+import TabBar from './src/TabBar';
+import ContentComponent from './src/ContentComponent';
+import TopicButton from './src/TopicButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import About from './About';
-import { fetchContent } from './api';
-import { calculateTTL, flattenTopics, parseHashParams } from './utils';
-import { topics } from './topics';
-import { tabs } from './tabs';
-import { getTheme } from './theme';
+import About from './src/About';
+import { fetchContent } from './src/api';
+import { calculateTTL, flattenTopics, parseHashParams } from './src/utils';
+import { topics } from './src/topics';
+import { tabs } from './src/tabs';
+import { getTheme } from './src/theme';
 import axios from 'axios';
-import * as Constants from './constants';
+import * as Constants from './src/constants';
 
 const Home = () => {
   const theme = getTheme(useMediaQuery('(prefers-color-scheme: dark)') ? 'dark' : 'light');

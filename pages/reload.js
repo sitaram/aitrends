@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
-import { fetchContent } from '../app/api';
-import { topics } from '../app/topics';
-import { tabs as origTabs } from '../app/tabs';
+import { fetchContent } from '../src/api';
+import { topics } from '../src/topics';
+import { tabs as origTabs } from '../src/tabs';
+import * as Constants from '../src/constants';
 import axios from 'axios';
-import * as Constants from '../app/constants';
 
 const Reload = () => {
   const [reloadState, setReloadState] = useState({});
