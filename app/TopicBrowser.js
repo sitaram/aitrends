@@ -34,6 +34,7 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
 }));
 
 const SubListItem = styled(ListItem)(({ theme }) => ({
+  padding: '2px 10px',
   paddingLeft: theme.spacing(4), // Add left padding to indent sub-items
   '&.Mui-selected, &.Mui-selected:hover': {
     backgroundColor: theme.palette.primary.main,
@@ -98,7 +99,7 @@ const TopicBrowser = ({ onSelect, selectedTopic, openClusterIndex }) => {
                   onClick={() => onSelect(topic)}
                   selected={selectedTopic === topic}
                 >
-                  <ListItemText primary={topic} />
+                  <ListItemText primary={topic.replace(/^AI (in|for) /, '')} />
                 </SubListItem>
               ))}
             </List>
