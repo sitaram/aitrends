@@ -86,5 +86,5 @@ const FeedbackForm = forwardRef(({ toggleFeedbackModal }, ref) => {
   );
 });
 
-MyComponent.displayName = 'FeedbackForm';
+FeedbackForm.displayName = 'FeedbackForm';
 export default FeedbackForm;
