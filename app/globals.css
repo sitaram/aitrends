@@ -27,6 +27,12 @@ body {
   background: linear-gradient(to right, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
+a:hover {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 4px;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -73,7 +79,7 @@ body {
   text-decoration: none;
 }
 .custom-link:hover {
-  color: #bB8B4B;
+  color: #bb8b4b;
   text-decoration: underline;
 }
 
