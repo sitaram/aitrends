@@ -1,4 +1,4 @@
-const topics = {
+export const topics = {
   clusters: [
     {
       name: 'Core Machine Learning Concepts',
