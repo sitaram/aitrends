@@ -139,8 +139,8 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window }) => {
             onChange={handleTabChange}
           >
             {tabs.map((item, index) =>
-              item.name !== 'Divider' ? (
-                <Tab key={index} label={item.name} />
+              item !== 'Divider' ? (
+                <Tab key={index} label={item} />
               ) : (
                 // Render a Tab styled as a divider
                 <DividerTab key={`divider-${index}`} />

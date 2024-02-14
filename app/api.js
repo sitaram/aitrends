@@ -2,9 +2,9 @@
 import axios from 'axios';
 import { splitChat } from './utils';
 
-export const fetchContent = async (prompt, payload, ttl, isOverview, isOnline, setContent, setIsLoading, signal) => {
-  console.log(prompt);
-  const request = { prompt: prompt, payload: payload, ttl: ttl, isOverview: isOverview, isOnline: isOnline };
+export const fetchContent = async (topic, tab, payload, isOverview, isOnline, setContent, setIsLoading, signal) => {
+  console.log(topic, tab);
+  const request = { topic: topic, tab: tab, payload: payload, isOverview: isOverview, isOnline: isOnline };
   try {
     if (setContent) setContent([]);
     const response = await axios({

@@ -49,15 +49,13 @@ const Reload = () => {
 
   const fetchData = async (topic, tab, signal) => {
     const key = `${topic}-${tab.name}`;
-    const prompt = tab.prompt.replace('${topic}', topic);
-    const ttl = tab.ttl || 90 * 86400;
-    console.log('fetchData', topic, tab.name, prompt, ttl);
+    console.log('fetchData', topic, tab.name);
     try {
       activeRequests.current.add(key);
       const content = await fetchContent(
-        prompt,
+        topic,
+        tab,
         null, // payload
-        ttl,
         false, // isOverview
         false, // isOnline
         () => {},
@@ -100,11 +98,10 @@ const Reload = () => {
     const summaryKey = `${topic}-Overview`;
     // Call the OpenAI API with the concatenated content for a summary
     setReloadState((prevState) => ({ ...prevState, [summaryKey]: 'loading' }));
-    const summaryPrompt = tabs[0].prompt.replace('${topic}', topic);
     const content = fetchContent(
-      summaryPrompt,
+      topic,
+      tabs[0],
       allTabsContent,
-      90 * 86400,
       true, // isOverview
       false, // isOnline
       () => {},

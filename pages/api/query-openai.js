@@ -1,8 +1,7 @@
 import OpenAI from 'openai';
 import dotenv from 'dotenv';
 import Redis from 'ioredis';
-// Import node-cron if you plan to use it directly in this file, otherwise, the setup could be external
-// import cron from 'node-cron';
+import { prompts, ttls } from '../../server/prompts';
 
 dotenv.config(); // Load environment variables from .env file
 
@@ -29,7 +28,10 @@ export default async (req, res) => {
   try {
     if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-    const { prompt, payload, ttl, isOverview, isOnline } = req.body;
+    const { topic, tab, payload, isOverview, isOnline } = req.body;
+
+    const prompt = prompts[tab].replace('${topic}', topic);
+    const ttl = ttls[tab] || 90 * 86400;
     console.log('REQUEST:', prompt);
 
     if (!prompt) return res.status(400).json({ error: 'Prompt is required' });

@@ -22,7 +22,7 @@ import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import About from './About';
 import { fetchContent } from './api';
-import { calculateTTL, flattenTopics, parseHashParams } from './utils';
+import { flattenTopics, parseHashParams } from './utils';
 import { topics } from './topics';
 import { tabs } from './tabs';
 import { getTheme } from './theme';
@@ -65,7 +65,7 @@ const Home = () => {
     const newIndex = allTopics.findIndex((t) => t === newTopic);
     if (newIndex !== -1) setTopicIndex(newIndex);
     setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newIndex])));
-    updateUrlHash(newTopic, tabs[tabIndex].name);
+    updateUrlHash(newTopic, tabs[tabIndex]);
   };
 
   // Handles switching between topics
@@ -77,13 +77,13 @@ const Home = () => {
 
     setTopicIndex(newIndex);
     setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newIndex])));
-    updateUrlHash(allTopics[newIndex], tabs[tabIndex].name);
+    updateUrlHash(allTopics[newIndex], tabs[tabIndex]);
   };
 
   // Handle tab change
   const handleTabChange = (event, newTabIndex) => {
     setTabIndex(newTabIndex);
-    updateUrlHash(topic, tabs[newTabIndex].name);
+    updateUrlHash(topic, tabs[newTabIndex]);
   };
 
   const handleSwitchTab = (direction) => {
@@ -110,11 +110,11 @@ const Home = () => {
       }
 
       // Check if the new tab is a 'Divider', if so, continue looping to find a valid tab.
-    } while (tabs[newIndex].name === 'Divider' && tabs.length > 1); // Ensure there's more than one tab to prevent infinite loop.
+    } while (tabs[newIndex] === 'Divider' && tabs.length > 1); // Ensure there's more than one tab to prevent infinite loop.
 
     // Once a valid tab is found or if 'Divider' is the only option, update the tabIndex state.
     if (tabIndex !== newIndex) setTabIndex(newIndex);
-    updateUrlHash(topic, tabs[newIndex].name);
+    updateUrlHash(topic, tabs[newIndex]);
   };
 
   // Parse the initial hash parameters
@@ -122,7 +122,7 @@ const Home = () => {
     const { topic, tab } = parseHashParams(window.location.hash);
     const newTopicIndex = allTopics.findIndex((t) => t === topic);
     if (newTopicIndex !== -1) setTopicIndex(newTopicIndex);
-    const newTabIndex = tabs.findIndex((t) => t.name === tab);
+    const newTabIndex = tabs.findIndex((t) => t === tab);
     if (newTabIndex !== -1) setTabIndex(newTabIndex);
   }, []);
 
@@ -132,7 +132,7 @@ const Home = () => {
       const { topic, tab } = parseHashParams(window.location.hash);
       const newTopicIndex = allTopics.findIndex((t) => t === topic);
       if (newTopicIndex !== -1) setTopicIndex(newTopicIndex);
-      const newTabIndex = tabs.findIndex((t) => t.name === tab);
+      const newTabIndex = tabs.findIndex((t) => t === tab);
       if (newTabIndex !== -1) setTabIndex(newTabIndex);
     };
     window.addEventListener('hashchange', handleHashChange);
@@ -165,12 +165,10 @@ const Home = () => {
 
       const fetchData = async () => {
         try {
-          const prompt = tabs[tabIndex].prompt.replace('${topic}', topic);
-          const ttl = tabs[tabIndex].ttl || 90 * 86400;
           await fetchContent(
-            prompt,
+            topic,
+            tabs[tabIndex],
             null, // payload
-            ttl,
             tabIndex == 0, // isOverview
             true, // isOnline
             setContent,
