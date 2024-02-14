@@ -77,25 +77,22 @@ const tabContainerStyle = (theme) => {
 const TabBar = ({ tabs, tabIndex, handleTabChange, window, setIsTabBarSticky }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const tabsRef = useRef(null);
 
+  /*
+  const tabsRef = useRef(null);
   useEffect(() => {
-    const adjustScroll = () => {
-      if (tabsRef.current) {
-        const flexContainer = tabsRef.current.querySelector('.MuiTabs-flexContainer');
-        if (flexContainer) {
-          const activeTab = flexContainer.children[tabIndex]; // Assuming tabIndex is your active tab index
-          if (activeTab) {
-            // Scroll the selected tab into view
-            activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-          }
+    if (tabsRef.current) {
+      const flexContainer = tabsRef.current.querySelector('.MuiTabs-flexContainer');
+      if (flexContainer) {
+        const activeTab = flexContainer.children[tabIndex]; // Assuming tabIndex is your active tab index
+        if (activeTab) {
+          // Scroll the selected tab into view
+          activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         }
       }
-    };
-    // Delay the scroll adjustment slightly to allow other scroll adjustments to settle
-    const timer = setTimeout(adjustScroll, 600); // Adjust the delay as needed
-    return () => clearTimeout(timer);
+    }
   }, [tabIndex]);
+  */
 
   return (
     <ElevationScroll window={window} setIsTabBarSticky={setIsTabBarSticky}>
@@ -115,7 +112,7 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window, setIsTabBarSticky }) 
             variant="scrollable"
             scrollButtons="auto"
             allowScrollButtonsMobile
-            ref={tabsRef} // Apply the ref to the Tabs component
+            // ref={tabsRef} // Apply the ref to the Tabs component
             sx={{
               '& .Mui-selected': {
                 color: theme.palette.primary.main,
