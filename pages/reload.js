@@ -16,7 +16,7 @@ const Reload = () => {
   const maxConcurrentRequests = 30;
 
   // Filter out 'Divider' tabs for rendering purposes
-  const tabs = origTabs.filter((tab) => tab.name !== 'Divider');
+  const tabs = origTabs.filter((tab) => tab !== 'Divider');
 
   const processQueue = () => {
     while (activeRequests.current.size < maxConcurrentRequests && requestQueue.current.length > 0) {
@@ -48,8 +48,8 @@ const Reload = () => {
   };
 
   const fetchData = async (topic, tab, signal) => {
-    const key = `${topic}-${tab.name}`;
-    console.log('fetchData', topic, tab.name);
+    const key = `${topic}-${tab}`;
+    console.log('fetchData', topic, tab);
     try {
       activeRequests.current.add(key);
       const content = await fetchContent(
@@ -63,12 +63,12 @@ const Reload = () => {
         signal
       );
 
-      console.log('fetchData done', topic, tab.name, 'content:', content.length, 'bytes');
+      console.log('fetchData done', topic, tab, 'content:', content.length, 'bytes');
       // Store the fetched content by topic and tab
       if (!contentResults.current[topic]) {
         contentResults.current[topic] = {};
       }
-      contentResults.current[topic][tab.name] = content.substr(0, 1000);
+      contentResults.current[topic][tab] = content.substr(0, 1000);
       setReloadState((prevState) => ({ ...prevState, [key]: 'success' }));
     } catch (error) {
       if (axios.isCancel(error)) {
@@ -93,7 +93,7 @@ const Reload = () => {
   const processSummary = (topic, signal) => {
     console.log('processSummary', topic, contentResults);
     const allTabsContent = Object.entries(contentResults.current[topic])
-      .map(([tabName, content]) => `\n\n----------------------\n\nTAB NAME: [[${tabName}]]\nCONTENT: ${content}`)
+      .map(([tab, content]) => `\n\n----------------------\n\nTAB NAME: [[${tab}]]\nCONTENT: ${content}`)
       .join(', ');
     const summaryKey = `${topic}-Overview`;
     // Call the OpenAI API with the concatenated content for a summary
@@ -118,7 +118,7 @@ const Reload = () => {
   };
 
   const handleReloadClick = () => {
-    const notabs = tabs.filter((tab) => tab.name !== 'Overview');
+    const notabs = tabs.filter((tab) => tab !== 'Overview');
     if (!loading) {
       setLoading(true);
       setReloadState({});
@@ -126,7 +126,7 @@ const Reload = () => {
       const topic = Constants.ALLTOPICS;
       topicTabCount.current[topic] = notabs.length;
       notabs.forEach((tab) => {
-        const key = `${topic}-${tab.name}`;
+        const key = `${topic}-${tab}`;
         setReloadState((prevState) => ({ ...prevState, [key]: 'loading' }));
         enqueueRequest(topic, tab);
       });
@@ -138,7 +138,7 @@ const Reload = () => {
               // Initialize the tab count for this topic
               topicTabCount.current[topic] = notabs.length;
               notabs.forEach((tab) => {
-                const key = `${topic}-${tab.name}`;
+                const key = `${topic}-${tab}`;
                 setReloadState((prevState) => ({ ...prevState, [key]: 'loading' }));
                 enqueueRequest(topic, tab);
               });
@@ -153,7 +153,7 @@ const Reload = () => {
       const topic = Constants.ALLTOPICS;
       tabs.forEach((tab) => {
         tabs.forEach((tab) => {
-          const key = `${topic}-${tab.name}`;
+          const key = `${topic}-${tab}`;
           if (reloadState[key] === 'loading') {
             setReloadState((prevState) => ({ ...prevState, [key]: 'error' }));
           }
@@ -162,7 +162,7 @@ const Reload = () => {
       topics.clusters.forEach((cluster) => {
         cluster.topics.forEach((topic) => {
           tabs.forEach((tab) => {
-            const key = `${topic}-${tab.name}`;
+            const key = `${topic}-${tab}`;
             if (reloadState[key] === 'loading') {
               setReloadState((prevState) => ({ ...prevState, [key]: 'error' }));
             }
@@ -199,7 +199,7 @@ const Reload = () => {
             <TableCell>Topic / Tab</TableCell>
             {tabs.map((tab, index) => (
               <TableCell key={index} align="center">
-                {tab.name}
+                {tab}
               </TableCell>
             ))}
           </TableRow>
@@ -218,7 +218,7 @@ const Reload = () => {
             <TableCell>All AI Topics</TableCell>
             {tabs.map((tab, tabIndex) => (
               <TableCell key={`alltopics-${tabIndex}`}>
-                {renderStatusIcon(reloadState[`${Constants.ALLTOPICS}-${tab.name}`])}
+                {renderStatusIcon(reloadState[`${Constants.ALLTOPICS}-${tab}`])}
               </TableCell>
             ))}
           </TableRow>
@@ -239,7 +239,7 @@ const Reload = () => {
                   <TableCell>{topic}</TableCell>
                   {tabs.map((tab, tabIndex) => (
                     <TableCell key={`${clusterIndex}-${topicIndex}-${tabIndex}`}>
-                      {renderStatusIcon(reloadState[`${topic}-${tab.name}`])}
+                      {renderStatusIcon(reloadState[`${topic}-${tab}`])}
                     </TableCell>
                   ))}
                 </TableRow>

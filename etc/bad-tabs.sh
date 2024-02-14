@@ -7,7 +7,7 @@
 perl -lne '
 
 my @x = (
-'"$(grep name: app/tabs.js | grep -v Divider | sed 's/name://')"'
+'"$(awk -F\' '{print $2}' app/tabs.js | grep -v Divider | grep .)"'
 );
 %tab = ();
 foreach (@x) {

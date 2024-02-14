@@ -114,7 +114,6 @@ export const topics = {
         'AI for Personal Assistants',
         'AI in User Experience Design',
         'AI for Interactive Entertainment',
-        'Interactive Entertainment',
         'AI in Social Media',
         'AI for Personalized Learning',
         'AI in Virtual Events',
