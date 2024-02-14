@@ -79,7 +79,7 @@ const ContentComponent = ({
           {tabIndex != 0 ? (
             <Paper
               sx={{
-                padding: '30px 16px',
+                padding: '10px 16px',
                 marginBottom: '0',
                 borderBottom: 0,
                 borderColor: 'divider',
