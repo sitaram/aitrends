@@ -17,7 +17,7 @@ const StyledList = styled(List)(({ theme }) => ({
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
   width: '100%', // Set the width to 100% to prevent horizontal expansion
-  padding: '7px 10px',
+  padding: '10px',
   borderRadius: theme.shape.borderRadius,
   color: theme.palette.text.secondary,
   '&.Mui-selected': {
@@ -34,7 +34,7 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
 }));
 
 const SubListItem = styled(ListItem)(({ theme }) => ({
-  padding: '7px 10px',
+  padding: '10px',
   paddingLeft: theme.spacing(4), // Add left padding to indent sub-items
   '&.Mui-selected, &.Mui-selected:hover': {
     backgroundColor: theme.palette.primary.main,
