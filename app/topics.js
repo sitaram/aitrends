@@ -1,4 +1,4 @@
-export const topics = {
+const topics = {
   clusters: [
     {
       name: 'Core Machine Learning Concepts',
@@ -18,7 +18,6 @@ export const topics = {
         'Multi-Task Learning',
         'Meta-Learning',
         'Sparse Data Learning',
-        'AI Ethics and Fairness',
         'Explainable AI (XAI)',
         'Graph Neural Networks',
         'Zero-Shot Learning',
@@ -80,7 +79,7 @@ export const topics = {
     {
       name: 'Ethical and Responsible AI',
       topics: [
-        'Ethical AI and Fairness',
+        'AI Ethics and Fairness',
         'Bias Detection and Mitigation',
         'Privacy-preserving AI',
         'Sustainable AI',
@@ -103,7 +102,6 @@ export const topics = {
       topics: [
         'AI-powered Chatbots and Virtual Assistants',
         'AI-driven Recommendation Systems',
-        'Explainable AI (XAI)',
         'Natural Language Generation',
         'Emotion AI',
         'Voice and Speech Recognition',
@@ -174,7 +172,6 @@ export const topics = {
         'AI for Urban Planning',
         'AI in Public Health',
         'AI for Social Good Initiatives',
-        'AI and Ethics in Society',
         'AI for Energy Efficiency',
         'AI in Conservation Biology',
         'AI for Global Health',
@@ -210,7 +207,6 @@ export const topics = {
         'AI Data Lakes',
         'AI Model Management',
         'AI Scalability Solutions',
-        'AI with Blockchain Integration',
         'AI Operations (AIOps)',
         'AI in DevOps',
         'AI for IT Automation',
