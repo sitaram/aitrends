@@ -99,9 +99,6 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window }) => {
         position="static"
         color="default"
         sx={{
-          '& .MuiTabs-root': {
-            backgroundColor: 'red',
-          },
           backgroundColor: theme.palette.background.paper,
           borderBottom: 1,
           borderColor: 'divider',
