@@ -1,5 +1,6 @@
 export const tabs = [
   'Overview',
+  'Expert Q&A',
   'News',
   'Recap',
   'Evolution',
@@ -16,7 +17,6 @@ export const tabs = [
   'AI Tools and Platforms',
   'Divider',
   'Expert opinions',
-  'Expert Q&A',
   'Policy and Regulation',
   'Ethics',
   'Challenges and Solutions',
