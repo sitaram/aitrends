@@ -93,6 +93,7 @@ const ContentComponent = ({
                   textDecoration: 'underline',
                   cursor: 'pointer',
                   textAlign: 'right',
+                  fontWeight: 'bold',
                 }}
                 onClick={() => {
                   handleTabChange(null, 0);

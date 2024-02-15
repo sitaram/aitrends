@@ -104,7 +104,7 @@ const CustomMarkdown = ({ text, topic, handleTabChange }) => {
 
   const markdownComponents = {
     strong: createComponent('strong', true, { color: theme.palette.markdown.strong, fontWeight: 'bold' }),
-    h1: createComponent('h1', true, { color: theme.palette.markdown.h1, textDecoration: 'underline' }),
+    h1: createComponent('h1', true, { color: theme.palette.markdown.h1, fontWeight: 'bold' }),
     h2: createComponent('h2', true, {
       color: theme.palette.markdown.h2,
       fontWeight: 'bold',
