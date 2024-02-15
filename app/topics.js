@@ -24,6 +24,7 @@ export const topics = {
         'Graph Neural Networks',
         'Zero-Shot Learning',
         'AI in Network Analysis',
+        'Retrieval Augmented Generation (RAG)',
         'Causal Inference in AI',
         'MLOps',
       ],
