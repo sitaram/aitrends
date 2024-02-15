@@ -1,12 +1,14 @@
 export const tabs = [
   'Overview',
   'Expert Q&A',
+  'Innovative Use Cases',
+  'Ecosystem',
+  'Divider',
   'News',
   'Recap',
   'Evolution',
   'Future roadmap',
   'Divider',
-  'Ecosystem',
   'Funding and Investment',
   'Career Paths',
   'Skill Development',
@@ -25,6 +27,5 @@ export const tabs = [
   'Comparisons',
   'Applications',
   'Case Studies',
-  'Innovative Use Cases',
   'Impact',
 ];
