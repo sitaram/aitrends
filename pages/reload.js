@@ -34,7 +34,7 @@ const Reload = () => {
       case 'success':
         return <span style={{ color: 'green', fontWeight: 'bold' }}>✔️</span>;
       case 'error':
-        return <span style={{ color: 'red', fontWeight: 'bold' }}>❌</span>;
+        return <span style={{ color: 'red', backgroundColor: 'lightred', fontWeight: 'bold' }}>❌</span>;
       case 'loading':
         return <span style={{ color: 'orange' }}>•</span>;
       default:
@@ -70,6 +70,14 @@ const Reload = () => {
       }
       contentResults.current[topic][tab] = content.substr(0, 1000);
       setReloadState((prevState) => ({ ...prevState, [key]: 'success' }));
+
+      if (topicTabCount.current[topic] !== undefined) {
+        topicTabCount.current[topic]--;
+        if (topicTabCount.current[topic] === 0) {
+          // All tabs for this topic have finished, process the summary
+          await processSummary(topic, signal);
+        }
+      }
     } catch (error) {
       if (axios.isCancel(error)) {
         console.log('Request was cancelled');
@@ -79,42 +87,35 @@ const Reload = () => {
       }
     } finally {
       activeRequests.current.delete(key);
-      if (topicTabCount.current[topic] !== undefined) {
-        topicTabCount.current[topic]--;
-        if (topicTabCount.current[topic] === 0) {
-          // All tabs for this topic have finished, process the summary
-          processSummary(topic, signal);
-        }
-      }
       processQueue();
     }
   };
 
-  const processSummary = (topic, signal) => {
+  const processSummary = async (topic, signal) => {
     console.log('processSummary', topic, contentResults);
     const allTabsContent = Object.entries(contentResults.current[topic])
       .map(([tab, content]) => `\n\n----------------------\n\nTAB NAME: [[${tab}]]\nCONTENT: ${content}`)
       .join(', ');
     const summaryKey = `${topic}-Overview`;
-    // Call the OpenAI API with the concatenated content for a summary
-    setReloadState((prevState) => ({ ...prevState, [summaryKey]: 'loading' }));
-    const content = fetchContent(
-      topic,
-      tabs[0],
-      allTabsContent,
-      true, // isOverview
-      false, // isOnline
-      () => {},
-      () => {},
-      signal
-    )
-      .then(() => {
-        setReloadState((prevState) => ({ ...prevState, [summaryKey]: 'success' }));
-      })
-      .catch((error) => {
-        console.error('An error occurred:', error);
-        setReloadState((prevState) => ({ ...prevState, [summaryKey]: 'error' }));
-      });
+
+    // Assume fetchContent for summary is an async operation
+    try {
+      setReloadState((prevState) => ({ ...prevState, [summaryKey]: 'loading' }));
+      await fetchContent(
+        topic,
+        tabs[0],
+        allTabsContent,
+        true, // isOverview
+        false, // isOnline
+        () => {},
+        () => {},
+        signal
+      );
+      setReloadState((prevState) => ({ ...prevState, [summaryKey]: 'success' }));
+    } catch (error) {
+      console.error('An error occurred:', error);
+      setReloadState((prevState) => ({ ...prevState, [summaryKey]: 'error' }));
+    }
   };
 
   const handleReloadClick = () => {
@@ -235,7 +236,12 @@ const Reload = () => {
                 </TableCell>
               </TableRow>
               {cluster.topics.map((topic, topicIndex) => (
-                <TableRow key={`${clusterIndex}-${topicIndex}`}>
+                <TableRow
+                  key={`${clusterIndex}-${topicIndex}`}
+                  style={{
+                    backgroundColor: topicIndex % 2 === 1 ? '#F7F7F7' : 'none', // Applying very light gray for even rows
+                  }}
+                >
                   <TableCell>{topic}</TableCell>
                   {tabs.map((tab, tabIndex) => (
                     <TableCell key={`${clusterIndex}-${topicIndex}-${tabIndex}`}>
