@@ -62,4 +62,6 @@ export const prompts = {
   'Innovative Use Cases':
     'Showcase innovative and unconventional use cases of AI in ${topic}. Highlight novel applications, experimental projects, and creative integrations.',
   Impact: 'Analyze the impact of recent advancements in ${topic} in the last year.',
+  Research:
+    'Provide a comprehensive overview of recent and pivotal research papers related to ${topic}. Focus on identifying studies that have significantly advanced the understanding or application of the topic. Ensure that all information is accurate and refrain from including or generating links to non-existent sources. Highlight the methodology, findings, and implications of each paper, grouping them into thematic categories to facilitate easy navigation and comprehension. Include direct references to accessible databases or repositories like arXiv, Google Scholar, or specific academic journals where these papers can be found. For each paper, offer a brief summary that encapsulates its core contribution to the field and its relevance to ongoing research or practical applications. Aim to cater to both newcomers and seasoned experts in the field by providing insights that are both educational and deeply informative. Keep it tight, just one bullet point per paper, and one section per a group or category of papers, about 3 to 5 sections total.',
 };

@@ -18,6 +18,7 @@ export const tabs = [
   'Tech Deep Dive',
   'AI Tools and Platforms',
   'Divider',
+  'Research',
   'Expert opinions',
   'Policy and Regulation',
   'Ethics',
