@@ -50,6 +50,8 @@ const TopicBrowser = ({ onSelect, selectedTopic, openClusterIndex }) => {
   const theme = useTheme();
   const [openTopicIndex, setOpenTopicIndex] = React.useState(null);
   const topicRefs = useRef([]);
+  // This ref tracks if the component has mounted, to avoid scrolling on initial render.
+  const hasMounted = useRef(false);
 
   const handleClick = (index) => {
     if (openTopicIndex === index) {
@@ -65,13 +67,26 @@ const TopicBrowser = ({ onSelect, selectedTopic, openClusterIndex }) => {
   }, [openClusterIndex]);
 
   useEffect(() => {
-    const selectedRef = topicRefs.current[selectedTopic];
-    if (selectedRef) {
-      selectedRef.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-      });
+    // Skip the first effect run to avoid scrolling on initial mount.
+    if (!hasMounted.current) {
+      hasMounted.current = true;
+      return;
     }
+
+    // Function to scroll to the selected topic within the opened cluster.
+    const scrollToTopic = () => {
+      const selectedRef = topicRefs.current[selectedTopic];
+      if (selectedRef && selectedRef.scrollIntoView) {
+        selectedRef.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+        });
+      }
+    };
+
+    // Check if the topic is visible/rendered before attempting to scroll.
+    // This could be a simple timeout or a more complex visibility check.
+    setTimeout(scrollToTopic, 600); // Adjust delay as needed based on your UI's behavior.
   }, [selectedTopic]);
 
   return (
