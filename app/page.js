@@ -64,8 +64,10 @@ const Home = () => {
   const handleTopicChange = (newTopic) => {
     setTopicsDrawerOpen(false);
     const newIndex = allTopics.findIndex((t) => t === newTopic);
-    if (newIndex !== -1) setTopicIndex(newIndex);
-    setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newIndex])));
+    if (newIndex !== -1) {
+      setTopicIndex(newIndex);
+      setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newIndex])));
+    }
     updateUrlHash(newTopic, tabs[tabIndex]);
   };
 
@@ -122,7 +124,10 @@ const Home = () => {
   useEffect(() => {
     const { topic, tab } = parseHashParams(window.location.hash);
     const newTopicIndex = allTopics.findIndex((t) => t === topic);
-    if (newTopicIndex !== -1) setTopicIndex(newTopicIndex);
+    if (newTopicIndex !== -1) {
+      setTopicIndex(newTopicIndex);
+      setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newTopicIndex])));
+    }
     const newTabIndex = tabs.findIndex((t) => t === tab);
     if (newTabIndex !== -1) setTabIndex(newTabIndex);
   }, []);
@@ -132,7 +137,10 @@ const Home = () => {
     const handleHashChange = () => {
       const { topic, tab } = parseHashParams(window.location.hash);
       const newTopicIndex = allTopics.findIndex((t) => t === topic);
-      if (newTopicIndex !== -1) setTopicIndex(newTopicIndex);
+      if (newTopicIndex !== -1) {
+        setTopicIndex(newTopicIndex);
+        setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newTopicIndex])));
+      }
       const newTabIndex = tabs.findIndex((t) => t === tab);
       if (newTabIndex !== -1) setTabIndex(newTabIndex);
     };
