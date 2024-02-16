@@ -215,12 +215,10 @@ const TopicBrowser = ({ handleTopicChange, selectedTopic, openClusters, setOpenC
               onClick={() => {
                 console.log(`Researching ${filter}`);
                 handleTopicChange(filter);
-                setOpenClusters((prevOpenClusters) =>
-                  prevOpenClusters.includes(clusterName) ? prevOpenClusters : [clusterName]
-                );
+                setOpenClusters((prevOpenClusters) => []);
               }}
             >
-              Research `{filter}` (takes 2 min)
+              Research `{filter}` (minute per tab)
             </Button>
           </ListItem>
         )}

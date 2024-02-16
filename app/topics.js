@@ -186,6 +186,8 @@ export const topics = {
         'AI for Global Health',
         'AI in Disaster Response',
         'AI for Ocean Exploration',
+        'AI in Space Exploration',
+        'AI in Astronomy',
         'AI for Carbon Footprint Analysis',
         'AI for Smart Grid Optimization',
         'AI for Water Resource Management',
