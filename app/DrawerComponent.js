@@ -6,7 +6,7 @@ import TopicBrowser from './TopicBrowser';
 const DrawerComponent = ({ topic, topicsDrawerOpen, handleTopicsDrawerToggle, handleTopicChange }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const drawerWidth = isMobile ? 230 : 250;
+  const drawerWidth = isMobile ? 200 : 250;
 
   const drawerContent = <TopicBrowser topic={topic} handleTopicChange={handleTopicChange} selectedTopic={topic} />;
 
