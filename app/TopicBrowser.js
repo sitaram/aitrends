@@ -54,9 +54,12 @@ const CollapseWrapper = styled(Collapse)(({ theme }) => ({
   overflowX: 'hidden', // Hide horizontal overflow for collapsing section
 }));
 
-const TopicBrowser = ({ handleTopicChange, selectedTopic, openClusters, setOpenClusters }) => {
+const TopicBrowser = ({ topic, handleTopicChange, selectedTopic }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const defaultOpenCluster = 'Industry Applications';
+  const [openClusters, setOpenClusters] = useState([defaultOpenCluster]);
 
   const [filter, setFilter] = useState('');
   const [filteredClusters, setFilteredClusters] = useState(topics.clusters);
@@ -78,11 +81,15 @@ const TopicBrowser = ({ handleTopicChange, selectedTopic, openClusters, setOpenC
 
       setFilteredClusters(newFilteredClusters);
       setOpenClusters(newFilteredClusters.map((cluster) => cluster.name));
+      console.log('XXX 3', openClusters);
     } else {
       setFilteredClusters(topics.clusters);
-      setOpenClusters([]);
+
+      const newOpenCluster = topics.clusters.find((cluster) => cluster.topics.includes(topic));
+      setOpenClusters(newOpenCluster ? [newOpenCluster.name] : []);
+      console.log('XXX 2', openClusters);
     }
-  }, [filter]);
+  }, [filter, topic]);
 
   useEffect(() => {
     // Skip the first effect run to avoid scrolling on initial mount.

@@ -3,25 +3,12 @@ import { Drawer, useMediaQuery, useTheme, Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import TopicBrowser from './TopicBrowser';
 
-const DrawerComponent = ({
-  topicsDrawerOpen,
-  handleTopicsDrawerToggle,
-  topic,
-  openClusters,
-  setOpenClusters,
-  handleTopicChange,
-}) => {
+const DrawerComponent = ({ topic, topicsDrawerOpen, handleTopicsDrawerToggle, handleTopicChange }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const drawerWidth = isMobile ? 230 : 250;
 
-  const drawerContent = (
-    <TopicBrowser
-      handleTopicChange={handleTopicChange}
-      selectedTopic={topic}
-      openClusters={openClusters}
-      setOpenClusters={setOpenClusters}
-    />
-  );
+  const drawerContent = <TopicBrowser topic={topic} handleTopicChange={handleTopicChange} selectedTopic={topic} />;
 
   return (
     <>
@@ -49,7 +36,7 @@ const DrawerComponent = ({
           variant="permanent"
           className="desktopdrawer"
           sx={{
-            width: isMobile ? 230 : 250,
+            width: drawerWidth,
             flexShrink: 0,
             overflowX: 'hidden',
             '& .MuiDrawer-paper': {

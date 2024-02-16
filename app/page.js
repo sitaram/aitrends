@@ -34,9 +34,6 @@ const Home = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [topicsDrawerOpen, setTopicsDrawerOpen] = useState(true);
 
-  const defaultOpenCluster = 'Industry Applications';
-  const [openClusters, setOpenClusters] = useState([defaultOpenCluster]);
-
   const allTopics = [Constants.ALLTOPICS, ...flattenTopics(topics.clusters)];
   const [topic, setTopic] = useState(Constants.ALLTOPICS);
   const [displayedTopic, setDisplayedTopic] = useState(Constants.APPNAME);
@@ -76,8 +73,6 @@ const Home = () => {
         : (oldIndex + 1) % allTopics.length;
     const newTopic = allTopics[newIndex];
     setTopic(newTopic);
-    const newOpenCluster = topics.clusters.find((cluster) => cluster.topics.includes(newTopic)).name;
-    setOpenClusters([newOpenCluster]);
     updateUrlHash(newTopic, tabs[tabIndex]);
   };
 
@@ -136,11 +131,6 @@ const Home = () => {
   useEffect(() => {
     const { topic, tab } = parseHashParams(window.location.hash);
     if (topic) setTopic(topic);
-    if (allTopics.includes(topic)) {
-      const newOpenCluster = topics.clusters.find((cluster) => cluster.topics.includes(topic)).name;
-      setOpenClusters([newOpenCluster]);
-    }
-
     const newTabIndex = tabs.findIndex((t) => t === tab);
     if (newTabIndex !== -1) setTabIndex(newTabIndex);
   }, []);
@@ -216,11 +206,9 @@ const Home = () => {
           setShowAbout={setShowAbout}
         />
         <DrawerComponent
+          topic={topic}
           topicsDrawerOpen={topicsDrawerOpen}
           handleTopicsDrawerToggle={handleTopicsDrawerToggle}
-          topic={topic}
-          openClusters={openClusters}
-          setOpenClusters={setOpenClusters}
           handleTopicChange={handleDynamicTopicChange}
         />
         <div style={{ width: '100%', overflowX: 'hidden' }}>
