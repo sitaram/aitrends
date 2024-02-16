@@ -13,7 +13,7 @@ import * as Constants from './constants';
 const StyledList = styled(List)(({ theme }) => ({
   width: 250, // Set a fixed width for the drawer
   overflowX: 'hidden', // Hide horizontal overflow
-  overflowY: 'scroll', // Show horizontal overflow
+  overflowY: 'scroll', // Show horizontal overflow to avoid jerkiness
 }));
 
 const StyledListItem = styled(ListItem)(({ theme }) => {
