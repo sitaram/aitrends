@@ -81,13 +81,11 @@ const TopicBrowser = ({ topic, handleTopicChange, selectedTopic }) => {
 
       setFilteredClusters(newFilteredClusters);
       setOpenClusters(newFilteredClusters.map((cluster) => cluster.name));
-      console.log('XXX 3', openClusters);
     } else {
       setFilteredClusters(topics.clusters);
 
       const newOpenCluster = topics.clusters.find((cluster) => cluster.topics.includes(topic));
       setOpenClusters(newOpenCluster ? [newOpenCluster.name] : []);
-      console.log('XXX 2', openClusters);
     }
   }, [filter, topic]);
 
