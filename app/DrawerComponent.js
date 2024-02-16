@@ -9,14 +9,20 @@ const DrawerComponent = ({
   topicsDrawerOpen,
   handleTopicsDrawerToggle,
   topic,
-  openClusterIndex,
+  openClusters,
+  setOpenClusters,
   handleTopicChange,
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const drawerContent = (
-    <TopicBrowser handleTopicChange={handleTopicChange} selectedTopic={topic} openClusterIndex={openClusterIndex} />
+    <TopicBrowser
+      handleTopicChange={handleTopicChange}
+      selectedTopic={topic}
+      openClusters={openClusters}
+      setOpenClusters={setOpenClusters}
+    />
   );
 
   return (

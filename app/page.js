@@ -36,10 +36,10 @@ const Home = () => {
   // State hooks for managing the app's state
   const [topicsDrawerOpen, setTopicsDrawerOpen] = useState(true);
   const [topic, setTopic] = useState(Constants.ALLTOPICS);
-  // Find the index of "Industry Applications" category within topics.clusters
-  const defaultOpenIndex = topics.clusters.findIndex((cluster) => cluster.name === 'Industry Applications');
-  const [openClusterIndex, setOpenClusterIndex] = useState(defaultOpenIndex);
-  const [topicIndex, setTopicIndex] = useState(0);
+
+  const defaultOpenCluster = 'Industry Applications';
+  const [openClusters, setOpenClusters] = useState([defaultOpenCluster]);
+
   const [displayedTopic, setDisplayedTopic] = useState(Constants.APPNAME);
   const allTopics = [Constants.ALLTOPICS, ...flattenTopics(topics.clusters)];
   const [tabIndex, setTabIndex] = useState(0);
@@ -60,33 +60,26 @@ const Home = () => {
     setTopicsDrawerOpen(!topicsDrawerOpen);
   };
 
-  // Handles topic changes
+  // Adjusting topic change handling to work with cluster names
   const handleTopicChange = (newTopic) => {
     setTopicsDrawerOpen(false);
-    const newIndex = allTopics.findIndex((t) => t === newTopic);
-    if (newIndex !== -1) {
-      setTopicIndex(newIndex);
-      // leave this to TopicBrowser code to do it differently with and without a filter present
-      // setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newIndex])));
-      console.log('ooo 1');
-    }
+    setTopic(newTopic);
     updateUrlHash(newTopic, tabs[tabIndex]);
   };
 
   // Handles switching between topics
   const handleSwitchTopic = (direction) => {
+    const oldIndex = allTopics.findIndex((t) => t === topic);
+    if (oldIndex == -1) return;
     let newIndex =
       direction === 'Previous'
-        ? (topicIndex - 1 + allTopics.length) % allTopics.length
-        : (topicIndex + 1) % allTopics.length;
-
-    setTopicIndex(newIndex);
-    setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newIndex])));
-    console.log(
-      'ooo 2',
-      topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newIndex]))
-    );
-    updateUrlHash(allTopics[newIndex], tabs[tabIndex]);
+        ? (oldIndex - 1 + allTopics.length) % allTopics.length
+        : (oldIndex + 1) % allTopics.length;
+    const newTopic = allTopics[newIndex];
+    setTopic(newTopic);
+    const newOpenCluster = topics.clusters.find((cluster) => cluster.topics.includes(newTopic)).name;
+    setOpenClusters([newOpenCluster]);
+    updateUrlHash(newTopic, tabs[tabIndex]);
   };
 
   // Handle tab change
@@ -130,8 +123,6 @@ const Home = () => {
     // Check if newTopic is a dynamic topic
     if (!allTopics.includes(newTopic)) {
       // Handle dynamic topic
-      // Option 1: Add dynamic topic to allTopics (if mutable) or manage separately
-      // Option 2: Directly set the topic without using topicIndex
       setTopic(newTopic);
       // Optionally, manage dynamic topics separately from static topics
     } else {
@@ -145,12 +136,13 @@ const Home = () => {
   // Parse the initial hash parameters
   useEffect(() => {
     const { topic, tab } = parseHashParams(window.location.hash);
-    const newTopicIndex = allTopics.findIndex((t) => t === topic);
-    if (newTopicIndex !== -1) {
-      setTopicIndex(newTopicIndex);
-      setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newTopicIndex])));
-      console.log('ooo 3');
+    setTopic(topic);
+
+    if (allTopics.includes(topic)) {
+      const newOpenCluster = topics.clusters.find((cluster) => cluster.topics.includes(topic)).name;
+      setOpenClusters([newOpenCluster]);
     }
+
     const newTabIndex = tabs.findIndex((t) => t === tab);
     if (newTabIndex !== -1) setTabIndex(newTabIndex);
   }, []);
@@ -159,17 +151,11 @@ const Home = () => {
   useEffect(() => {
     const handleHashChange = () => {
       const { topic, tab } = parseHashParams(window.location.hash);
-      const newTopicIndex = allTopics.findIndex((t) => t === topic);
-      if (newTopicIndex !== -1) {
-        setTopicIndex(newTopicIndex);
-        // setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newTopicIndex])));
-        console.log('ooo 4');
-      } else {
-        setTopic(topic);
-      }
+      setTopic(topic);
       const newTabIndex = tabs.findIndex((t) => t === tab);
       if (newTabIndex !== -1) setTabIndex(newTabIndex);
     };
+
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, [tabs]);
@@ -184,11 +170,6 @@ const Home = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [topic]);
-
-  // Updates the topic when topicIndex changes
-  useEffect(() => {
-    setTopic(allTopics[topicIndex]);
-  }, [topicIndex, allTopics]);
 
   // Fetches content when tab or topic changes
   useEffect(() => {
@@ -240,7 +221,8 @@ const Home = () => {
           topicsDrawerOpen={topicsDrawerOpen}
           handleTopicsDrawerToggle={handleTopicsDrawerToggle}
           topic={topic}
-          openClusterIndex={openClusterIndex}
+          openClusters={openClusters}
+          setOpenClusters={setOpenClusters}
           handleTopicChange={handleDynamicTopicChange}
         />
         <div style={{ width: '100%', overflowX: 'hidden' }}>

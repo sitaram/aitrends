@@ -54,34 +54,29 @@ const CollapseWrapper = styled(Collapse)(({ theme }) => ({
   overflowX: 'hidden', // Hide horizontal overflow for collapsing section
 }));
 
-const TopicBrowser = ({ handleTopicChange, selectedTopic, openClusterIndex }) => {
+const TopicBrowser = ({ handleTopicChange, selectedTopic, openClusters, setOpenClusters }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [filter, setFilter] = useState('');
   const [filteredClusters, setFilteredClusters] = useState(topics.clusters);
-  const [openClusters, setOpenClusters] = useState([]);
   const [openTopicIndex, setOpenTopicIndex] = useState(null);
   const topicRefs = useRef([]);
 
   const hasMounted = useRef(false);
 
+  // Adjusting to use names for open clusters based on filter
   useEffect(() => {
     if (filter) {
       const lowerFilter = filter.toLowerCase();
       const newFilteredClusters = topics.clusters
         .map((cluster) => {
           const filteredTopics = cluster.topics.filter((topic) => topic.toLowerCase().includes(lowerFilter));
-          return {
-            ...cluster,
-            topics: filteredTopics,
-          };
+          return { ...cluster, topics: filteredTopics };
         })
         .filter((cluster) => cluster.topics.length > 0);
 
       setFilteredClusters(newFilteredClusters);
-
-      // Use cluster names for open clusters
       const openClusterNames = newFilteredClusters.map((cluster) => cluster.name);
       setOpenClusters(openClusterNames);
     } else {
@@ -89,19 +84,6 @@ const TopicBrowser = ({ handleTopicChange, selectedTopic, openClusterIndex }) =>
       setOpenClusters([]);
     }
   }, [filter]);
-
-  // Convert openClusterIndex to a cluster name at component mount or when it changes
-  useEffect(() => {
-    if (typeof openClusterIndex === 'number' && openClusterIndex >= 0 && openClusterIndex < topics.clusters.length) {
-      const initialOpenClusterName = topics.clusters[openClusterIndex]?.name;
-      if (initialOpenClusterName) {
-        setOpenClusters([initialOpenClusterName]);
-      }
-    } else {
-      // Reset or handle invalid index as needed
-      setOpenClusters([]);
-    }
-  }, [openClusterIndex, topics.clusters]);
 
   useEffect(() => {
     // Skip the first effect run to avoid scrolling on initial mount.
@@ -186,7 +168,7 @@ const TopicBrowser = ({ handleTopicChange, selectedTopic, openClusterIndex }) =>
                   const clusterName = cluster.name;
                   setOpenClusters((prevOpenClusters) => {
                     return prevOpenClusters.includes(clusterName)
-                      ? prevOpenClusters.filter((name) => name !== clusterName)
+                      ? prevOpenClusters
                       : filter
                       ? [...prevOpenClusters, clusterName]
                       : [clusterName];
