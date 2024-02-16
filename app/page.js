@@ -66,7 +66,9 @@ const Home = () => {
     const newIndex = allTopics.findIndex((t) => t === newTopic);
     if (newIndex !== -1) {
       setTopicIndex(newIndex);
-      setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newIndex])));
+      // leave this to TopicBrowser code to do it differently with and without a filter present
+      // setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newIndex])));
+      console.log('ooo 1');
     }
     updateUrlHash(newTopic, tabs[tabIndex]);
   };
@@ -80,6 +82,10 @@ const Home = () => {
 
     setTopicIndex(newIndex);
     setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newIndex])));
+    console.log(
+      'ooo 2',
+      topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newIndex]))
+    );
     updateUrlHash(allTopics[newIndex], tabs[tabIndex]);
   };
 
@@ -143,10 +149,11 @@ const Home = () => {
     if (newTopicIndex !== -1) {
       setTopicIndex(newTopicIndex);
       setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newTopicIndex])));
+      console.log('ooo 3');
     }
     const newTabIndex = tabs.findIndex((t) => t === tab);
     if (newTabIndex !== -1) setTabIndex(newTabIndex);
-  }, [allTopics]);
+  }, []);
 
   // Parse hash parameters on hash change
   useEffect(() => {
@@ -155,7 +162,8 @@ const Home = () => {
       const newTopicIndex = allTopics.findIndex((t) => t === topic);
       if (newTopicIndex !== -1) {
         setTopicIndex(newTopicIndex);
-        setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newTopicIndex])));
+        // setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newTopicIndex])));
+        console.log('ooo 4');
       } else {
         setTopic(topic);
       }
@@ -164,7 +172,7 @@ const Home = () => {
     };
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
-  }, [tabs, allTopics]);
+  }, [tabs]);
 
   // Updates the displayed topic based on the scroll position
   useEffect(() => {

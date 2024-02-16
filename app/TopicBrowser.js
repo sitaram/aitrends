@@ -3,12 +3,14 @@ import { TextField, Button, List, ListItem, ListItemText, Collapse, useTheme, us
 import { styled } from '@mui/material/styles';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import { InputAdornment, IconButton } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
 import { topics } from './topics'; // Import the topics data from your topics.js file
 import * as Constants from './constants';
 
 const FilterTextField = styled(TextField)(({ theme }) => ({
   width: 'calc(100% - 20px)', // Adjust based on padding/margins
-  margin: '10px auto 4px',
+  margin: '10px auto',
   '& .MuiInputBase-input': {
     padding: '10px 14px', // Adjust this value to decrease the padding
     margin: '0px',
@@ -149,7 +151,19 @@ const TopicBrowser = ({ handleTopicChange, selectedTopic, openClusterIndex }) =>
         value={filter}
         onChange={handleFilterChange}
         margin="normal"
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              {filter && (
+                <IconButton aria-label="clear filter" onClick={() => setFilter('')} edge="end">
+                  <ClearIcon />
+                </IconButton>
+              )}
+            </InputAdornment>
+          ),
+        }}
       />
+
       <StyledList>
         <StyledListItem
           ismobile={isMobile ? 'true' : 'false'}
@@ -170,11 +184,13 @@ const TopicBrowser = ({ handleTopicChange, selectedTopic, openClusterIndex }) =>
                 button
                 onClick={() => {
                   const clusterName = cluster.name;
-                  setOpenClusters((prevOpenClusters) =>
-                    prevOpenClusters.includes(clusterName)
+                  setOpenClusters((prevOpenClusters) => {
+                    return prevOpenClusters.includes(clusterName)
                       ? prevOpenClusters.filter((name) => name !== clusterName)
-                      : [...prevOpenClusters, clusterName]
-                  );
+                      : filter
+                      ? [...prevOpenClusters, clusterName]
+                      : [clusterName];
+                  });
                 }}
               >
                 <ListItemText primary={cluster.name} />
@@ -190,9 +206,13 @@ const TopicBrowser = ({ handleTopicChange, selectedTopic, openClusterIndex }) =>
                       onClick={() => {
                         handleTopicChange(topic);
                         const clusterName = cluster.name;
-                        setOpenClusters((prevOpenClusters) =>
-                          prevOpenClusters.includes(clusterName) ? prevOpenClusters : [...prevOpenClusters, clusterName]
-                        );
+                        setOpenClusters((prevOpenClusters) => {
+                          return prevOpenClusters.includes(clusterName)
+                            ? prevOpenClusters
+                            : filter
+                            ? [...prevOpenClusters, clusterName]
+                            : [clusterName];
+                        });
                       }}
                       ref={(el) => (topicRefs.current[topic] = el)}
                       selected={selectedTopic === topic}
@@ -214,6 +234,9 @@ const TopicBrowser = ({ handleTopicChange, selectedTopic, openClusterIndex }) =>
               onClick={() => {
                 console.log(`Researching ${filter}`);
                 handleTopicChange(filter);
+                setOpenClusters((prevOpenClusters) =>
+                  prevOpenClusters.includes(clusterName) ? prevOpenClusters : [clusterName]
+                );
               }}
             >
               Research `{filter}` (takes 2 min)
