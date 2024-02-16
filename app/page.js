@@ -44,7 +44,7 @@ const Home = () => {
   const allTopics = [Constants.ALLTOPICS, ...flattenTopics(topics.clusters)];
   const [tabIndex, setTabIndex] = useState(0);
   const [content, setContent] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loadingCount, setLoadingCount] = useState(0);
   const [showAbout, setShowAbout] = useState(false);
   const [isTabBarSticky, setIsTabBarSticky] = useState(false);
   const updateScheduled = useRef(false);
@@ -139,7 +139,7 @@ const Home = () => {
       const newTopicIndex = allTopics.findIndex((t) => t === topic);
       if (newTopicIndex !== -1) {
         setTopicIndex(newTopicIndex);
-        setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newTopicIndex])));
+        // setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newTopicIndex])));
       }
       const newTabIndex = tabs.findIndex((t) => t === tab);
       if (newTabIndex !== -1) setTabIndex(newTabIndex);
@@ -166,41 +166,40 @@ const Home = () => {
 
   // Fetches content when tab or topic changes
   useEffect(() => {
-    if (!updateScheduled.current) {
-      updateScheduled.current = true;
+    if (updateScheduled.current) return;
 
-      const abortController = new AbortController();
-      setIsLoading(true);
+    updateScheduled.current = true;
+    const abortController = new AbortController();
+    setLoadingCount((prevCount) => prevCount + 1);
 
-      const fetchData = async () => {
-        try {
-          await fetchContent(
-            topic,
-            tabs[tabIndex],
-            null, // payload
-            tabIndex == 0, // isOverview
-            true, // isOnline
-            setContent,
-            setIsLoading,
-            abortController.signal
-          );
-        } catch (error) {
-          console.error('Error fetching content:', error);
-          setIsLoading(false);
-        }
-      };
-
-      fetchData().then(() => {
+    // Define the fetchData function directly inside useEffect
+    const fetchData = async () => {
+      try {
+        await fetchContent(
+          topic,
+          tabs[tabIndex],
+          null, // payload
+          tabIndex === 0, // isOverview
+          true, // isOnline
+          setContent,
+          abortController.signal
+        );
+      } catch (error) {
+        console.error('Error fetching content:', error);
+      } finally {
+        setLoadingCount((prevCount) => Math.max(0, prevCount - 1));
         updateScheduled.current = false; // Reset after async operation
-      });
+      }
+    };
 
-      // Cleanup
-      return () => {
-        abortController.abort();
-        updateScheduled.current = false; // Ensure reset if unmount occurs before fetch completes
-      };
-    }
-  }, [topic, tabIndex]);
+    fetchData();
+
+    // Cleanup function
+    return () => {
+      abortController.abort();
+      updateScheduled.current = false; // Ensure reset if unmount occurs before fetch completes
+    };
+  }, [topic, tabIndex]); // Dependencies array
 
   return (
     <ThemeProvider theme={theme}>
@@ -259,7 +258,7 @@ const Home = () => {
             <ContentComponent
               topic={topic}
               tabIndex={tabIndex}
-              isLoading={isLoading}
+              loadingCount={loadingCount}
               isTabBarSticky={isTabBarSticky}
               content={content}
               handleSwitchTab={handleSwitchTab}

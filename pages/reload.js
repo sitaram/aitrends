@@ -59,7 +59,6 @@ const Reload = () => {
         false, // isOverview
         false, // isOnline
         () => {},
-        () => {},
         signal
       );
 
@@ -107,7 +106,6 @@ const Reload = () => {
         allTabsContent,
         true, // isOverview
         false, // isOnline
-        () => {},
         () => {},
         signal
       );

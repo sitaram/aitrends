@@ -7,7 +7,7 @@ import { useSwipeable } from 'react-swipeable';
 const ContentComponent = ({
   topic,
   tabIndex,
-  isLoading,
+  loadingCount,
   isTabBarSticky,
   content,
   handleSwitchTab,
@@ -63,7 +63,7 @@ const ContentComponent = ({
           {feedback} Tab
         </Box>
       )}
-      {isLoading ? (
+      {loadingCount ? (
         <div className="centered">
           <ThreeDots color="#3a506b" />
         </div>

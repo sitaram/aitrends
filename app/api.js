@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { splitChat } from './utils';
 
-export const fetchContent = async (topic, tab, payload, isOverview, isOnline, setContent, setIsLoading, signal) => {
+export const fetchContent = async (topic, tab, payload, isOverview, isOnline, setContent, signal) => {
   console.log(topic, tab);
   const request = { topic: topic, tab: tab, payload: payload, isOverview: isOverview, isOnline: isOnline };
   try {
@@ -16,7 +16,6 @@ export const fetchContent = async (topic, tab, payload, isOverview, isOnline, se
     const data = response.data.data;
     const content = splitChat(data);
     if (setContent) setContent(content);
-    if (setIsLoading) setIsLoading(false);
     return data;
   } catch (error) {
     if (axios.isCancel(error)) {
@@ -24,6 +23,5 @@ export const fetchContent = async (topic, tab, payload, isOverview, isOnline, se
     } else {
       console.error('Error fetching content:', error);
     }
-    if (setIsLoading) setIsLoading(false);
   }
 };

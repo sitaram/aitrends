@@ -63,6 +63,8 @@ const About = ({ setShowAbout }) => {
         <br />
         &emsp;- Recursive summarization
         <br />
+        &emsp;- Meta-prompting
+        <br />
         &emsp;- AI-generated trending AI topics
         <br />
         &emsp;- AI-generated tabs concept and ideas
