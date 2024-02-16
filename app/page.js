@@ -135,8 +135,7 @@ const Home = () => {
   // Parse the initial hash parameters
   useEffect(() => {
     const { topic, tab } = parseHashParams(window.location.hash);
-    setTopic(topic);
-
+    if (topic) setTopic(topic);
     if (allTopics.includes(topic)) {
       const newOpenCluster = topics.clusters.find((cluster) => cluster.topics.includes(topic)).name;
       setOpenClusters([newOpenCluster]);
@@ -150,7 +149,7 @@ const Home = () => {
   useEffect(() => {
     const handleHashChange = () => {
       const { topic, tab } = parseHashParams(window.location.hash);
-      setTopic(topic);
+      if (topic) setTopic(topic);
       const newTabIndex = tabs.findIndex((t) => t === tab);
       if (newTabIndex !== -1) setTabIndex(newTabIndex);
     };
