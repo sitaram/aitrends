@@ -70,7 +70,7 @@ const Home = () => {
   // Handles switching between topics
   const handleSwitchTopic = (direction) => {
     const oldIndex = allTopics.findIndex((t) => t === topic);
-    if (oldIndex == -1) return;
+    if (oldIndex === -1) return;
     let newIndex =
       direction === 'Previous'
         ? (oldIndex - 1 + allTopics.length) % allTopics.length

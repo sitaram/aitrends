@@ -77,8 +77,7 @@ const TopicBrowser = ({ handleTopicChange, selectedTopic, openClusters, setOpenC
         .filter((cluster) => cluster.topics.length > 0);
 
       setFilteredClusters(newFilteredClusters);
-      const openClusterNames = newFilteredClusters.map((cluster) => cluster.name);
-      setOpenClusters(openClusterNames);
+      setOpenClusters(newFilteredClusters.map((cluster) => cluster.name));
     } else {
       setFilteredClusters(topics.clusters);
       setOpenClusters([]);
