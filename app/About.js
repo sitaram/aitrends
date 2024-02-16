@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import { useTheme, useMediaQuery, Box, Typography, Button, Paper, Divider, Grid, Chip, Container } from '@mui/material';
 
 const About = ({ setShowAbout }) => {
@@ -78,8 +77,8 @@ const About = ({ setShowAbout }) => {
           <Chip label="Meta-prompting" variant="outlined" color="primary" />
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap', mb: 2 }}>
-          <Image src="concept1.webp" alt="Concept 1" style={{ width: '100%', maxWidth: '140px', height: 'auto' }} />
-          <Image src="concept2.webp" alt="Concept 2" style={{ width: '100%', maxWidth: '140px', height: 'auto' }} />
+          <img src="concept1.webp" alt="Concept 1" style={{ width: '100%', maxWidth: '140px', height: 'auto' }} />
+          <img src="concept2.webp" alt="Concept 2" style={{ width: '100%', maxWidth: '140px', height: 'auto' }} />
         </Box>
         <Box sx={{ textAlign: 'right' }}>
           <Button

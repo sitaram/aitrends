@@ -130,7 +130,7 @@ const Home = () => {
     }
     const newTabIndex = tabs.findIndex((t) => t === tab);
     if (newTabIndex !== -1) setTabIndex(newTabIndex);
-  }, []);
+  }, [allTopics]);
 
   // Parse hash parameters on hash change
   useEffect(() => {
@@ -139,14 +139,14 @@ const Home = () => {
       const newTopicIndex = allTopics.findIndex((t) => t === topic);
       if (newTopicIndex !== -1) {
         setTopicIndex(newTopicIndex);
-        // setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newTopicIndex])));
+        setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newTopicIndex])));
       }
       const newTabIndex = tabs.findIndex((t) => t === tab);
       if (newTabIndex !== -1) setTabIndex(newTabIndex);
     };
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
-  }, [tabs]);
+  }, [tabs, allTopics]);
 
   // Updates the displayed topic based on the scroll position
   useEffect(() => {
@@ -162,7 +162,7 @@ const Home = () => {
   // Updates the topic when topicIndex changes
   useEffect(() => {
     setTopic(allTopics[topicIndex]);
-  }, [topicIndex]);
+  }, [topicIndex, allTopics]);
 
   // Fetches content when tab or topic changes
   useEffect(() => {
