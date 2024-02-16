@@ -1,0 +1,4 @@
+
+add an input box on top of the topic browser, in the drawer, styled nicely and dynamically and consistently with the rest of the UI, and make its behavior be such that:
+
+as you type in it, the hierarchy incrementally filters to keep the clusters/topics that match the string typed. if a topic is kept then the cluster above it is also kept, of course. and, if it filters down to nothing, then it says so, but also shows a new button called 'research <the thing that's typed>' with a caveat that it takes a couple minutes to run. this button should kick off a new set of tabs for the newly entered topic.
