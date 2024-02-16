@@ -52,7 +52,9 @@ export default async (req, res) => {
 
     // DEBUG console.log('fetchAndUpdate', prompt.substr(0, 30), ttl, ttlRemaining, cachedResponse ? cachedResponse.substr(0, 30) : 0);
     const data =
-      isOnline && isOverview ? 'visit /reload to construct overview' : await fetchAndUpdate(fullPrompt, cacheKey, ttl);
+      isOnline && isOverview
+        ? 'Recursive summarization not available online'
+        : await fetchAndUpdate(fullPrompt, cacheKey, ttl);
     return res.status(200).json({ data: data });
   } catch (error) {
     console.error('Error making request to OpenAI:', error);
