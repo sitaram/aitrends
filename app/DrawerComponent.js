@@ -3,7 +3,7 @@ import { Drawer, useMediaQuery, useTheme, Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import TopicBrowser from './TopicBrowser';
 
-const drawerWidth = 240;
+const drawerWidth = 250;
 
 const DrawerComponent = ({
   topicsDrawerOpen,
@@ -47,7 +47,6 @@ const DrawerComponent = ({
           sx={{
             width: drawerWidth,
             flexShrink: 0,
-            overflowY: 'scroll',
             overflowX: 'hidden',
             '& .MuiDrawer-paper': {
               marginTop: '64px',

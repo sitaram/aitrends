@@ -11,8 +11,9 @@ import { topics } from './topics'; // Import the topics data from your topics.js
 import * as Constants from './constants';
 
 const StyledList = styled(List)(({ theme }) => ({
-  width: 240, // Set a fixed width for the drawer
+  width: 250, // Set a fixed width for the drawer
   overflowX: 'hidden', // Hide horizontal overflow
+  overflowY: 'scroll', // Show horizontal overflow
 }));
 
 const StyledListItem = styled(ListItem)(({ theme }) => {
