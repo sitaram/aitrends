@@ -177,6 +177,8 @@ const Reload = () => {
   };
 
   useEffect(() => {
+    document.title = 'AI Trends: Reload Dashboard';
+
     // Cleanup logic here, if necessary
     return () => {
       // Reset everything on component unmount
@@ -187,7 +189,7 @@ const Reload = () => {
 
   return (
     <>
-      <h1>Reload Dashboard</h1>
+      <h1>AI Trends: Reload Dashboard</h1>
       <Button variant="contained" color="primary" onClick={handleReloadClick}>
         {loading ? 'Stop Reload' : 'Start Reload'}
       </Button>
