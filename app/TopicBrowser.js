@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useTheme } from '@mui/material';
+import { useTheme, useMediaQuery } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -15,32 +15,40 @@ const StyledList = styled(List)(({ theme }) => ({
   overflowX: 'hidden', // Hide horizontal overflow
 }));
 
-const StyledListItem = styled(ListItem)(({ theme }) => ({
-  width: '100%', // Set the width to 100% to prevent horizontal expansion
-  padding: '10px',
-  borderRadius: theme.shape.borderRadius,
-  color: theme.palette.text.secondary,
-  '&.Mui-selected': {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.common.white,
-    '& .MuiListItemText-primary': {
-      fontWeight: theme.typography.fontWeightMedium,
-    },
-  },
-  '&.Mui-selected, &.Mui-selected:hover': {
-    background: 'none',
-    backgroundColor: theme.palette.primary.main,
-  },
-}));
+const StyledListItem = styled(ListItem)(({ theme }) => {
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-const SubListItem = styled(ListItem)(({ theme }) => ({
-  padding: '10px',
-  paddingLeft: theme.spacing(4), // Add left padding to indent sub-items
-  '&.Mui-selected, &.Mui-selected:hover': {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.common.white,
-  },
-}));
+  return {
+    width: '100%', // Set the width to 100% to prevent horizontal expansion
+    padding: isMobile ? '10px' : '7px 10px',
+    borderRadius: theme.shape.borderRadius,
+    color: theme.palette.text.secondary,
+    '&.Mui-selected': {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.common.white,
+      '& .MuiListItemText-primary': {
+        fontWeight: theme.typography.fontWeightMedium,
+      },
+    },
+    '&.Mui-selected, &.Mui-selected:hover': {
+      background: 'none',
+      backgroundColor: theme.palette.primary.main,
+    },
+  };
+});
+
+const SubListItem = styled(ListItem)(({ theme }) => {
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  return {
+    padding: isMobile ? '10px' : '7px 10px',
+    paddingLeft: theme.spacing(4), // Add left padding to indent sub-items
+    '&.Mui-selected, &.Mui-selected:hover': {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.common.white,
+    },
+  };
+});
 
 const CollapseWrapper = styled(Collapse)(({ theme }) => ({
   overflowX: 'hidden', // Hide horizontal overflow for collapsing section
