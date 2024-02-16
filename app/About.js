@@ -19,10 +19,10 @@ const About = ({ setShowAbout }) => {
       maxWidth={false}
       sx={{
         position: 'fixed',
-        bottom: '10%',
+        bottom: '5%',
         left: '50%',
         transform: 'translateX(-50%)',
-        width: isMobile ? '90%' : '60%',
+        width: isMobile ? '90%' : '70%',
         textDecoration: 'none',
         zIndex: 2000,
       }}
@@ -33,10 +33,10 @@ const About = ({ setShowAbout }) => {
           p: 3,
           backgroundColor: theme.palette.background.paper,
           borderRadius: theme.shape.borderRadius,
-          boxShadow: `0 8px 16px 0 ${theme.palette.grey[200]}`,
+          boxShadow: `8px 8px 16px 0 ${theme.palette.grey[500]}`,
         }}
       >
-        <Typography variant="h5" component="h2" color="secondary" gutterBottom>
+        <Typography variant="h5" component="h2" gutterBottom>
           AI Trends: Your Interactive Newsletter
         </Typography>
         <Typography variant="body1" sx={{ mb: 2 }}>

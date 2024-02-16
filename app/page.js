@@ -265,7 +265,7 @@ const Home = () => {
               handleTabChange={handleTabChange}
             />
             <TopicButton handleTopicsDrawerToggle={handleTopicsDrawerToggle} />
-            {showAbout && <About setShowAbout={setShowAbout} />}
+            {showAbout && <About showAbout={showAbout} setShowAbout={setShowAbout} />}
           </Box>
         </div>
       </Box>
