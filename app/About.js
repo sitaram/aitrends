@@ -1,45 +1,40 @@
 import React from 'react';
-import { useTheme, useMediaQuery, Box, Typography, Button, Paper, Divider, Grid, Chip, Container } from '@mui/material';
+import { useTheme, useMediaQuery, Box, Typography, Button, Paper, Divider, Grid, Chip, Modal } from '@mui/material';
 
-const About = ({ setShowAbout }) => {
+const About = ({ showAbout, setShowAbout }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const handleOkClick = (e) => {
-    e.preventDefault();
+  const handleClose = () => {
     setShowAbout(false);
   };
 
   return (
-    <Container
-      component="a"
-      href="#"
-      onClick={handleOkClick}
-      disableGutters
-      maxWidth={false}
+    <Modal
+      open={showAbout}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
       sx={{
-        position: 'fixed',
-        bottom: '5%',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        width: isMobile ? '90%' : '70%',
-        textDecoration: 'none',
-        zIndex: 2000,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
-      <Paper
-        elevation={5}
+      <Box
         sx={{
-          p: 3,
+          position: 'absolute',
+          width: isMobile ? '95%' : '70%',
           backgroundColor: theme.palette.background.paper,
+          boxShadow: 24,
+          p: 3,
           borderRadius: theme.shape.borderRadius,
-          boxShadow: `8px 8px 16px 0 ${theme.palette.grey[500]}`,
         }}
       >
-        <Typography variant="h5" component="h2" gutterBottom>
+        <Typography id="modal-modal-title" variant="h5" component="h2" gutterBottom>
           AI Trends: Your Interactive Newsletter
         </Typography>
-        <Typography variant="body1" sx={{ mb: 2 }}>
+        <Typography id="modal-modal-description" variant="body1" sx={{ mb: 2 }}>
           Dive into the dynamic world of AI with <strong>AI Trends</strong>—a newsletter crafted to bring you closer to
           the forefront of artificial intelligence. From GPT-powered insights to the latest in AI research and
           applications, stay informed and inspired.
@@ -77,21 +72,29 @@ const About = ({ setShowAbout }) => {
           <Chip label="Meta-prompting" variant="outlined" color="primary" />
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap', mb: 2 }}>
-          <img src="concept1.webp" alt="Concept 1" style={{ width: '100%', maxWidth: '140px', height: 'auto' }} />
-          <img src="concept2.webp" alt="Concept 2" style={{ width: '100%', maxWidth: '140px', height: 'auto' }} />
+          <img
+            src="concept1.webp"
+            alt="Concept 1"
+            style={{ width: '100%', maxWidth: isMobile ? '90px' : '140px', height: 'auto' }}
+          />
+          <img
+            src="concept2.webp"
+            alt="Concept 2"
+            style={{ width: '100%', maxWidth: isMobile ? '90px' : '140px', height: 'auto' }}
+          />
         </Box>
         <Box sx={{ textAlign: 'right' }}>
           <Button
             variant="contained"
             color="primary"
-            onClick={handleOkClick}
+            onClick={handleClose}
             style={{ backgroundColor: theme.palette.primary.main }}
           >
             Got it!
           </Button>
         </Box>
-      </Paper>
-    </Container>
+      </Box>
+    </Modal>
   );
 };
 

@@ -16,7 +16,7 @@ const DrawerComponent = ({
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const drawerContent = (
-    <TopicBrowser onSelect={handleTopicChange} selectedTopic={topic} openClusterIndex={openClusterIndex} />
+    <TopicBrowser handleTopicChange={handleTopicChange} selectedTopic={topic} openClusterIndex={openClusterIndex} />
   );
 
   return (

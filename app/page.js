@@ -120,6 +120,22 @@ const Home = () => {
     updateUrlHash(topic, tabs[newIndex]);
   };
 
+  const handleDynamicTopicChange = (newTopic) => {
+    // Check if newTopic is a dynamic topic
+    if (!allTopics.includes(newTopic)) {
+      // Handle dynamic topic
+      // Option 1: Add dynamic topic to allTopics (if mutable) or manage separately
+      // Option 2: Directly set the topic without using topicIndex
+      setTopic(newTopic);
+      // Optionally, manage dynamic topics separately from static topics
+    } else {
+      // Handle as before
+      handleTopicChange(newTopic);
+    }
+    // Update URL hash or other necessary state
+    updateUrlHash(newTopic, tabs[tabIndex]);
+  };
+
   // Parse the initial hash parameters
   useEffect(() => {
     const { topic, tab } = parseHashParams(window.location.hash);
@@ -140,6 +156,8 @@ const Home = () => {
       if (newTopicIndex !== -1) {
         setTopicIndex(newTopicIndex);
         setOpenClusterIndex(topics.clusters.findIndex((cluster) => cluster.topics.includes(allTopics[newTopicIndex])));
+      } else {
+        setTopic(topic);
       }
       const newTabIndex = tabs.findIndex((t) => t === tab);
       if (newTabIndex !== -1) setTabIndex(newTabIndex);
@@ -215,7 +233,7 @@ const Home = () => {
           handleTopicsDrawerToggle={handleTopicsDrawerToggle}
           topic={topic}
           openClusterIndex={openClusterIndex}
-          handleTopicChange={handleTopicChange}
+          handleTopicChange={handleDynamicTopicChange}
         />
         <div style={{ width: '100%', overflowX: 'hidden' }}>
           <Box
