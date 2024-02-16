@@ -1,10 +1,6 @@
-import React, { useEffect, useRef } from 'react';
-import { useTheme, useMediaQuery } from '@mui/material';
+import React, { useEffect, useRef, useState } from 'react';
+import { TextField, Button, List, ListItem, ListItemText, Collapse, useTheme, useMediaQuery } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { topics } from './topics'; // Import the topics data from your topics.js file
@@ -14,6 +10,16 @@ const StyledList = styled(List)(({ theme }) => ({
   width: 250, // Set a fixed width for the drawer
   overflowX: 'hidden', // Hide horizontal overflow
   overflowY: 'scroll', // Show horizontal overflow to avoid jerkiness
+}));
+
+const FilterTextField = styled(TextField)(({ theme }) => ({
+  margin: theme.spacing(1),
+  width: 'calc(100% - 20px)', // Adjust based on padding/margins
+  margin: '10px auto 4px',
+  '& .MuiInputBase-input': {
+    padding: '10px 14px', // Adjust this value to decrease the padding
+    margin: '0px',
+  },
 }));
 
 const StyledListItem = styled(ListItem)(({ theme }) => {
@@ -57,22 +63,34 @@ const CollapseWrapper = styled(Collapse)(({ theme }) => ({
 
 const TopicBrowser = ({ onSelect, selectedTopic, openClusterIndex }) => {
   const theme = useTheme();
-  const [openTopicIndex, setOpenTopicIndex] = React.useState(null);
+  const [filter, setFilter] = useState('');
+  const [filteredClusters, setFilteredClusters] = useState(topics.clusters);
+  const [openClusters, setOpenClusters] = useState([]);
+  const [openTopicIndex, setOpenTopicIndex] = useState(null);
   const topicRefs = useRef([]);
-  // This ref tracks if the component has mounted, to avoid scrolling on initial render.
+
   const hasMounted = useRef(false);
 
-  const handleClick = (index) => {
-    if (openTopicIndex === index) {
-      setOpenTopicIndex(null); // Close the clicked topic if it's already open
-    } else {
-      setOpenTopicIndex(index); // Open the clicked topic
-    }
-  };
-
-  // Use openClusterIndex to control the open state of clusters
   useEffect(() => {
-    setOpenTopicIndex(openClusterIndex);
+    if (filter) {
+      const lowerFilter = filter.toLowerCase();
+      const newFilteredClusters = topics.clusters
+        .map((cluster) => ({
+          ...cluster,
+          topics: cluster.topics.filter((topic) => topic.toLowerCase().includes(lowerFilter)),
+        }))
+        .filter((cluster) => cluster.topics.length > 0);
+      setFilteredClusters(newFilteredClusters);
+      // Open all clusters that have matching topics
+      setOpenClusters(newFilteredClusters.map((_, index) => index));
+    } else {
+      setFilteredClusters(topics.clusters);
+      setOpenClusters([]);
+    }
+  }, [filter]);
+
+  useEffect(() => {
+    setOpenClusters([openClusterIndex]);
   }, [openClusterIndex]);
 
   useEffect(() => {
@@ -98,39 +116,89 @@ const TopicBrowser = ({ onSelect, selectedTopic, openClusterIndex }) => {
     setTimeout(scrollToTopic, 600); // Adjust delay as needed based on your UI's behavior.
   }, [selectedTopic]);
 
+  const handleFilterChange = (event) => {
+    setFilter(event.target.value);
+  };
+
+  const highlightMatch = (text, part) => {
+    const start = text.toLowerCase().indexOf(part.toLowerCase());
+    const end = start + part.length;
+    return (
+      <span>
+        {text.substring(0, start)}
+        <span style={{ backgroundColor: 'yellow', color: 'black' }}>{text.substring(start, end)}</span>
+        {text.substring(end)}
+      </span>
+    );
+  };
+
   return (
-    <StyledList>
-      <StyledListItem
-        button
-        onClick={() => onSelect(Constants.ALLTOPICS)}
-        selected={selectedTopic === Constants.ALLTOPICS}
-      >
-        <ListItemText primary={Constants.ALLTOPICS} />
-      </StyledListItem>
-      {topics.clusters.map((cluster, clusterIndex) => (
-        <div key={cluster.name}>
-          <StyledListItem button onClick={() => handleClick(clusterIndex)}>
-            <ListItemText primary={cluster.name} />
-            {openTopicIndex === clusterIndex ? <ExpandLess /> : <ExpandMore />}
-          </StyledListItem>
-          <CollapseWrapper in={openTopicIndex === clusterIndex} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              {cluster.topics.map((topic, topicIndex) => (
-                <SubListItem
-                  button
-                  key={topicIndex}
-                  ref={(el) => (topicRefs.current[topic] = el)}
-                  onClick={() => onSelect(topic)}
-                  selected={selectedTopic === topic}
-                >
-                  <ListItemText primary={topic.replace(/^AI (in|for) /, '')} />
-                </SubListItem>
-              ))}
-            </List>
-          </CollapseWrapper>
-        </div>
-      ))}
-    </StyledList>
+    <>
+      <FilterTextField
+        autoComplete="off"
+        placeholder="Filter or research topics..."
+        variant="outlined"
+        value={filter}
+        onChange={handleFilterChange}
+        margin="normal"
+      />
+      <StyledList>
+        <StyledListItem
+          button
+          onClick={() => {
+            setOpenClusters([Constants.ALLTOPICS]);
+            onSelect(Constants.ALLTOPICS);
+          }}
+          selected={selectedTopic === Constants.ALLTOPICS}
+        >
+          <ListItemText primary={Constants.ALLTOPICS} />
+        </StyledListItem>
+
+        {filteredClusters.length > 0 ? (
+          filteredClusters.map((cluster, clusterIndex) => (
+            <div key={cluster.name}>
+              <StyledListItem
+                button
+                onClick={() =>
+                  setOpenClusters(
+                    openClusters.includes(clusterIndex)
+                      ? openClusters.filter((index) => index !== clusterIndex)
+                      : [clusterIndex]
+                  )
+                }
+              >
+                <ListItemText primary={cluster.name} />
+                {openClusters.includes(clusterIndex) ? <ExpandLess /> : <ExpandMore />}
+              </StyledListItem>
+              <Collapse in={openClusters.includes(clusterIndex)} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  {cluster.topics.map((topic, topicIndex) => (
+                    <SubListItem button key={topic} onClick={() => onSelect(topic)} selected={selectedTopic === topic}>
+                      <ListItemText primary={filter ? highlightMatch(topic, filter) : topic} />
+                    </SubListItem>
+                  ))}
+                </List>
+              </Collapse>
+            </div>
+          ))
+        ) : (
+          <ListItem>
+            <ListItemText primary={`No topics found for "${filter}".`} />
+            <Button
+              variant="contained"
+              color="primary"
+              style={{ backgroundColor: theme.palette.primary.main }}
+              onClick={() => {
+                console.log(`Researching ${filter}`);
+                // Placeholder for research functionality
+              }}
+            >
+              Research "{filter}" (takes 2 min)
+            </Button>
+          </ListItem>
+        )}
+      </StyledList>
+    </>
   );
 };
 
