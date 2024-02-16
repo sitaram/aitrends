@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { useTheme, useMediaQuery, Box, Typography, Button, Paper, Divider, Grid, Chip, Container } from '@mui/material';
 
 const About = ({ setShowAbout }) => {
@@ -67,8 +68,7 @@ const About = ({ setShowAbout }) => {
         </Grid>
         <Divider sx={{ mb: 2 }} />
         <Typography variant="body2" component="div" sx={{ mb: 2 }}>
-          Created by Sitaram Iyer, this newsletter employs a range of AI technologies to deliver content that's both
-          informative and engaging:
+          Created by Sitaram Iyer, sitaram at gmail.com
         </Typography>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
           <Chip label="GPT-4" variant="outlined" color="primary" />
@@ -78,8 +78,8 @@ const About = ({ setShowAbout }) => {
           <Chip label="Meta-prompting" variant="outlined" color="primary" />
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap', mb: 2 }}>
-          <img src="concept1.webp" alt="Concept 1" style={{ width: '100%', maxWidth: '140px', height: 'auto' }} />
-          <img src="concept2.webp" alt="Concept 2" style={{ width: '100%', maxWidth: '140px', height: 'auto' }} />
+          <Image src="concept1.webp" alt="Concept 1" style={{ width: '100%', maxWidth: '140px', height: 'auto' }} />
+          <Image src="concept2.webp" alt="Concept 2" style={{ width: '100%', maxWidth: '140px', height: 'auto' }} />
         </Box>
         <Box sx={{ textAlign: 'right' }}>
           <Button

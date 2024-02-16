@@ -193,7 +193,7 @@ const TopicBrowser = ({ onSelect, selectedTopic, openClusterIndex }) => {
                 // Placeholder for research functionality
               }}
             >
-              Research "{filter}" (takes 2 min)
+              Research `{filter}` (takes 2 min)
             </Button>
           </ListItem>
         )}
