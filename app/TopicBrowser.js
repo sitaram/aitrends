@@ -203,7 +203,13 @@ const TopicBrowser = ({ topic, handleTopicChange, selectedTopic }) => {
                       ref={(el) => (topicRefs.current[topic] = el)}
                       selected={selectedTopic === topic}
                     >
-                      <ListItemText primary={filter ? highlightMatch(topic, filter) : topic} />
+                      <ListItemText
+                        primary={
+                          filter
+                            ? highlightMatch(topic.replace(/^AI (in|for) /, ''), filter)
+                            : topic.replace(/^AI (in|for) /, '')
+                        }
+                      />
                     </SubListItem>
                   ))}
                 </List>
