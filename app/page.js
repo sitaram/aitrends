@@ -155,6 +155,10 @@ const Home = () => {
       const titleRect = titleElement.getBoundingClientRect();
       setDisplayedTopic(titleRect.bottom < 64 ? topic : Constants.APPNAME);
     };
+
+    // Update the title with the current topic, or use a default title if the topic isn't set
+    document.title = topic !== Constants.ALLTOPICS ? `AI Trends: ${topic}` : 'AI Trends';
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [topic]);
