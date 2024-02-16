@@ -32,16 +32,15 @@ import * as Constants from './constants';
 const Home = () => {
   const theme = getTheme(useMediaQuery('(prefers-color-scheme: dark)') ? 'dark' : 'light');
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-  // State hooks for managing the app's state
   const [topicsDrawerOpen, setTopicsDrawerOpen] = useState(true);
-  const [topic, setTopic] = useState(Constants.ALLTOPICS);
 
   const defaultOpenCluster = 'Industry Applications';
   const [openClusters, setOpenClusters] = useState([defaultOpenCluster]);
 
-  const [displayedTopic, setDisplayedTopic] = useState(Constants.APPNAME);
   const allTopics = [Constants.ALLTOPICS, ...flattenTopics(topics.clusters)];
+  const [topic, setTopic] = useState(Constants.ALLTOPICS);
+  const [displayedTopic, setDisplayedTopic] = useState(Constants.APPNAME);
+
   const [tabIndex, setTabIndex] = useState(0);
   const [content, setContent] = useState([]);
   const [loadingCount, setLoadingCount] = useState(0);
