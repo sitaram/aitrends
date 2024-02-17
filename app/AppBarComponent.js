@@ -13,6 +13,7 @@ import {
   Modal,
   TextField,
   Button,
+  useTheme,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShareIcon from '@mui/icons-material/Share';
@@ -25,6 +26,7 @@ import LogoComponent from './LogoComponent';
 import FeedbackForm from './FeedbackForm';
 
 const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic, setShowAbout }) => {
+  const theme = useTheme();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const [feedbackData, setFeedbackData] = useState('');
@@ -94,7 +96,7 @@ const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic, setShowAbou
         <FeedbackForm toggleFeedbackModal={toggleFeedbackModal} />
       </Modal>
 
-      <Toolbar sx={{ paddingRight: '8px' }}>
+      <Toolbar sx={{ paddingRight: '8px', backgroundColor: theme.palette.primary.main }}>
         <IconButton
           color="inherit"
           aria-label="open drawer"

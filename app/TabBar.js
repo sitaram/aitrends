@@ -43,6 +43,7 @@ const DividerTab = () => (
 
 const tabContainerStyle = (theme) => {
   return {
+    backgroundColor: theme.palette.background.tabbar, // Match the tab bar background
     position: 'relative',
     '&::before, &::after': {
       content: '""',
@@ -78,22 +79,6 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window, setIsTabBarSticky }) 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  /*
-  const tabsRef = useRef(null);
-  useEffect(() => {
-    if (tabsRef.current) {
-      const flexContainer = tabsRef.current.querySelector('.MuiTabs-flexContainer');
-      if (flexContainer) {
-        const activeTab = flexContainer.children[tabIndex]; // Assuming tabIndex is your active tab index
-        if (activeTab) {
-          // Scroll the selected tab into view
-          activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        }
-      }
-    }
-  }, [tabIndex]);
-  */
-
   return (
     <ElevationScroll window={window} setIsTabBarSticky={setIsTabBarSticky}>
       <AppBar
@@ -112,7 +97,6 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window, setIsTabBarSticky }) 
             variant="scrollable"
             scrollButtons="auto"
             allowScrollButtonsMobile
-            // ref={tabsRef} // Apply the ref to the Tabs component
             sx={{
               '& .Mui-selected': {
                 color: theme.palette.primary.main,
@@ -121,16 +105,12 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window, setIsTabBarSticky }) 
                 backgroundColor: theme.palette.primary.main,
               },
               '& .MuiTab-root': {
-                backgroundColor: theme.palette.background.tabbar,
                 textTransform: 'none',
                 fontWeight: 'bold',
                 fontSize: '0.875rem',
               },
-              '& .MuiButtonBase-root': {
-                backgroundColor: theme.palette.background.tabbar,
-              },
-              '& .MuiBox-root': {
-                backgroundColor: theme.palette.background.tabbar,
+              '& .MuiTabs-scrollButtons': {
+                color: theme.palette.primary.main,
               },
             }}
             centered={false}

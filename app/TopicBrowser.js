@@ -11,6 +11,17 @@ import * as Constants from './constants';
 const FilterTextField = styled(TextField)(({ theme }) => ({
   width: 'calc(100% - 20px)', // Adjust based on padding/margins
   margin: '10px auto',
+  '& .MuiOutlinedInput-notchedOutline': {
+    borderColor: theme.palette.primary.main,
+    borderWidth: '1px',
+  },
+
+  // Target the notched outline for the border color on hover
+  '&:hover .MuiOutlinedInput-notchedOutline': {
+    borderColor: theme.palette.primary.main,
+    boxShadow: `0 0 5px ${theme.palette.primary.main}`, // Halo effect
+  },
+
   '& .MuiInputBase-input': {
     padding: '10px 14px', // Adjust this value to decrease the padding
     margin: '0px',

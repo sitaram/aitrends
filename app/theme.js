@@ -1,37 +1,36 @@
 import { createTheme } from '@mui/material/styles';
 
-// Enhanced theme creation with dynamic mode and custom components
 export const getTheme = (mode) =>
   createTheme({
     palette: {
       mode,
       primary: {
-        main: mode === 'light' ? '#5E81AC' : '#6181b1',
+        main: mode === 'light' ? '#416D19' : '#416D19', // Deep forest green, consistent in both modes
         contrastText: '#ffffff',
       },
       secondary: {
-        main: mode === 'light' ? '#fBE0CB' : '#aB7B4B',
-        contrastText: '#000',
+        main: mode === 'light' ? '#FFF67E' : '#FFDD95', // Sunny yellow for light mode, a warmer yellow for dark mode
+        contrastText: mode === 'light' ? '#000000' : '#000000',
       },
       tertiary: {
-        main: mode === 'light' ? '#bed3e7' : '#6181b1',
+        main: mode === 'light' ? '#9BCF53' : '#BFEA7C', // Vivid green for light mode, soft green for dark mode
         contrastText: '#ffffff',
       },
       markdown: {
-        strong: '#81a161', // Nice green for strong emphasis
-        h1: 'red', // Red for h1 headings
-        h2: 'green', // Green for h2 headings
+        strong: '#416D19', // Deep forest green for emphasis
+        h1: '#9BCF53', // Vivid green for h1 headings
+        h2: '#BFEA7C', // Soft green for h2 headings
         h3: 'tomato', // Tomato for h3 headings
         h4: 'undefined',
       },
       background: {
-        default: mode === 'light' ? '#E5E9F0' : '#2E3440',
-        paper: mode === 'light' ? '#ffffff' : '#0B1222',
-        tabbar: mode === 'light' ? '#f5f5f5' : '#0B1222',
+        default: mode === 'light' ? '#ffffff' : '#303030', // White for light mode, dark grey for dark mode
+        paper: mode === 'light' ? '#f0f0f0' : '#0B2212', // Light grey and darker grey for paper elements
+        tabbar: mode === 'light' ? '#e0e0e0' : '#37474f', // Slightly darker grey for the tabbar in both modes
       },
       text: {
-        primary: mode === 'light' ? '#2E3440' : '#ECEFF4',
-        secondary: mode === 'light' ? '#4C566A' : '#D8DEE9',
+        primary: mode === 'light' ? '#212121' : '#fafafa', // Deep black for light mode, off-white for dark mode
+        secondary: mode === 'light' ? '#757575' : '#b0bec5', // Medium grey for both modes
       },
     },
     // Other customizations
