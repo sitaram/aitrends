@@ -159,7 +159,6 @@ const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic, setShowAbou
             <Typography variant="h6" noWrap>
               <a
                 href="https://aitrends.live/"
-                target="_blank"
                 rel="noopener noreferrer"
                 aria-label="aitrends live"
                 style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}
