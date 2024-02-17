@@ -58,6 +58,6 @@ export default async (req, res) => {
     return res.status(200).json({ data: data });
   } catch (error) {
     console.error('Error making request to OpenAI:', error);
-    res.status(500).json({ error: 'An error occurred' });
+    res.status(500).json({ error: 'An error occurred', details: error.message });
   }
 };

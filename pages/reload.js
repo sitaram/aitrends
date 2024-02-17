@@ -1,31 +1,49 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
-import { fetchContent } from '../app/api';
+import ReloadTopic from './reload_topic'; // Make sure this path matches your project structure
 import { topics } from '../app/topics';
 import { tabs as origTabs } from '../app/tabs';
-import axios from 'axios';
 import * as Constants from '../app/constants';
 
 const Reload = () => {
   const [reloadState, setReloadState] = useState({});
   const [loading, setLoading] = useState(false);
-  const contentResults = useRef({});
-  const topicTabCount = useRef({});
-  const requestQueue = useRef([]);
-  const activeRequests = useRef(new Set());
-  const maxConcurrentRequests = 30;
+  const reloadTopics = {};
+  const activeRequests = new Set();
 
   // Filter out 'Divider' tabs for rendering purposes
   const tabs = origTabs.filter((tab) => tab !== 'Divider');
 
-  const processQueue = () => {
-    while (activeRequests.current.size < maxConcurrentRequests && requestQueue.current.length > 0) {
-      const { topic, tab } = requestQueue.current.shift();
-      const controller = new AbortController();
-      fetchData(topic, tab, controller.signal);
-    }
-    if (activeRequests.current.size == 0 && requestQueue.current.length == 0) {
-      setLoading(false);
+  const updateReloadState = (key, status) => {
+    setReloadState((prevState) => ({ ...prevState, [key]: status }));
+  };
+
+  const processNextTopic = () => {
+    Object.values(reloadTopics).forEach((reloadTopic) => {
+      reloadTopic.processQueue();
+    });
+  };
+
+  const initiateReloadForTopic = (topic, tabs) => {
+    const updateStateCallback = (key, status) => updateReloadState(key, status);
+    const reloadTopic = new ReloadTopic(topic, tabs, updateStateCallback, activeRequests, processNextTopic);
+    reloadTopics[topic] = reloadTopic;
+    reloadTopic.enqueueRequests();
+  };
+
+  const handleReloadClick = async () => {
+    setLoading((currentLoading) => !currentLoading);
+    if (!loading) {
+      setReloadState({});
+      initiateReloadForTopic(Constants.ALLTOPICS, tabs);
+      topics.clusters.forEach((cluster) => {
+        cluster.topics.forEach((topic) => {
+          initiateReloadForTopic(topic, tabs);
+        });
+      });
+    } else {
+      // Cancel all ongoing requests
+      Object.values(reloadTopics).forEach((reloadTopic) => reloadTopic.cancelAllRequests());
     }
   };
 
@@ -34,158 +52,13 @@ const Reload = () => {
       case 'success':
         return <span style={{ color: 'green', fontWeight: 'bold' }}>✔️</span>;
       case 'error':
-        return <span style={{ color: 'red', backgroundColor: 'lightred', fontWeight: 'bold' }}>❌</span>;
+        return <span style={{ color: 'red', fontWeight: 'bold' }}>❌</span>;
       case 'loading':
         return <span style={{ color: 'orange' }}>•</span>;
       default:
         return <span style={{ color: 'gray' }}>•</span>;
     }
   };
-
-  const enqueueRequest = (topic, tab) => {
-    requestQueue.current.push({ topic, tab });
-    processQueue();
-  };
-
-  const fetchData = async (topic, tab, signal) => {
-    const key = `${topic}-${tab}`;
-    console.log('fetchData', topic, tab);
-    try {
-      activeRequests.current.add(key);
-      const content = await fetchContent(
-        topic,
-        tab,
-        null, // payload
-        false, // isOverview
-        false, // isOnline
-        () => {},
-        signal
-      );
-
-      console.log('fetchData done', topic, tab, 'content:', content.length, 'bytes');
-      // Store the fetched content by topic and tab
-      if (!contentResults.current[topic]) {
-        contentResults.current[topic] = {};
-      }
-      contentResults.current[topic][tab] = content.substr(0, 1000);
-      setReloadState((prevState) => ({ ...prevState, [key]: 'success' }));
-
-      if (topicTabCount.current[topic] !== undefined) {
-        topicTabCount.current[topic]--;
-        if (topicTabCount.current[topic] === 0) {
-          // All tabs for this topic have finished, process the summary
-          await processSummary(topic, signal);
-        }
-      }
-    } catch (error) {
-      if (axios.isCancel(error)) {
-        console.log('Request was cancelled');
-      } else {
-        console.error('An error occurred:', error);
-        setReloadState((prevState) => ({ ...prevState, [key]: 'error' }));
-      }
-    } finally {
-      activeRequests.current.delete(key);
-      processQueue();
-    }
-  };
-
-  const processSummary = async (topic, signal) => {
-    console.log('processSummary', topic, contentResults);
-    const allTabsContent = Object.entries(contentResults.current[topic])
-      .map(([tab, content]) => `\n\n----------------------\n\nTAB NAME: [[${tab}]]\nCONTENT: ${content}`)
-      .join(', ');
-    const summaryKey = `${topic}-Overview`;
-
-    // Assume fetchContent for summary is an async operation
-    try {
-      setReloadState((prevState) => ({ ...prevState, [summaryKey]: 'loading' }));
-      await fetchContent(
-        topic,
-        tabs[0],
-        allTabsContent,
-        true, // isOverview
-        false, // isOnline
-        () => {},
-        signal
-      );
-      setReloadState((prevState) => ({ ...prevState, [summaryKey]: 'success' }));
-    } catch (error) {
-      console.error('An error occurred:', error);
-      setReloadState((prevState) => ({ ...prevState, [summaryKey]: 'error' }));
-    }
-  };
-
-  const handleReloadClick = () => {
-    const tabs_minus_overview = tabs.filter((tab) => tab !== 'Overview');
-    if (!loading) {
-      setLoading(true);
-      setReloadState({});
-
-      const topic = Constants.ALLTOPICS;
-      topicTabCount.current[topic] = tabs_minus_overview.length;
-      tabs_minus_overview.forEach((tab) => {
-        const key = `${topic}-${tab}`;
-        setReloadState((prevState) => ({ ...prevState, [key]: 'loading' }));
-        enqueueRequest(topic, tab);
-      });
-
-      if (1)
-        topics.clusters.forEach((cluster) => {
-          cluster.topics.forEach((topic) => {
-            if (1 || topic === 'AI in Retail' || topic === 'Computer Vision') {
-              // Initialize the tab count for this topic
-              topicTabCount.current[topic] = tabs_minus_overview.length;
-              tabs_minus_overview.forEach((tab) => {
-                const key = `${topic}-${tab}`;
-                setReloadState((prevState) => ({ ...prevState, [key]: 'loading' }));
-                enqueueRequest(topic, tab);
-              });
-            }
-          });
-        });
-    } else {
-      // Abort logic if needed or reset state to stop
-      setLoading(false);
-
-      // Reset dashboard.
-      const topic = Constants.ALLTOPICS;
-      tabs.forEach((tab) => {
-        tabs.forEach((tab) => {
-          const key = `${topic}-${tab}`;
-          if (reloadState[key] === 'loading') {
-            setReloadState((prevState) => ({ ...prevState, [key]: 'error' }));
-          }
-        });
-      });
-      topics.clusters.forEach((cluster) => {
-        cluster.topics.forEach((topic) => {
-          tabs.forEach((tab) => {
-            const key = `${topic}-${tab}`;
-            if (reloadState[key] === 'loading') {
-              setReloadState((prevState) => ({ ...prevState, [key]: 'error' }));
-            }
-          });
-        });
-      });
-
-      contentResults.current = {};
-      topicTabCount.current = {};
-      requestQueue.current = [];
-      activeRequests.current.clear();
-    }
-  };
-
-  useEffect(() => {
-    document.title = 'AI Trends: Reload Dashboard';
-
-    // Cleanup logic here, if necessary
-    return () => {
-      // Reset everything on component unmount
-      requestQueue.current = [];
-      activeRequests.current.clear();
-    };
-  }, []);
 
   return (
     <>
@@ -206,15 +79,16 @@ const Reload = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {/* Standalone topic rendering */}
+          {/* Render Constants.ALLTOPICS separately */}
           <TableRow>
             <TableCell
               colSpan={tabs.length + 1}
               style={{ fontWeight: 'bold', backgroundColor: '#E5E9F0', borderTop: '2px solid black' }}
             >
-              All AI Topics
+              {Constants.ALLTOPICS}
             </TableCell>
           </TableRow>
+
           <TableRow>
             <TableCell>All AI Topics</TableCell>
             {tabs.map((tab, tabIndex) => (
@@ -224,7 +98,7 @@ const Reload = () => {
             ))}
           </TableRow>
 
-          {/* Clusters and topics rendering */}
+          {/* Render clusters and their topics */}
           {topics.clusters.map((cluster, clusterIndex) => (
             <React.Fragment key={`cluster-${clusterIndex}`}>
               <TableRow>
@@ -236,19 +110,18 @@ const Reload = () => {
                 </TableCell>
               </TableRow>
               {cluster.topics.map((topic, topicIndex) => (
-                <TableRow
-                  key={`${clusterIndex}-${topicIndex}`}
-                  style={{
-                    backgroundColor: topicIndex % 2 === 1 ? '#F7F7F7' : 'none', // Applying very light gray for even rows
-                  }}
-                >
-                  <TableCell>{topic}</TableCell>
-                  {tabs.map((tab, tabIndex) => (
-                    <TableCell key={`${clusterIndex}-${topicIndex}-${tabIndex}`}>
-                      {renderStatusIcon(reloadState[`${topic}-${tab}`])}
-                    </TableCell>
-                  ))}
-                </TableRow>
+                <React.Fragment key={`topic-${topicIndex}`}>
+                  <TableRow
+                    style={{
+                      backgroundColor: topicIndex % 2 === 1 ? '#F7F7F7' : 'none', // Applying very light gray for even rows
+                    }}
+                  >
+                    <TableCell>{topic}</TableCell>
+                    {tabs.map((tab, tabIndex) => (
+                      <TableCell key={`${topic}-${tab}`}>{renderStatusIcon(reloadState[`${topic}-${tab}`])}</TableCell>
+                    ))}
+                  </TableRow>
+                </React.Fragment>
               ))}
             </React.Fragment>
           ))}
