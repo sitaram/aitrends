@@ -19,7 +19,7 @@ export const getTheme = (mode) =>
       markdown: {
         strong: '#416D19', // Deep forest green for emphasis
         h1: '#9BCF53', // Vivid green for h1 headings
-        h2: '#BFEA7C', // Soft green for h2 headings
+        h2: '#9B53b0', // Vivid blue for h2 headings
         h3: 'tomato', // Tomato for h3 headings
         h4: 'undefined',
       },
