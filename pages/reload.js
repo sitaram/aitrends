@@ -117,14 +117,14 @@ const Reload = () => {
   };
 
   const handleReloadClick = () => {
-    const notabs = tabs.filter((tab) => tab !== 'Overview');
+    const tabs_minus_overview = tabs.filter((tab) => tab !== 'Overview');
     if (!loading) {
       setLoading(true);
       setReloadState({});
 
       const topic = Constants.ALLTOPICS;
-      topicTabCount.current[topic] = notabs.length;
-      notabs.forEach((tab) => {
+      topicTabCount.current[topic] = tabs_minus_overview.length;
+      tabs_minus_overview.forEach((tab) => {
         const key = `${topic}-${tab}`;
         setReloadState((prevState) => ({ ...prevState, [key]: 'loading' }));
         enqueueRequest(topic, tab);
@@ -135,8 +135,8 @@ const Reload = () => {
           cluster.topics.forEach((topic) => {
             if (1 || topic === 'AI in Retail' || topic === 'Computer Vision') {
               // Initialize the tab count for this topic
-              topicTabCount.current[topic] = notabs.length;
-              notabs.forEach((tab) => {
+              topicTabCount.current[topic] = tabs_minus_overview.length;
+              tabs_minus_overview.forEach((tab) => {
                 const key = `${topic}-${tab}`;
                 setReloadState((prevState) => ({ ...prevState, [key]: 'loading' }));
                 enqueueRequest(topic, tab);
