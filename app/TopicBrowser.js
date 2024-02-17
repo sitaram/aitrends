@@ -12,12 +12,12 @@ const FilterTextField = styled(TextField)(({ theme }) => ({
   width: 'calc(100% - 20px)', // Adjust based on padding/margins
   margin: '10px auto',
   '& .MuiOutlinedInput-notchedOutline': {
-    borderColor: theme.palette.primary.main,
-    borderWidth: '1px',
+    borderColor: theme.palette.tertiary.main,
+    borderWidth: '2px',
   },
 
   // Target the notched outline for the border color on hover
-  '&:hover .MuiOutlinedInput-notchedOutline': {
+  '&:active, &:hover .MuiOutlinedInput-notchedOutline': {
     borderColor: theme.palette.primary.main,
     boxShadow: `0 0 5px ${theme.palette.primary.main}`, // Halo effect
   },

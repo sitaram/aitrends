@@ -25,7 +25,7 @@ export const getTheme = (mode) =>
       },
       background: {
         default: mode === 'light' ? '#ffffff' : '#303030', // White for light mode, dark grey for dark mode
-        paper: mode === 'light' ? '#f0f0f0' : '#0B2212', // Light grey and darker grey for paper elements
+        paper: mode === 'light' ? '#f0f0f0' : '#0B1212', // Light grey and darker grey for paper elements
         tabbar: mode === 'light' ? '#e0e0e0' : '#37474f', // Slightly darker grey for the tabbar in both modes
       },
       text: {
