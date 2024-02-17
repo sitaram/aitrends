@@ -1,4 +1,4 @@
-import { fetchContent } from 'api';
+import { fetchContent } from './api';
 
 class ReloadTopic {
   constructor(topic, tabs, updateStateCallback, activeRequests, processNextTopic, maxConcurrentRequests = 50) {
