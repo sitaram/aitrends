@@ -59,8 +59,7 @@ const LogoComponent = () => {
       <path d="M100,-5 Q115,35 130,-5 Q120,15 110,-5 Q115,20 100,-5" className="flame" />
 
       {/* Adding a translucent rectangle as a halo for the text */}
-
-      <rect x="5" y="15" width="130" height="20" rx="5" fill="rgba(94, 129, 172, 0.5)" />
+      <rect x="5" y="15" width="130" height="20" rx="5" fill="rgba(65, 109, 25, 0.5)" />
 
       {/* Text label for aitrends.live */}
       <text x="10" y="30" className="trend-text">
