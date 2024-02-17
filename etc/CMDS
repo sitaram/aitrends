@@ -22,6 +22,63 @@ redis-cli EVAL "$(cat del.lua)" 1 "*List the major companies and org*"
 
 
 
+add to next.config.mjs: const nextConfig = { output: 'export' };
+npm run build
+npx cap init AITrends live.aitrends --web-dir=out ("n" to both questions)
+npm install @capacitor/{android,ios}
+npx cap add ios
+npx cap add android
+npx cap copy
+# optional: npm install @capacitor/[plugin] (e.g., camera, GPS)
+npx cap sync
+#npx cap open ios
+
+https://developer.android.com/studio
+cd ~/bin; tar zxvf ~/Downloads/android-studio-2023.1.1.28-linux.tar.gz 
+cd android-studio/bin
+./studio.sh
+
+export CAPACITOR_ANDROID_STUDIO_PATH=$HOME/bin/android-studio/bin/studio.sh
+npx cap open android
+(opens in studio)
+after a minute of loading, hit the run button on top
+
+sign in on studio
+and open google play console
+create profile, pay $25, submit drivers license for verification
+create app
+internal testing
+
+get google to generate the google-managed key.
+
+then, create an app signing key:
+keytool -genkeypair -v -keystore ~/etc/android-upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias android-upload-key
+
+Generating 2,048 bit RSA key pair and self-signed certificate (SHA256withRSA) with a validity of 10,000 days
+	for: CN=Sitaram Iyer, OU=Unknown, O=Unknown, L=San Carlos, ST=CA, C=US
+[Storing /home/sitaram/etc/android-upload-keystore.jks]
+
+Open Your Project in Android Studio.
+Open the Signing Configurations:
+Go to File > Project Structure > Modules in the menu.
+Select your app module and go to the Signing Config tab.
+Create a New Signing Configuration:  [sitaram signing key]
+
+Click on the + to add a new configuration.
+Enter the path to your keystore file, the keystore password, the key alias, and the key password.
+Assign Signing Config to Your Build Type:
+
+Go to the Build Types tab.
+Assign the newly created signing config to the release build type.
+Sync Project with Gradle Files: After configuring, click on “OK” and allow the project to sync with the Gradle files.
+
+(default config tab: live.aitrends: signing config: switch to mine dropdown)
+(build variants: release: signing config: switch to mine dropdown)
+
+
+studio: menu: build > generate signed bundle > 
+
+
 
 
 
