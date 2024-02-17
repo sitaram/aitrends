@@ -17,7 +17,7 @@ const FilterTextField = styled(TextField)(({ theme }) => ({
   },
 
   // Target the notched outline for the border color on hover
-  '&:active, &:hover .MuiOutlinedInput-notchedOutline': {
+  '&:hover .MuiOutlinedInput-notchedOutline, &:active .MuiOutlinedInput-notchedOutline': {
     borderColor: theme.palette.primary.main,
     boxShadow: `0 0 5px ${theme.palette.primary.main}`, // Halo effect
   },
@@ -228,19 +228,21 @@ const TopicBrowser = ({ topic, handleTopicChange, selectedTopic }) => {
             </div>
           ))
         ) : (
-          <ListItem>
+          <ListItem style={{ display: 'block' }}>
             <ListItemText primary={`No topics found for "${filter}".`} />
+            <br />
             <Button
               variant="contained"
               color="primary"
-              style={{ backgroundColor: theme.palette.primary.main }}
+              style={{ width: '100%', backgroundColor: theme.palette.primary.main, textTransform: 'none' }}
               onClick={() => {
                 console.log(`Researching ${filter}`);
                 handleTopicChange(filter);
                 setOpenClusters((prevOpenClusters) => []);
               }}
             >
-              Research `{filter}` (minute per tab)
+              Research `{filter}`<br />
+              (takes a minute)
             </Button>
           </ListItem>
         )}
