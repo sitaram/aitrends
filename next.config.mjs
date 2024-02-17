@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  // FOR MOBILE APP
+  // output: 'export',
 };
 
 export default nextConfig;
