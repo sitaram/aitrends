@@ -189,7 +189,7 @@ const Reload = () => {
 
   return (
     <>
-      <h1>AI Trends: Reload Dashboard</h1>
+      <h1>${Constants.APPNAME}: Reload Dashboard</h1>
       <Button variant="contained" color="primary" onClick={handleReloadClick}>
         {loading ? 'Stop Reload' : 'Start Reload'}
       </Button>
