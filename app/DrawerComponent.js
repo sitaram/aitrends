@@ -6,8 +6,8 @@ import TopicBrowser from './TopicBrowser';
 const DrawerComponent = ({ topic, topicsDrawerOpen, handleTopicsDrawerToggle, handleTopicChange }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const drawerWidth = isMobile ? 200 : 250;
 
+  const drawerWidth = 250;
   const drawerContent = <TopicBrowser topic={topic} handleTopicChange={handleTopicChange} selectedTopic={topic} />;
 
   return (
@@ -23,6 +23,7 @@ const DrawerComponent = ({ topic, topicsDrawerOpen, handleTopicsDrawerToggle, ha
             }}
             sx={{
               '.MuiDrawer-paper': {
+                width: drawerWidth,
                 marginTop: '60px', // Add this margin to create space for the title bar
                 height: `calc(100% - 60px)`,
               },
