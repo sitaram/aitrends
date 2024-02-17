@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
-import ReloadTopic from './app/reload_topic';
+import ReloadTopic from '../app/reload_topic';
 import { topics } from '../app/topics';
 import { tabs as origTabs } from '../app/tabs';
 import * as Constants from '../app/constants';
