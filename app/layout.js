@@ -4,11 +4,12 @@ import React from 'react';
 import { Inter } from 'next/font/google';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import './globals.css';
+import * as Constants from './constants';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'AI Trends',
+  title: Constants.APPNAME,
   description: 'Keep up with latest trends in AI with this dynamic and interactive newsletter',
 };
 

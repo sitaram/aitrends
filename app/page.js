@@ -129,6 +129,7 @@ const Home = () => {
 
   // Parse the initial hash parameters
   useEffect(() => {
+    if (!window.location.hash) return; // don't erase our default open cluster
     const { topic, tab } = parseHashParams(window.location.hash);
     if (topic) setTopic(topic);
     const newTabIndex = tabs.findIndex((t) => t === tab);
@@ -157,7 +158,7 @@ const Home = () => {
     };
 
     // Update the title with the current topic, or use a default title if the topic isn't set
-    document.title = topic !== Constants.ALLTOPICS ? `AI Trends: ${topic}` : 'AI Trends';
+    document.title = topic !== Constants.ALLTOPICS ? `${Constants.APPNAME}: ${topic}` : Constants.APPNAME;
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
