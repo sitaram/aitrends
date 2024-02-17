@@ -183,7 +183,7 @@ const TopicBrowser = ({ topic, handleTopicChange, selectedTopic }) => {
                   const clusterName = cluster.name;
                   setOpenClusters((prevOpenClusters) => {
                     return prevOpenClusters.includes(clusterName)
-                      ? prevOpenClusters
+                      ? prevOpenClusters.filter((cluster) => cluster !== clusterName)
                       : filter
                       ? [...prevOpenClusters, clusterName]
                       : [clusterName];
