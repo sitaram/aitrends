@@ -19,9 +19,11 @@ const Reload = () => {
   };
 
   const processNextTopic = () => {
+    let queue = 0;
     Object.values(reloadTopics).forEach((reloadTopic) => {
-      reloadTopic.processQueue();
+      queue += reloadTopic.processQueue();
     });
+    if (queue == 0) setLoading(false);
   };
 
   const initiateReloadForTopic = (topic, tabs) => {
@@ -32,8 +34,8 @@ const Reload = () => {
   };
 
   const handleReloadClick = async () => {
-    setLoading((currentLoading) => !currentLoading);
     if (!loading) {
+      setLoading(true);
       setReloadState({});
       initiateReloadForTopic(Constants.ALLTOPICS, tabs);
       topics.clusters.forEach((cluster) => {
@@ -43,6 +45,7 @@ const Reload = () => {
       });
     } else {
       // Cancel all ongoing requests
+      setLoading(false);
       Object.values(reloadTopics).forEach((reloadTopic) => reloadTopic.cancelAllRequests());
     }
   };

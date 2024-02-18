@@ -11,6 +11,7 @@ class ReloadTopic {
     this.signal = new AbortController();
     this.activeRequests = activeRequests;
     this.processNextTopic = processNextTopic;
+    this.summaryPending = 1;
     this.tabs.forEach((tab) => {
       // Initialize contentResults structure for each tab
       this.contentResults[tab] = { status: 'pending', content: null };
@@ -33,6 +34,7 @@ class ReloadTopic {
       const { topic, tab } = this.requestQueue.shift();
       this.fetchData(topic, tab);
     }
+    return this.requestQueue.length + this.summaryPending;
   }
 
   async fetchData(topic, tab) {
@@ -61,6 +63,7 @@ class ReloadTopic {
     } catch (error) {
       // Update content result on failure
       if (error.name !== 'AbortError') {
+        console.error('fetchData: error:', error);
         this.contentResults[tab] = { status: 'error', content: null };
         this.updateStateCallback(key, 'error');
       }
@@ -98,8 +101,12 @@ class ReloadTopic {
       // Notify success for 'Overview' tab
       this.updateStateCallback(`${this.topic}-Overview`, 'success');
     } catch (error) {
+      console.error('processSummary: error:', error);
       // Notify failure for 'Overview' tab
       this.updateStateCallback(`${this.topic}-Overview`, 'error');
+    } finally {
+      if (this.requestQueue.length == 0) this.processNextTopic(); // Try processing other topics
+      this.summaryPending = 0;
     }
   }
 

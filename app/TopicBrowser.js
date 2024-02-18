@@ -5,7 +5,9 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { InputAdornment, IconButton } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
-import { topics } from './topics'; // Import the topics data from your topics.js file
+import { topics } from './topics';
+import { tabs } from './tabs';
+import ReloadTopic from './reload_topics';
 import * as Constants from './constants';
 
 const FilterTextField = styled(TextField)(({ theme }) => ({
@@ -237,6 +239,14 @@ const TopicBrowser = ({ topic, handleTopicChange, selectedTopic }) => {
                 console.log(`Researching ${filter}`);
                 handleTopicChange(filter);
                 setOpenClusters((prevOpenClusters) => []);
+                const reloadTopic = new ReloadTopic(
+                  filter, // topic
+                  tabs,
+                  () => {}, // updateStateCallback
+                  new Set(), // activeRequests
+                  () => {} // processNextTopic
+                );
+                reloadTopic.enqueueRequests();
               }}
             >
               Research `{filter}`<br />
