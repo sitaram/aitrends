@@ -45,8 +45,8 @@ const Reload = () => {
       });
     } else {
       // Cancel all ongoing requests
-      setLoading(false);
       Object.values(reloadTopics).forEach((reloadTopic) => reloadTopic.cancelAllRequests());
+      setLoading(false);
     }
   };
 
@@ -66,7 +66,7 @@ const Reload = () => {
   return (
     <>
       <h1>{Constants.APPNAME}: Reload Dashboard</h1>
-      <Button variant="contained" color="primary" onClick={handleReloadClick}>
+      <Button variant="contained" onClick={handleReloadClick} style={{ backgroundColor: loading ? 'red' : '#1976d2' }}>
         {loading ? 'Stop Reload' : 'Start Reload'}
       </Button>
 
