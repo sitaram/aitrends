@@ -7,7 +7,7 @@ import { InputAdornment, IconButton } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import { topics } from './topics';
 import { tabs } from './tabs';
-import ReloadTopic from './reload_topics';
+import ReloadTopic from './reload_topic';
 import * as Constants from './constants';
 
 const FilterTextField = styled(TextField)(({ theme }) => ({
