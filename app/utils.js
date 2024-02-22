@@ -19,7 +19,7 @@ export const parseHashParams = (hash) => {
 };
 
 export const splitChat = (str) => {
-  const codeBlockRegex = /(```[\s\S]*?```)/g; // Matches fenced code blocks
+  const codeBlockRegex = /(```[\s\S]*?```)/g; // Matches fenced code blocks.
   const placeholders = [];
   let index = 0;
 
