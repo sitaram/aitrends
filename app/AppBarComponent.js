@@ -20,7 +20,8 @@ import ShareIcon from '@mui/icons-material/Share';
 import SubscribeIcon from '@mui/icons-material/Subscriptions';
 import FeedbackIcon from '@mui/icons-material/Feedback';
 import InfoIcon from '@mui/icons-material/Info';
-import BlogIcon from '@mui/icons-material/Article';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import CloseIcon from '@mui/icons-material/Close';
 import LogoComponent from './LogoComponent';
 import FeedbackForm from './FeedbackForm';
@@ -84,9 +85,15 @@ const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic, setShowAbou
     setShowAbout(true);
   };
 
-  const handleBlogPost = () => {
-    console.log('Navigate to blog post');
-    // Implement navigation to blog section
+  const handleLinkedInPost = () => {
+    window.open(
+      'https://www.linkedin.com/posts/activity-7142703288986050561-oRre?utm_source=share&utm_medium=member_desktop',
+      '_blank'
+    );
+  };
+
+  const handleCode = () => {
+    window.open('https://github.com/sitaram/aitrends', '_blank');
   };
 
   return (
@@ -140,14 +147,18 @@ const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic, setShowAbou
                 </ListItemIcon>
                 <ListItemText primary="Feedback" />
               </ListItem>
-              {/*
-              <ListItem button onClick={handleBlogPost}>
+              <ListItem button onClick={handleLinkedInPost}>
                 <ListItemIcon>
-                  <BlogIcon />
+                  <LinkedInIcon />
                 </ListItemIcon>
-                <ListItemText primary="Blog Post" />
+                <ListItemText primary="LinkedIn Post" />
               </ListItem>
-              */}
+              <ListItem button onClick={handleCode}>
+                <ListItemIcon>
+                  <GitHubIcon />
+                </ListItemIcon>
+                <ListItemText primary="GitHub Repo" />
+              </ListItem>
             </List>
           </Box>
         </Drawer>
