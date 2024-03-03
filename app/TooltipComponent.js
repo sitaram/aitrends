@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Tooltip, tooltipClasses, useTheme } from '@mui/material';
+
+import { Button, Tooltip, tooltipClasses, useTheme } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 import ArrowDropDownCircleTwoToneIcon from '@mui/icons-material/ArrowDropDownCircleTwoTone';
@@ -60,7 +61,7 @@ export default function TooltipComponent({ open, onClose, onClick, handleTabChan
       title={
         <>
           <Typography variant="h5" style={{ fontWeight: 'bold' }}>
-            Lots of tabs
+            Lots of tabs (click on one?)
           </Typography>
           {Object.entries(categories).map(([category, tabs]) => (
             <span key={category} sx={{ margin: 2 }}>
@@ -94,6 +95,16 @@ export default function TooltipComponent({ open, onClose, onClick, handleTabChan
               </span>
             </span>
           ))}
+          <Box sx={{ textAlign: 'right' }}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={onClose}
+              style={{ mt: 10, backgroundColor: theme.palette.primary.main }}
+            >
+              Got it!
+            </Button>
+          </Box>
         </>
       }
       TransitionComponent={Zoom}
