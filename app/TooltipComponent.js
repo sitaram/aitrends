@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Tooltip, tooltipClasses, useTheme } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
-import InfoIcon from '@mui/icons-material/Info';
+import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
+import ArrowDropDownCircleTwoToneIcon from '@mui/icons-material/ArrowDropDownCircleTwoTone';
 import { Typography, Box, Chip } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { tabs as allTabs } from './tabs';
@@ -71,7 +72,18 @@ export default function TooltipComponent({ open, onClose, onClick, handleTabChan
                     label={tab}
                     variant="outlined"
                     size="small"
-                    sx={{ mr: 0.5, mb: 0.5, borderColor: '#dadde9' }}
+                    sx={{
+                      mr: 0.5,
+                      mb: 0.5,
+                      borderColor: '#dadde9',
+                      borderColor: '#dadde9',
+                      borderColor: theme.palette.primary.main,
+                      '&:hover': {
+                        backgroundColor: theme.palette.primary.main + ' !important',
+                        color: '#ffffff',
+                        borderColor: theme.palette.primary.main, // Optionally, you can ensure the border color matches during hover
+                      },
+                    }}
                     onClick={() => {
                       const index = allTabs.findIndex((t) => t === tab);
                       console.log('tab, index', tab, index);
@@ -91,7 +103,7 @@ export default function TooltipComponent({ open, onClose, onClick, handleTabChan
       arrow
     >
       <IconButton color="primary" style={{ padding: 0, verticalAlign: '-2px' }} onClick={onClick}>
-        <InfoIcon />
+        {!open ? <ArrowDropDownCircleTwoToneIcon /> : <ArrowDropDownCircleIcon />}
       </IconButton>
     </CustomWidthTooltip>
   );

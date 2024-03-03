@@ -53,20 +53,18 @@ const tabContainerStyle = (theme) => {
       bottom: 0,
       zIndex: 1,
       pointerEvents: 'none',
-    },
-    '&::before': {
-      left: '35px',
       width: '30px',
       height: '45px',
+    },
+    '&::before': {
+      left: '40px',
       background: `linear-gradient(to right, ${hexToRgba(theme.palette.background.tabbar, 1)} 0%, ${hexToRgba(
         theme.palette.background.tabbar,
         0
       )} 100%)`,
     },
     '&::after': {
-      right: '35px',
-      width: '30px',
-      height: '45px',
+      right: '40px',
       background: `linear-gradient(to left, ${hexToRgba(theme.palette.background.tabbar, 1)} 0%, ${hexToRgba(
         theme.palette.background.tabbar,
         0
@@ -81,7 +79,7 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window, setIsTabBarSticky }) 
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [showTooltip, setShowTooltip] = useState(false);
 
-  const handleInfoIconClick = () => {
+  const handleToolbarClick = () => {
     setShowTooltip(!showTooltip);
   };
 
@@ -102,7 +100,13 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window, setIsTabBarSticky }) 
           }}
         >
           <Box sx={{ ...tabContainerStyle(theme), flexGrow: 1, textAlign: 'center' }}>
-            <Box sx={{ display: 'inline-block', width: 'calc(100% - 45px)' }}>
+            <TooltipComponent
+              open={showTooltip}
+              onClose={() => setShowTooltip(false)}
+              onClick={handleToolbarClick}
+              handleTabChange={handleTabChange}
+            />
+            <Box sx={{ display: 'inline-block', width: 'calc(100% - 50px)' }}>
               <Tabs
                 value={tabIndex}
                 variant="scrollable"
@@ -122,6 +126,7 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window, setIsTabBarSticky }) 
                   },
                   '& .MuiTabs-scrollButtons': {
                     color: theme.palette.primary.main,
+                    width: '20px !important',
                   },
                 }}
                 centered={false}
@@ -137,12 +142,6 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window, setIsTabBarSticky }) 
                 )}
               </Tabs>
             </Box>
-            <TooltipComponent
-              open={showTooltip}
-              onClose={() => setShowTooltip(false)}
-              onClick={handleInfoIconClick}
-              handleTabChange={handleTabChange}
-            />
           </Box>
         </AppBar>
       </Box>
