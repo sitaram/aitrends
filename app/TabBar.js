@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { AppBar, Tabs, Tab, Box, Divider, useScrollTrigger, useTheme, useMediaQuery } from '@mui/material';
+import { AppBar, Tabs, Tab, Box, Divider, IconButton, useScrollTrigger, useTheme, useMediaQuery } from '@mui/material';
 import { hexToRgba } from './utils';
+import TooltipComponent from './TooltipComponent';
 
 const ElevationScroll = ({ children, window, setIsTabBarSticky }) => {
   const theme = useTheme();
@@ -78,55 +79,68 @@ const tabContainerStyle = (theme) => {
 const TabBar = ({ tabs, tabIndex, handleTabChange, window, setIsTabBarSticky }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  const handleInfoIconClick = () => {
+    setShowTooltip(!showTooltip);
+  };
 
   return (
     <ElevationScroll window={window} setIsTabBarSticky={setIsTabBarSticky}>
-      <AppBar
-        position="static"
-        color="default"
-        sx={{
-          backgroundColor: theme.palette.background.paper,
-          borderBottom: 1,
-          borderColor: 'divider',
-          ...(!isMobile && { boxShadow: 'none' }),
-        }}
-      >
-        <Box sx={tabContainerStyle(theme)}>
-          <Tabs
-            value={tabIndex}
-            variant="scrollable"
-            scrollButtons="auto"
-            allowScrollButtonsMobile
-            sx={{
-              '& .Mui-selected': {
-                color: theme.palette.primary.main,
-              },
-              '& .MuiTabs-indicator': {
-                backgroundColor: theme.palette.primary.main,
-              },
-              '& .MuiTab-root': {
-                textTransform: 'none',
-                fontWeight: 'bold',
-                fontSize: '0.875rem',
-              },
-              '& .MuiTabs-scrollButtons': {
-                color: theme.palette.primary.main,
-              },
-            }}
-            centered={false}
-            onChange={handleTabChange}
-          >
-            {tabs.map((item, index) =>
-              item !== 'Divider' ? (
-                <Tab key={index} label={item} />
-              ) : (
-                // Render a Tab styled as a divider
-                <DividerTab key={`divider-${index}`} />
-              )
-            )}
-          </Tabs>
-        </Box>
-      </AppBar>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <AppBar
+          position="static"
+          color="default"
+          sx={{
+            backgroundColor: theme.palette.background.paper,
+            borderBottom: 1,
+            borderColor: 'divider',
+            ...(!isMobile && { boxShadow: 'none' }),
+            width: '100%', // Ensure AppBar takes full width
+            display: 'flex', // Added to ensure flex behavior
+            justifyContent: 'space-between', // Adjusted for spacing between tabs and tooltip
+          }}
+        >
+          <Box sx={{ ...tabContainerStyle(theme), flexGrow: 1, textAlign: 'center' }}>
+            <Box sx={{ display: 'inline-block', width: 'calc(100% - 45px)' }}>
+              <Tabs
+                value={tabIndex}
+                variant="scrollable"
+                scrollButtons="auto"
+                allowScrollButtonsMobile
+                sx={{
+                  '& .Mui-selected': {
+                    color: theme.palette.primary.main,
+                  },
+                  '& .MuiTabs-indicator': {
+                    backgroundColor: theme.palette.primary.main,
+                  },
+                  '& .MuiTab-root': {
+                    textTransform: 'none',
+                    fontWeight: 'bold',
+                    fontSize: '0.875rem',
+                  },
+                  '& .MuiTabs-scrollButtons': {
+                    color: theme.palette.primary.main,
+                  },
+                }}
+                centered={false}
+                onChange={handleTabChange}
+              >
+                {tabs.map((item, index) =>
+                  item !== 'Divider' ? (
+                    <Tab key={index} label={item} />
+                  ) : (
+                    // Render a Tab styled as a divider
+                    <DividerTab key={`divider-${index}`} />
+                  )
+                )}
+              </Tabs>
+            </Box>
+            <TooltipComponent open={showTooltip} onClose={() => setShowTooltip(false)} onClick={handleInfoIconClick} />
+          </Box>
+        </AppBar>
+      </Box>
     </ElevationScroll>
   );
 };
