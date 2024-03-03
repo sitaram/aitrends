@@ -38,6 +38,7 @@ const About = ({ showAbout, setShowAbout }) => {
           ethical debates to the funding scene, technical deep-dives to innovative applications, our platform lays out a
           detailed map of AI's landscape.
         </Typography>
+        <Divider sx={{ mb: 2 }} />
         <Typography variant="body2" sx={{ mb: 2 }}>
           Through over 100 chat sessions with ChatGPT, we meticulously curated a resource that not only informs but
           inspires. Whether you're navigating career paths, looking for upskilling resources, or exploring innovative
