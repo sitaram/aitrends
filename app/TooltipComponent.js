@@ -6,6 +6,7 @@ import ArrowDropDownCircleTwoToneIcon from '@mui/icons-material/ArrowDropDownCir
 import { Typography, Box, Chip } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { tabs as allTabs } from './tabs';
+import Zoom from '@mui/material/Zoom';
 
 export default function TooltipComponent({ open, onClose, onClick, handleTabChange }) {
   const theme = useTheme();
@@ -22,8 +23,9 @@ export default function TooltipComponent({ open, onClose, onClick, handleTabChan
       backgroundColor: theme.palette.background.tabbar,
       padding: '10px',
       margin: 'auto',
-      backgroundColor: '#f0fed8',
-      border: '1px solid #dadde9',
+      backgroundColor: '#f8ffe8',
+      borderRadius: '10px',
+      boxShadow: '0 0 10px 0 ' + theme.palette.primary.main,
     },
     [`@media (min-width: ${600 / 0.95}px)`]: {
       [`& .${tooltipClasses.tooltip}`]: {
@@ -76,8 +78,6 @@ export default function TooltipComponent({ open, onClose, onClick, handleTabChan
                       mr: 0.5,
                       mb: 0.5,
                       borderColor: '#dadde9',
-                      borderColor: '#dadde9',
-                      borderColor: theme.palette.primary.main,
                       '&:hover': {
                         backgroundColor: theme.palette.primary.main + ' !important',
                         color: '#ffffff',
@@ -86,7 +86,6 @@ export default function TooltipComponent({ open, onClose, onClick, handleTabChan
                     }}
                     onClick={() => {
                       const index = allTabs.findIndex((t) => t === tab);
-                      console.log('tab, index', tab, index);
                       if (index !== -1) handleTabChange(null, index);
                       onClose();
                     }}
@@ -97,9 +96,13 @@ export default function TooltipComponent({ open, onClose, onClick, handleTabChan
           ))}
         </>
       }
+      TransitionComponent={Zoom}
+      TransitionProps={{ timeout: 500 }}
       open={open}
       onClose={onClose}
+      disableFocusListener
       disableHoverListener
+      disableTouchListener
       arrow
     >
       <IconButton color="primary" style={{ padding: 0, verticalAlign: '-2px' }} onClick={onClick}>
