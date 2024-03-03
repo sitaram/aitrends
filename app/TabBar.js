@@ -137,7 +137,12 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window, setIsTabBarSticky }) 
                 )}
               </Tabs>
             </Box>
-            <TooltipComponent open={showTooltip} onClose={() => setShowTooltip(false)} onClick={handleInfoIconClick} />
+            <TooltipComponent
+              open={showTooltip}
+              onClose={() => setShowTooltip(false)}
+              onClick={handleInfoIconClick}
+              handleTabChange={handleTabChange}
+            />
           </Box>
         </AppBar>
       </Box>

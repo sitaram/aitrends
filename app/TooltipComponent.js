@@ -4,8 +4,9 @@ import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
 import { Typography, Box, Chip } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { tabs as allTabs } from './tabs';
 
-export default function TooltipComponent({ open, onClose, onClick }) {
+export default function TooltipComponent({ open, onClose, onClick, handleTabChange }) {
   const theme = useTheme();
   const CustomWidthTooltip = styled(({ theme, className, ...props }) => (
     <Tooltip
@@ -71,6 +72,12 @@ export default function TooltipComponent({ open, onClose, onClick }) {
                     variant="outlined"
                     size="small"
                     sx={{ mr: 0.5, mb: 0.5, borderColor: '#dadde9' }}
+                    onClick={() => {
+                      const index = allTabs.findIndex((t) => t === tab);
+                      console.log('tab, index', tab, index);
+                      if (index !== -1) handleTabChange(null, index);
+                      onClose();
+                    }}
                   />
                 ))}
               </span>
@@ -80,6 +87,7 @@ export default function TooltipComponent({ open, onClose, onClick }) {
       }
       open={open}
       onClose={onClose}
+      disableHoverListener
       arrow
     >
       <IconButton color="primary" style={{ padding: 0, verticalAlign: '-2px' }} onClick={onClick}>
