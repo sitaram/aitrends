@@ -36,13 +36,13 @@ const About = ({ showAbout, setShowAbout }) => {
           Keeping pace with AI can be daunting. AITrends.live was created to simplify this challenge, offering a
           comprehensive view across 200 AI topics and 25 facets each. From foundational concepts to future predictions,
           ethical debates to the funding scene, technical deep-dives to innovative applications, our platform lays out a
-          detailed map of AI's landscape.
+          detailed map of AI&apos;s landscape.
         </Typography>
         <Divider sx={{ mb: 2 }} />
         <Typography variant="body2" sx={{ mb: 2 }}>
           Through over 100 chat sessions with ChatGPT, we meticulously curated a resource that not only informs but
-          inspires. Whether you're navigating career paths, looking for upskilling resources, or exploring innovative
-          use cases in your field, AITrends.live is your go-to destination.
+          inspires. Whether you&apos;re navigating career paths, looking for upskilling resources, or exploring
+          innovative use cases in your field, AITrends.live is your go-to destination.
         </Typography>
         <Divider sx={{ mb: 2 }} />
         <Typography variant="body2" component="div" sx={{ mb: 2 }}>
