@@ -20,7 +20,7 @@ export default function TooltipComponent({ open, onClose, onClick }) {
       backgroundColor: theme.palette.background.tabbar,
       padding: '10px',
       margin: 'auto',
-      backgroundColor: '#f5faf5',
+      backgroundColor: '#f0fed8',
       border: '1px solid #dadde9',
     },
     [`@media (min-width: ${600 / 0.95}px)`]: {
@@ -55,7 +55,9 @@ export default function TooltipComponent({ open, onClose, onClick }) {
     <CustomWidthTooltip
       title={
         <>
-          <Typography variant="h5">Lots of tabs</Typography>
+          <Typography variant="h5" style={{ fontWeight: 'bold' }}>
+            Lots of tabs
+          </Typography>
           {Object.entries(categories).map(([category, tabs]) => (
             <span key={category} sx={{ margin: 2 }}>
               <Typography variant="body2" component="div" sx={{ fontWeight: 'bold', mt: 1, mb: 1 }}>
