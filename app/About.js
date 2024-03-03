@@ -1,20 +1,18 @@
 import React from 'react';
-import { useTheme, useMediaQuery, Box, Typography, Button, Paper, Divider, Grid, Chip, Modal } from '@mui/material';
+import { useTheme, useMediaQuery, Box, Typography, Button, Divider, Modal } from '@mui/material';
 
 const About = ({ showAbout, setShowAbout }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const handleClose = () => {
-    setShowAbout(false);
-  };
+  const handleClose = () => setShowAbout(false);
 
   return (
     <Modal
       open={showAbout}
       onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
+      aria-labelledby="about-aitrends-title"
+      aria-describedby="about-aitrends-description"
       sx={{
         display: 'flex',
         alignItems: 'center',
@@ -31,58 +29,26 @@ const About = ({ showAbout, setShowAbout }) => {
           borderRadius: theme.shape.borderRadius,
         }}
       >
-        <Typography id="modal-modal-title" variant="h5" component="h2" gutterBottom>
-          AI Trends: Your Interactive Newsletter
+        <Typography id="about-aitrends-title" variant="h5" component="h2" gutterBottom>
+          AITrends.live: Your AI Exploration Hub
         </Typography>
-        <Typography id="modal-modal-description" variant="body1" sx={{ mb: 2 }}>
-          Dive into the dynamic world of AI with <strong>AI Trends</strong>—a newsletter crafted to bring you closer to
-          the forefront of artificial intelligence. From GPT-powered insights to the latest in AI research and
-          applications, stay informed and inspired.
+        <Typography id="about-aitrends-description" variant="body1" sx={{ mb: 2 }}>
+          Keeping pace with AI can be daunting. AITrends.live was created to simplify this challenge, offering a
+          comprehensive view across 200 AI topics and 25 facets each. From foundational concepts to future predictions,
+          ethical debates to the funding scene, technical deep-dives to innovative applications, our platform lays out a
+          detailed map of AI's landscape.
         </Typography>
-        <Grid container spacing={2} sx={{ mb: 2 }}>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="subtitle1" gutterBottom>
-              Interactive Features:
-            </Typography>
-            <Typography variant="body2">- Swipe through content or use tabs to navigate topics.</Typography>
-            <Typography variant="body2">
-              - Discover AI topics, from foundational concepts to cutting-edge research.
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="subtitle1" gutterBottom>
-              Techniques & Tools:
-            </Typography>
-            <Typography variant="body2">- Leveraging GPT-4 for deep insights.</Typography>
-            <Typography variant="body2">- Utilizing Bing API for up-to-date information.</Typography>
-            <Typography variant="body2">
-              - Implementing recursive summarization and meta-prompting for nuanced content generation.
-            </Typography>
-          </Grid>
-        </Grid>
+        <Typography variant="body2" sx={{ mb: 2 }}>
+          Through over 100 chat sessions with ChatGPT, we meticulously curated a resource that not only informs but
+          inspires. Whether you're navigating career paths, looking for upskilling resources, or exploring innovative
+          use cases in your field, AITrends.live is your go-to destination.
+        </Typography>
         <Divider sx={{ mb: 2 }} />
         <Typography variant="body2" component="div" sx={{ mb: 2 }}>
-          Created by Sitaram Iyer, sitaram at gmail.com
+          Built for enthusiasts and professionals alike, AITrends.live is a testament to how AI can transform our
+          understanding and engagement with technology. Dive into the AI revolution with us. Your journey into AI starts
+          here.
         </Typography>
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
-          <Chip label="GPT-4" variant="outlined" color="primary" />
-          <Chip label="Redis Cache" variant="outlined" color="primary" />
-          <Chip label="Bing API" variant="outlined" color="primary" />
-          <Chip label="Recursive Summarization" variant="outlined" color="primary" />
-          <Chip label="Meta-prompting" variant="outlined" color="primary" />
-        </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap', mb: 2 }}>
-          <img
-            src="concept1.webp"
-            alt="Concept 1"
-            style={{ width: '100%', maxWidth: isMobile ? '90px' : '140px', height: 'auto' }}
-          />
-          <img
-            src="concept2.webp"
-            alt="Concept 2"
-            style={{ width: '100%', maxWidth: isMobile ? '90px' : '140px', height: 'auto' }}
-          />
-        </Box>
         <Box sx={{ textAlign: 'right' }}>
           <Button
             variant="contained"
@@ -90,7 +56,7 @@ const About = ({ showAbout, setShowAbout }) => {
             onClick={handleClose}
             style={{ backgroundColor: theme.palette.primary.main }}
           >
-            Got it!
+            Close
           </Button>
         </Box>
       </Box>
