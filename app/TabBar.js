@@ -23,7 +23,7 @@ const ElevationScroll = ({ children, window, setIsTabBarSticky }) => {
       position: trigger ? 'fixed' : 'sticky',
       top: trigger ? (isMobile ? '56px' : '64px') : '0px',
       zIndex: theme.zIndex.appBar - 1,
-      width: trigger ? (isMobile ? 'calc(100% - 0)' : 'calc(100% - 240px)') : '100%',
+      width: trigger ? (isMobile ? 'calc(100% - 0)' : 'calc(100% - 250px)') : '100%',
       marginLeft: 'auto', // Center the AppBar
       marginRight: 'auto', // Center the AppBar
       boxShadow: trigger
