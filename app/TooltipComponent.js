@@ -24,7 +24,7 @@ export default function TooltipComponent({ open, onClose, onClick, handleTabChan
       backgroundColor: theme.palette.background.tabbar,
       padding: '10px',
       margin: 'auto',
-      backgroundColor: '#f8ffe8',
+      backgroundColor: '#f8ffd8',
       borderRadius: '10px',
       boxShadow: '0 0 10px 0 ' + theme.palette.primary.main,
     },
@@ -61,7 +61,7 @@ export default function TooltipComponent({ open, onClose, onClick, handleTabChan
       title={
         <>
           <Typography variant="h5" style={{ fontWeight: 'bold' }}>
-            Lots of tabs (click on one?)
+            Lots of tabs (choose one?)
           </Typography>
           {Object.entries(categories).map(([category, tabs]) => (
             <span key={category} sx={{ margin: 2 }}>
@@ -78,14 +78,15 @@ export default function TooltipComponent({ open, onClose, onClick, handleTabChan
                     sx={{
                       mr: 0.5,
                       mb: 0.5,
-                      borderColor: '#dadde9',
+                      borderColor: theme.palette.tertiary.main,
                       '&:hover': {
                         backgroundColor: theme.palette.primary.main + ' !important',
                         color: '#ffffff',
                         borderColor: theme.palette.primary.main, // Optionally, you can ensure the border color matches during hover
                       },
                     }}
-                    onClick={() => {
+                    onClick={(event) => {
+                      event.stopPropagation();
                       const index = allTabs.findIndex((t) => t === tab);
                       if (index !== -1) handleTabChange(null, index);
                       onClose();
