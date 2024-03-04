@@ -32,22 +32,10 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 20%;
-  height: 25%;
-  background-color: #ff0000;
-  border-radius: 20%;
+  height: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.playIcon::before {
-  content: '';
-  display: block;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 10px 0 10px 18px;
-  border-color: transparent transparent transparent #ffffff;
 }
 
 .youtubeVideo {
