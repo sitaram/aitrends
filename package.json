@@ -39,10 +39,13 @@
     "react-loader-spinner": "^6.1.6",
     "react-markdown": "^9.0.1",
     "react-router-dom": "^6.22.0",
+    "react-slick": "^0.30.2",
     "react-swipeable": "^7.0.1",
+    "react-youtube": "^10.1.0",
     "redis-cli": "^1.4.0",
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.0",
+    "slick-carousel": "^1.8.1",
     "tls": "^0.0.1"
   },
   "devDependencies": {

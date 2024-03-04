@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Paper, Box, useMediaQuery, useTheme } from '@mui/material';
 import { ThreeDots } from 'react-loader-spinner';
 import CustomMarkdown from './CustomMarkdown';
+import YouTubeCarousel from './YouTubeCarousel';
 import { useSwipeable } from 'react-swipeable';
 
 const ContentComponent = ({
@@ -76,7 +77,9 @@ const ContentComponent = ({
             marginTop: isTabBarSticky ? '52px' : '0px',
           }}
         >
-          {tabIndex != 0 ? (
+          {tabIndex === 0 && <YouTubeCarousel query={topic} />}
+
+          {tabIndex !== 0 && (
             <Paper
               sx={{
                 padding: '10px 24px',
@@ -102,8 +105,6 @@ const ContentComponent = ({
                 &lt; Back to overview tab
               </div>
             </Paper>
-          ) : (
-            ''
           )}
           {content.map((part, index) => (
             <Paper
