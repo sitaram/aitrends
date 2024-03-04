@@ -1,10 +1,53 @@
 .carouselContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.slidesContainer {
+  display: flex;
+  overflow-x: auto;
+  width: 100%;
+  height: 100%;
+  justify-content: flex-start;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.slidesContainer::-webkit-scrollbar {
+  display: none;
 }
 
 .slide {
-  outline: none;
-  position: relative;
-  cursor: pointer;
+  flex-shrink: 0;
+  width: 304px;
+  height: 169px;
+  margin: 0 3px;
+  scroll-snap-align: start;
+}
+
+.carouselNext {
+  padding: 5px;
+  border-radius: 5px;
+  margin: 5px;
+  font-size: 16px;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  z-index: 10;
+}
+
+.carouselPrev {
+  padding: 5px;
+  border-radius: 5px;
+  margin: 5px;
+  font-size: 16px;
+  position: absolute;
+  left: 0;
+  background-color: white;
+  z-index: 10;
 }
 
 .thumbnailContainer {

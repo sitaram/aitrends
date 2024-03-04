@@ -1,8 +1,5 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import styles from './YouTubeCarousel.module.css';
 import YouTube from 'react-youtube';
 
@@ -11,10 +8,7 @@ const YouTubeCarousel = ({ query }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [videos, setVideos] = useState([]);
   const [activeVideoId, setActiveVideoId] = useState('');
-
-  const handleSwipe = (event) => {
-    event.stopPropagation();
-  };
+  const [currentIndex, setCurrentIndex] = useState(-1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,21 +40,29 @@ const YouTubeCarousel = ({ query }) => {
   };
 
   const handleThumbnailClick = (videoId) => {
-    // If the clicked video is already active, do nothing
     if (activeVideoId === videoId) return;
-
-    // Set the active video ID, which triggers the player to load
     setActiveVideoId(videoId);
+  };
+
+  const handlePrevClick = () => {
+    setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0)); // Go to the previous slide, stop at 0
+  };
+
+  const handleNextClick = () => {
+    setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, videos.length - 1)); // Go to the next slide, stop at the last
   };
 
   return (
     <div className={styles.carouselContainer}>
-      <Slider onTouchStart={handleSwipe} onSwipe={handleSwipe} {...settings}>
-        {videos.map((video) => (
+      <button className={styles.carouselPrev} onClick={handlePrevClick}>
+        Prev
+      </button>
+      <div className={styles.slidesContainer}>
+        {videos.map((video, index) => (
           <div key={video.id.videoId} className={styles.slide}>
-            {activeVideoId === video.id.videoId ? (
+            {currentIndex === index ? (
               <Suspense fallback={<div>Loading...</div>}>
-                <YouTube className={styles.player} key={video.id.videoId} videoId={video.id.videoId} opts={opts} />
+                <YouTube className={styles.player} videoId={video.id.videoId} opts={opts} />
               </Suspense>
             ) : (
               <div className={styles.thumbnailContainer} onClick={() => handleThumbnailClick(video.id.videoId)}>
@@ -72,7 +74,10 @@ const YouTubeCarousel = ({ query }) => {
             )}
           </div>
         ))}
-      </Slider>
+      </div>
+      <button className={styles.carouselNext} onClick={handleNextClick}>
+        Next
+      </button>
     </div>
   );
 };
