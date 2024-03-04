@@ -96,12 +96,12 @@ export default function TooltipComponent({ open, onClose, onClick, handleTabChan
               </span>
             </span>
           ))}
-          <Box sx={{ textAlign: 'right' }}>
+          <Box sx={{ textAlign: 'right', mt: 1 }}>
             <Button
               variant="contained"
               color="primary"
               onClick={onClose}
-              style={{ mt: 10, backgroundColor: theme.palette.primary.main }}
+              style={{ backgroundColor: theme.palette.primary.main }}
             >
               Got it!
             </Button>
