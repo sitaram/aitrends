@@ -30,7 +30,7 @@ const YouTubeCarousel = ({ query }) => {
   };
 
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     lazyLoad: 'ondemand',
     speed: 500,
