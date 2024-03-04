@@ -1,6 +1,8 @@
 // pages/api/youtube-search.js
 
 import Redis from 'ioredis';
+import * as Constants from '../../app/constants';
+
 const redis = new Redis(process.env.REDIS_URL);
 
 export default async function handler(req, res) {
@@ -9,7 +11,7 @@ export default async function handler(req, res) {
   if (!query) {
     return res.status(400).json({ error: 'Query parameter is required' });
   }
-  if (query === 'All AI Topics') query = 'Artificial Intelligence';
+  if (query === Constants.ALLTOPICS) query = Constants.ALLTOPICS_TITLE;
 
   const cacheKey = `youtube-search:${query}`;
   const cachedData = await redis.get(cacheKey);

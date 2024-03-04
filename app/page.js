@@ -44,6 +44,7 @@ const Home = () => {
   const [showAbout, setShowAbout] = useState(false);
   const [isTabBarSticky, setIsTabBarSticky] = useState(false);
   const updateScheduled = useRef(false);
+  const title = topic === Constants.ALLTOPICS ? Constants.ALLTOPICS_TITLE : topic;
 
   // Function to update the URL hash for topic and tab
   function updateUrlHash(topic, tab) {
@@ -154,7 +155,7 @@ const Home = () => {
     const handleScroll = () => {
       const titleElement = document.querySelector('.title');
       const titleRect = titleElement.getBoundingClientRect();
-      setDisplayedTopic(titleRect.bottom < 64 ? topic : Constants.APPNAME);
+      setDisplayedTopic(titleRect.bottom < 64 ? title : Constants.APPNAME);
     };
 
     // Update the title with the current topic, or use a default title if the topic isn't set
@@ -239,7 +240,7 @@ const Home = () => {
                 <IconButton onClick={() => handleSwitchTopic('Previous')}>
                   <NavigateBeforeIcon sx={{ fontSize: '2rem' }} />
                 </IconButton>
-                <span>{topic}</span> {/* Ensure the topic is centered by using it within a span if needed */}
+                <span>{title}</span>
                 <IconButton onClick={() => handleSwitchTopic('Next')}>
                   <NavigateNextIcon sx={{ fontSize: '2rem' }} />
                 </IconButton>

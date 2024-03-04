@@ -71,7 +71,7 @@ const TopicBrowser = ({ topic, handleTopicChange, selectedTopic }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const [openClusters, setOpenClusters] = useState([]); // Constants.DEFAULT_OPEN_CLUSTER
+  const [openClusters, setOpenClusters] = useState([]);
   const [filter, setFilter] = useState('');
   const [filteredClusters, setFilteredClusters] = useState(topics.clusters);
   const [openTopicIndex, setOpenTopicIndex] = useState(null);
