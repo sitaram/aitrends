@@ -14,18 +14,21 @@ const YouTubeCarousel = ({ query }) => {
   const [videos, setVideos] = useState([]);
   const [activeVideoId, setActiveVideoId] = useState('');
 
+  const handleSwipe = (event) => {
+    event.stopPropagation();
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(`/api/youtube-search?query=${encodeURIComponent(query)}`);
       const data = await res.json();
       setVideos(data.items || []);
     };
-
     fetchData();
   }, [query]);
 
   const opts = {
-    height: '172', // Half of 390 to fit the carousel size
+    height: '169', // Half of 390 to fit the carousel size
     width: '304', // Half of 640 to fit the carousel size
     playerVars: {
       autoplay: 0,
@@ -37,7 +40,7 @@ const YouTubeCarousel = ({ query }) => {
     infinite: true,
     lazyLoad: 'ondemand',
     speed: 500,
-    slidesToShow: isMobile ? 2 : 3,
+    slidesToShow: isMobile ? 1 : 3,
     slidesToScroll: 1,
   };
 
@@ -49,14 +52,26 @@ const YouTubeCarousel = ({ query }) => {
     setActiveVideoId(videoId);
   };
 
+  const onReady = (event) => {
+    // access to player in all event handlers via event.target
+    // event.target.pauseVideo();
+    console.log('onready');
+  };
+
   return (
     <div className={styles.carouselContainer}>
-      <Slider {...settings}>
+      <Slider onTouchStart={handleSwipe} onSwipe={handleSwipe} {...settings}>
         {videos.map((video) => (
           <div key={video.id.videoId} className={styles.slide}>
             {activeVideoId === video.id.videoId ? (
               <Suspense fallback={<div>Loading...</div>}>
-                <YouTube videoId={video.id.videoId} opts={opts} />
+                <YouTube
+                  className={styles.player}
+                  key={video.id.videoId}
+                  videoId={video.id.videoId}
+                  opts={opts}
+                  onReady={onReady}
+                />
               </Suspense>
             ) : (
               <div className={styles.thumbnailContainer} onClick={() => handleThumbnailClick(video.id.videoId)}>
