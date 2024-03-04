@@ -31,7 +31,7 @@ const YouTubeCarousel = ({ query }) => {
     height: '169', // Half of 390 to fit the carousel size
     width: '304', // Half of 640 to fit the carousel size
     playerVars: {
-      autoplay: 0,
+      autoplay: 1,
     },
   };
 
@@ -42,6 +42,10 @@ const YouTubeCarousel = ({ query }) => {
     speed: 500,
     slidesToShow: isMobile ? 1 : 3,
     slidesToScroll: 1,
+    centerMode: isMobile,
+    centerPadding: '12%',
+    arrows: true,
+    swipeToSlide: true,
   };
 
   const handleThumbnailClick = (videoId) => {
@@ -52,12 +56,6 @@ const YouTubeCarousel = ({ query }) => {
     setActiveVideoId(videoId);
   };
 
-  const onReady = (event) => {
-    // access to player in all event handlers via event.target
-    // event.target.pauseVideo();
-    console.log('onready');
-  };
-
   return (
     <div className={styles.carouselContainer}>
       <Slider onTouchStart={handleSwipe} onSwipe={handleSwipe} {...settings}>
@@ -65,13 +63,7 @@ const YouTubeCarousel = ({ query }) => {
           <div key={video.id.videoId} className={styles.slide}>
             {activeVideoId === video.id.videoId ? (
               <Suspense fallback={<div>Loading...</div>}>
-                <YouTube
-                  className={styles.player}
-                  key={video.id.videoId}
-                  videoId={video.id.videoId}
-                  opts={opts}
-                  onReady={onReady}
-                />
+                <YouTube className={styles.player} key={video.id.videoId} videoId={video.id.videoId} opts={opts} />
               </Suspense>
             ) : (
               <div className={styles.thumbnailContainer} onClick={() => handleThumbnailClick(video.id.videoId)}>
