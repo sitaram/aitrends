@@ -23,7 +23,7 @@ const ElevationScroll = ({ children, window, setIsTabBarSticky }) => {
       position: trigger ? 'fixed' : 'sticky',
       top: trigger ? (isMobile ? '56px' : '64px') : '0px',
       zIndex: theme.zIndex.appBar - 1,
-      width: trigger ? (isMobile ? 'calc(100% - 0)' : 'calc(100% - 250px)') : '100%',
+      width: trigger ? (isMobile ? '100%' : 'calc(100% - 250px)') : '100%',
       marginLeft: 'auto', // Center the AppBar
       marginRight: 'auto', // Center the AppBar
       boxShadow: trigger
@@ -31,7 +31,6 @@ const ElevationScroll = ({ children, window, setIsTabBarSticky }) => {
         : 'none', // Box shadow when elevated
       marginBottom: trigger ? 2 : 0, // Adjust space below the AppBar based on trigger
       transition: 'top 0.2s', // Smooth transition for the top property
-      width: '100%',
       // Ensure the container inside which AppBar is placed has a width that matches this max-width for consistency
     },
   });
