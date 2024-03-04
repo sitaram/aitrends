@@ -35,20 +35,21 @@ const About = ({ showAbout, setShowAbout }) => {
         <Typography id="about-aitrends-description" variant="body1" sx={{ mb: 2 }}>
           Keeping pace with AI can be daunting. AITrends.live was created to simplify this challenge, offering a
           comprehensive view across 200 AI topics and 25 facets each. From foundational concepts to future predictions,
-          ethical debates to the funding scene, technical deep-dives to innovative applications, our platform lays out a
-          detailed map of AI&apos;s landscape.
+          technical deep-dives to innovative applications, ethical debates to the funding scene, AI Trends maps out the
+          entire AI landscape into a matrix of ideas.
         </Typography>
         <Divider sx={{ mb: 2 }} />
         <Typography variant="body2" sx={{ mb: 2 }}>
-          Through over 100 chat sessions with ChatGPT, we meticulously curated a resource that not only informs but
-          inspires. Whether you&apos;re navigating career paths, looking for upskilling resources, or exploring
-          innovative use cases in your field, AITrends.live is your go-to destination.
+          This is a co-creation by Sitaram Iyer (sitaram at gmail) and ChatGPT. Through 2,500 chat messages in 3 weeks
+          spanning ideas, product, design, code, and data, we meticulously curated a resource that informs and hopefully
+          inspires. Whether you&apos;re exploring innovative use cases in your field, navigating career paths, or
+          looking for upskilling resources, AITrends.live is your go-to.
         </Typography>
         <Divider sx={{ mb: 2 }} />
         <Typography variant="body2" component="div" sx={{ mb: 2 }}>
-          Built for enthusiasts and professionals alike, AITrends.live is a testament to how AI can transform our
-          understanding and engagement with technology. Dive into the AI revolution with us. Your journey into AI starts
-          here.
+          Built for both enthusiasts and professionals, AITrends.live is a testament to how AI can transform our
+          understanding and engagement with technology for the common good. Dive into the AI revolution with us, your
+          journey into AI starts here.
         </Typography>
         <Box sx={{ textAlign: 'right' }}>
           <Button
@@ -57,7 +58,7 @@ const About = ({ showAbout, setShowAbout }) => {
             onClick={handleClose}
             style={{ backgroundColor: theme.palette.primary.main }}
           >
-            Close
+            Got it
           </Button>
         </Box>
       </Box>
