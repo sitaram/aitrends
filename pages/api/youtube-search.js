@@ -4,17 +4,18 @@ import Redis from 'ioredis';
 const redis = new Redis(process.env.REDIS_URL);
 
 export default async function handler(req, res) {
-  const { query } = req.query;
+  let { query } = req.query;
 
   if (!query) {
     return res.status(400).json({ error: 'Query parameter is required' });
   }
+  if (query === 'All AI Topics') query = 'Artificial Intelligence';
 
   const cacheKey = `youtube-search:${query}`;
   const cachedData = await redis.get(cacheKey);
 
   if (cachedData) {
-    console.log('Serving from cache');
+    console.log('Serving from cache:', query);
     return res.status(200).json(JSON.parse(cachedData));
   }
 
@@ -29,16 +30,16 @@ export default async function handler(req, res) {
 
     if (youtubeData.error) {
       console.error('YouTube API Error:', youtubeData.error);
-      return res.status(500).json({ error: 'Failed to fetch YouTube data' });
+      return res.status(500).json({ error: 'Failed to fetch YouTube data: ' + query });
     }
 
     // Cache the successful response for random 2 to 4 months
     const cacheDays = Math.floor(Math.random() * (120 - 60 + 1)) + 60;
     await redis.setex(cacheKey, 86400 * cacheDays, JSON.stringify(youtubeData));
-    console.log('Serving fresh data and caching');
+    console.log('Serving fresh data and caching:', query);
     res.status(200).json(youtubeData);
   } catch (error) {
     console.error('Request failed:', error);
-    res.status(500).json({ error: 'Failed to fetch YouTube data' });
+    res.status(500).json({ error: 'Failed to fetch YouTube data : ' + query });
   }
 }
