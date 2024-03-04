@@ -1,12 +1,10 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styles from './YouTubeCarousel.module.css';
-
-// Lazy load the YouTube component for better performance
-const YouTube = lazy(() => import('react-youtube'));
+import YouTube from 'react-youtube';
 
 const YouTubeCarousel = ({ query }) => {
   const theme = useTheme();
@@ -38,7 +36,6 @@ const YouTubeCarousel = ({ query }) => {
   const settings = {
     dots: false,
     infinite: true,
-    lazyLoad: 'ondemand',
     speed: 500,
     slidesToShow: isMobile ? 1 : 3,
     slidesToScroll: 1,
