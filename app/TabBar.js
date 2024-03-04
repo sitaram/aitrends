@@ -57,14 +57,14 @@ const tabContainerStyle = (theme) => {
       height: '45px',
     },
     '&::before': {
-      left: '40px',
+      left: '50px',
       background: `linear-gradient(to right, ${hexToRgba(theme.palette.background.tabbar, 1)} 0%, ${hexToRgba(
         theme.palette.background.tabbar,
         0
       )} 100%)`,
     },
     '&::after': {
-      right: '40px',
+      right: '20px',
       background: `linear-gradient(to left, ${hexToRgba(theme.palette.background.tabbar, 1)} 0%, ${hexToRgba(
         theme.palette.background.tabbar,
         0
@@ -99,14 +99,14 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window, setIsTabBarSticky }) 
             justifyContent: 'space-between', // Adjusted for spacing between tabs and tooltip
           }}
         >
-          <Box sx={{ ...tabContainerStyle(theme), flexGrow: 1, textAlign: 'center' }}>
+          <Box sx={{ ...tabContainerStyle(theme), flexGrow: 1, textAlign: 'end' }}>
             <TooltipComponent
               open={showTooltip}
               onClose={() => setShowTooltip(false)}
               onClick={handleToolbarClick}
               handleTabChange={handleTabChange}
             />
-            <Box sx={{ display: 'inline-block', width: 'calc(100% - 50px)' }}>
+            <Box sx={{ display: 'inline-block', width: 'calc(100% - 35px)' }}>
               <Tabs
                 value={tabIndex}
                 variant="scrollable"

@@ -7,7 +7,7 @@ import ArrowDropDownCircleTwoToneIcon from '@mui/icons-material/ArrowDropDownCir
 import { Typography, Box, Chip } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { tabs as allTabs } from './tabs';
-import Zoom from '@mui/material/Zoom';
+import Grow from '@mui/material/Grow';
 
 export default function TooltipComponent({ open, onClose, onClick, handleTabChange }) {
   const theme = useTheme();
@@ -108,7 +108,7 @@ export default function TooltipComponent({ open, onClose, onClick, handleTabChan
           </Box>
         </>
       }
-      TransitionComponent={Zoom}
+      TransitionComponent={Grow}
       TransitionProps={{ timeout: 500 }}
       open={open}
       onClose={onClose}
