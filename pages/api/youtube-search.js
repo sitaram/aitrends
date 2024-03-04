@@ -32,8 +32,9 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Failed to fetch YouTube data' });
     }
 
-    // Cache the successful response for 300 months
-    await redis.setex(cacheKey, 86400 * 9000, JSON.stringify(youtubeData));
+    // Cache the successful response for random 2 to 4 months
+    const cacheDays = Math.floor(Math.random() * (120 - 60 + 1)) + 60;
+    await redis.setex(cacheKey, 86400 * cacheDays, JSON.stringify(youtubeData));
     console.log('Serving fresh data and caching');
     res.status(200).json(youtubeData);
   } catch (error) {
