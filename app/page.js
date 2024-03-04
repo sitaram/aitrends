@@ -225,10 +225,7 @@ const Home = () => {
             }}
           >
             <Toolbar />
-            <Paper
-              elevation={1}
-              sx={{ padding: '1rem', marginBottom: '.2rem', backgroundColor: theme.palette.tertiary.main }}
-            >
+            <Paper elevation={1} sx={{ padding: '1rem', backgroundColor: theme.palette.tertiary.main }}>
               <Typography
                 variant="h1"
                 sx={{
