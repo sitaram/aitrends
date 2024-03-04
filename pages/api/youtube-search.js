@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   if (!query) {
     return res.status(400).json({ error: 'Query parameter is required' });
   }
-  if (query === Constants.ALLTOPICS) query = Constants.ALLTOPICS_TITLE;
+  if (query === Constants.ALLTOPICS) query = Constants.ALLTOPICS_YT_QUERY;
 
   const cacheKey = `youtube-search:${query}`;
   const cachedData = await redis.get(cacheKey);
