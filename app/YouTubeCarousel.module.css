@@ -29,24 +29,24 @@
 }
 
 .carouselNext {
-  padding: 5px;
+  padding: 5px 10px;
   border-radius: 5px;
   margin: 5px;
   font-size: 16px;
   position: absolute;
   right: 0;
-  background-color: white;
+  background-color: #9BCF53;
   z-index: 10;
 }
 
 .carouselPrev {
-  padding: 5px;
+  padding: 5px 10px;
   border-radius: 5px;
   margin: 5px;
   font-size: 16px;
   position: absolute;
   left: 0;
-  background-color: white;
+  background-color: #9BCF53;
   z-index: 10;
 }
 

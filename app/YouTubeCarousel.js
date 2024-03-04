@@ -8,7 +8,7 @@ const YouTubeCarousel = ({ query }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [videos, setVideos] = useState([]);
   const [activeVideoId, setActiveVideoId] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(-1);
+  const slidesContainerRef = useRef(); // Add this line to create a ref for the slides container
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,22 +45,26 @@ const YouTubeCarousel = ({ query }) => {
   };
 
   const handlePrevClick = () => {
-    setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0)); // Go to the previous slide, stop at 0
+    if (slidesContainerRef.current) {
+      slidesContainerRef.current.scrollLeft -= 304 + 6;
+    }
   };
 
   const handleNextClick = () => {
-    setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, videos.length - 1)); // Go to the next slide, stop at the last
+    if (slidesContainerRef.current) {
+      slidesContainerRef.current.scrollLeft += 304 + 6;
+    }
   };
 
   return (
     <div className={styles.carouselContainer}>
       <button className={styles.carouselPrev} onClick={handlePrevClick}>
-        Prev
+        &lt;
       </button>
-      <div className={styles.slidesContainer}>
-        {videos.map((video, index) => (
+      <div className={styles.slidesContainer} ref={slidesContainerRef}>
+        {videos.map((video) => (
           <div key={video.id.videoId} className={styles.slide}>
-            {currentIndex === index ? (
+            {activeVideoId === video.id.videoId ? (
               <Suspense fallback={<div>Loading...</div>}>
                 <YouTube className={styles.player} videoId={video.id.videoId} opts={opts} />
               </Suspense>
@@ -76,7 +80,7 @@ const YouTubeCarousel = ({ query }) => {
         ))}
       </div>
       <button className={styles.carouselNext} onClick={handleNextClick}>
-        Next
+        &gt;
       </button>
     </div>
   );
