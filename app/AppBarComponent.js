@@ -20,8 +20,8 @@ import ShareIcon from '@mui/icons-material/Share';
 import SubscribeIcon from '@mui/icons-material/Subscriptions';
 import FeedbackIcon from '@mui/icons-material/Feedback';
 import InfoIcon from '@mui/icons-material/Info';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import GitHubIcon from '@mui/icons-material/GitHub';
+import BlogIcon from '@mui/icons-material/Article';
+import CodeIcon from '@mui/icons-material/Code';
 import CloseIcon from '@mui/icons-material/Close';
 import LogoComponent from './LogoComponent';
 import FeedbackForm from './FeedbackForm';
@@ -149,15 +149,15 @@ const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic, setShowAbou
               </ListItem>
               <ListItem button onClick={handleLinkedInPost}>
                 <ListItemIcon>
-                  <LinkedInIcon />
+                  <BlogIcon />
                 </ListItemIcon>
-                <ListItemText primary="LinkedIn Post" />
+                <ListItemText primary="Blog Post" />
               </ListItem>
               <ListItem button onClick={handleCode}>
                 <ListItemIcon>
-                  <GitHubIcon />
+                  <CodeIcon />
                 </ListItemIcon>
-                <ListItemText primary="GitHub Repo" />
+                <ListItemText primary="Code" />
               </ListItem>
             </List>
           </Box>
