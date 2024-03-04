@@ -43,7 +43,7 @@ const ContentComponent = ({
   // console.log(content);
 
   return (
-    <div {...(isMobile ? handlers : {})} style={{ paddingBottom: '64px' }}>
+    <div style={{ paddingBottom: '64px' }}>
       {feedback && (
         <Box
           sx={{
@@ -106,15 +106,23 @@ const ContentComponent = ({
               </div>
             </Paper>
           )}
-          {content.map((part, index) => (
-            <Paper
-              key={index}
-              elevation={1}
-              sx={{ padding: '10px 16px', marginBottom: '0', borderBottom: 0, borderColor: 'divider', borderRadius: 0 }}
-            >
-              <CustomMarkdown text={part} topic={topic} handleTabChange={handleTabChange} />
-            </Paper>
-          ))}
+          <div {...(isMobile ? handlers : {})}>
+            {content.map((part, index) => (
+              <Paper
+                key={index}
+                elevation={1}
+                sx={{
+                  padding: '10px 16px',
+                  marginBottom: '0',
+                  borderBottom: 0,
+                  borderColor: 'divider',
+                  borderRadius: 0,
+                }}
+              >
+                <CustomMarkdown text={part} topic={topic} handleTabChange={handleTabChange} />
+              </Paper>
+            ))}
+          </div>
           <div
             style={{
               fontSize: '0.7rem',
