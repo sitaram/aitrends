@@ -25,10 +25,10 @@ const YouTubeCarousel = ({ query }) => {
   }, [query]);
 
   const opts = {
-    height: '195', // Half of 390 to fit the carousel size
-    width: '345', // Half of 640 to fit the carousel size
+    height: '172', // Half of 390 to fit the carousel size
+    width: '304', // Half of 640 to fit the carousel size
     playerVars: {
-      autoplay: 1,
+      autoplay: 0,
     },
   };
 
