@@ -56,6 +56,12 @@ const YouTubeCarousel = ({ query }) => {
     }
   };
 
+  function decodeHTMLEntities(text) {
+    var textArea = document.createElement('textarea');
+    textArea.innerHTML = text;
+    return textArea.value;
+  }
+
   return (
     <div className={styles.carouselContainer}>
       <button className={styles.carouselPrev} onClick={handlePrevClick}>
@@ -71,6 +77,7 @@ const YouTubeCarousel = ({ query }) => {
             ) : (
               <div className={styles.thumbnailContainer} onClick={() => handleThumbnailClick(video.id.videoId)}>
                 <img src={video.snippet.thumbnails.high.url} alt={video.snippet.title} className={styles.thumbnail} />
+                <div className={styles.videoTitle}>{decodeHTMLEntities(video.snippet.title)}</div>
                 <div className={styles.playIcon}>
                   <img src="/play-icon.svg" alt="Play" />
                 </div>

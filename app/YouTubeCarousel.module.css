@@ -69,6 +69,20 @@
   object-fit: cover;
 }
 
+.videoTitle {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for readability */
+  color: white;
+  text-align: center;
+  padding: 5px 5px;
+  overflow: hidden;
+  white-space: nowrap; /* Keep the title in a single line */
+  text-overflow: ellipsis; /* Add ellipsis for overflowed text */
+}
+
 .playIcon {
   position: absolute;
   top: 50%;
