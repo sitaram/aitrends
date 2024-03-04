@@ -31,6 +31,7 @@ const ElevationScroll = ({ children, window, setIsTabBarSticky }) => {
         : 'none', // Box shadow when elevated
       marginBottom: trigger ? 2 : 0, // Adjust space below the AppBar based on trigger
       transition: 'top 0.2s', // Smooth transition for the top property
+      width: '100%',
       // Ensure the container inside which AppBar is placed has a width that matches this max-width for consistency
     },
   });
