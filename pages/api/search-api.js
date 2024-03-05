@@ -17,6 +17,9 @@ export default async function handler(req, res) {
     'Innovations',
     'Policy Updates',
     'Case Studies',
+    'Upcoming Events',
+    'Community News',
+    'Conferences and Meetups',
     `in ${new Date().getFullYear()}`,
     'Challenges and Solutions',
   ];
