@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import {
   IconButton,
   Typography,
@@ -31,27 +31,38 @@ import axios from 'axios';
 import * as Constants from './constants';
 
 const Home = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
   const theme = getTheme(useMediaQuery('(prefers-color-scheme: dark)') ? 'dark' : 'light');
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const [topicsDrawerOpen, setTopicsDrawerOpen] = useState(true);
+
+  // Topic and tabindex. Get them from url params else use defaults.
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const topicParam = searchParams.get('topic');
+  const tabParam = searchParams.get('tab');
+  const [topic, setTopic] = useState(topicParam || Constants.ALLTOPICS);
+  const [tabIndex, setTabIndex] = useState(tabs.findIndex((t) => t === tabParam) || 0);
+  const title = topic === Constants.ALLTOPICS ? Constants.ALLTOPICS_TITLE : topic;
+
+  useEffect(() => {
+    if (topicParam) setTopic(topicParam);
+    const newTabIndex = tabs.findIndex((t) => t === tabParam);
+    if (newTabIndex !== -1) setTabIndex(newTabIndex);
+  }, [topicParam, tabParam]);
+
+  function updateUrlParams(topic, tab) {
+    router.push(`/?topic=${topic}&tab=${tab}`, null, { shallow: true });
+  }
 
   const allTopics = [Constants.ALLTOPICS, ...flattenTopics(topics.clusters)];
-  const [topic, setTopic] = useState(Constants.ALLTOPICS);
   const [displayedTopic, setDisplayedTopic] = useState(Constants.APPNAME);
 
-  const [tabIndex, setTabIndex] = useState(0);
+  // Runtime variables.
   const [content, setContent] = useState([]);
+  const [topicsDrawerOpen, setTopicsDrawerOpen] = useState(true);
   const [loadingCount, setLoadingCount] = useState(0);
   const [showAbout, setShowAbout] = useState(false);
   const [isTabBarSticky, setIsTabBarSticky] = useState(false);
   const updateScheduled = useRef(false);
-  const title = topic === Constants.ALLTOPICS ? Constants.ALLTOPICS_TITLE : topic;
-
-  function updateUrlParams(topic, tab) {
-    router.push(`/?topic=${topic}&tab=${tab}`, undefined, { shallow: true });
-  }
 
   // Toggles the visibility of the drawer
   const handleTopicsDrawerToggle = () => {
@@ -128,14 +139,6 @@ const Home = () => {
     // Update URL hash or other necessary state
     updateUrlParams(newTopic, tabs[tabIndex]);
   };
-
-  useEffect(() => {
-    const topicParam = searchParams.get('topic');
-    const tabParam = searchParams.get('tab');
-    if (topicParam) setTopic(topicParam);
-    const newTabIndex = tabs.findIndex((t) => t === tabParam);
-    if (newTabIndex !== -1) setTabIndex(newTabIndex);
-  }, [searchParams]);
 
   // Updates the displayed topic based on the scroll position
   useEffect(() => {
@@ -257,4 +260,10 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Home />
+    </Suspense>
+  );
+}
