@@ -2,7 +2,7 @@ import OpenAI from 'openai';
 import dotenv from 'dotenv';
 import Redis from 'ioredis';
 import { prompts, ttls, shouldWebSearch, webSearchPrompt } from '../../server/prompts';
-import { searchAPI } from '../../server/search-api';
+import searchAPI from '../../server/search-api';
 import * as Constants from '../../app/constants';
 
 dotenv.config(); // Load environment variables from .env file
