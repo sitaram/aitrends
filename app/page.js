@@ -163,10 +163,23 @@ const Home = () => {
     // Define the fetchData function directly inside useEffect
     const fetchData = async () => {
       try {
+        let payload = null; // No payload by default
+        if (tab === 'News') {
+          console.log('fetchData search-api', topic); // XXX
+          const response = await axios({
+            method: 'get',
+            url: '/api/search-api',
+            params: { topic: topic },
+            signal: this.signal.signal,
+          });
+          payload = response.data.text;
+          console.log('payload....', payload); // XXX
+        }
+
         await fetchContent(
           topic,
           tabs[tabIndex],
-          null, // payload
+          payload,
           tabIndex === 0, // isOverview
           true, // isOnline
           setContent,
