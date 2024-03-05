@@ -52,7 +52,7 @@ export default async function searchAPI(topic) {
     return combinedSnippets;
   } catch (error) {
     console.error('Error fetching search results:', topic, ':', error);
-    throw new Error('Error during search operation: ' + topic + ':' + error);
+    throw new Error('Error during search operation: ' + topic + ': ' + error);
   }
 }
 
