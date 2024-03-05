@@ -79,5 +79,6 @@ export const webSearchPrompt =
   ' Mention dates of events wherever possible.' +
   ' Output sections with clear and short section titles, and description list format within each section for readability.' +
   ' At the start, add a note about these updates being fresh and based on a Bing search within the last two weeks.' +
+  ' This is the last two weeks as of today, based on the snippets below, not the two weeks before your last model refresh.' +
   ' Avoid mentioning your lack of information or inability to browse the internet or lack of data since your model refresh.' +
   ' The Search results snippets:\n';
