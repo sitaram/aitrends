@@ -3,15 +3,6 @@ export const ttls = {
   'Community and Events': 10 * 86400,
 };
 
-export const webSearchPrompt =
-  ' Extract this solely from Search Result snippets below.' +
-  ' Refer back to the source of the information as much as possible.' +
-  ' Mention dates of events wherever possible.' +
-  ' Output sections with clear and short section titles, and description list format within each section for readability.' +
-  ' At the start, add a note about these updates being fresh and based on a Bing search within the past week.' +
-  ' Avoid mentioning your inability to browse the internet or have data since your last model refresh.' +
-  ' Search results snippets:\n';
-
 export const prompts = {
   Overview:
     "Below, you will find content from many different tabs, each providing unique insights on the same topic: ${topic}. Your task: Create a compelling narrative that weaves together the most engaging, interesting, insightful, informative, unique compared to other AI topics, non-obvious (to the casual reader as well as the expert) content across these tabs. It should be a single, cohesive narrative that integrates such elements, offering a comprehensive and captivating overview of the topic. This narrative should draw on the diversity of content available, blending it to highlight the topic's multifaceted nature. Try to cover many different tabs and try not to repeat a tab. Cover a mix of theoretical and practical aspects, past and future, promise and concerns, to be of interest to every audience, but prioritize a great narrative over making sure every area is individually covered. Transcend the boundaries of individual tabs to tell a concise narrative that is a thoughtful synthesis of the topic's most compelling aspects, and captures the essence of the entire topic, marked by clarity, coherence, and curiosity. Output in the following format: Two sentences introducing the topic. Then, three sections, to break the flow. Each section should have a clear and short section title, a single short phrase without colons or subphrases, avoiding 'phrase1: phrase2' form, output it in <h3> using ###, to make it easy to scan the ideas. Within each section, one sentence introducing that idea. Then, three bullet points in description list format, for easy scannability. Each bullet point should have a descrption list header, then a colon, then a single sentence summarizing the point, then an annotation back to the tab where the content came from, in the format [[tab name]] or multiple such [[tab name1]] [[tab name2]] ... annotation if the idea came from a combination of tabs, and try to synthesize several bullet points from a combination of 2 or 3 tabs, then the period to end the paragraph. Absolutely guarantee that the tab names in the annotations are the exact tab names from the input, i.e. never make up a tab name. The tab annotations will maintain a connection to the source material, allowing readers to understand where each piece of the story originates, and allowing them to switch to that tab to read more. Avoid repeating a tab name in the output, so that maximum number of tabs are covered in the output. Key requirements: (1) The language should be very simple and very readable. (2) It should be concise and economical in words without losing readability. (3) The tone should be factual and objective, matter of fact, not grandiose or fluffy or clickbaity. (4) It should be interesting and informative, with diverse angles. It should intrigue a general audience. (5) Importantly, it should be a great overview of the topic.",
@@ -76,3 +67,12 @@ export const prompts = {
 
   // 'Provide a comprehensive overview of recent and pivotal research papers related to ${topic} that have been ACTUALLY published on arXiv or Google Scholar. Focus on identifying studies that have significantly advanced the understanding or application of the topic. Ensure that all information is accurate and refrain from including non-existent papers. You will be described as hallucinating and your credibility will be undermined if even a single paper is not found on arXiv or Google Scholar. Recognize the methodology, findings, and implications of each paper, grouping them into thematic categories to facilitate easy navigation and comprehension. Keep it tight and concise, with one section per a group or category of papers, about 3 to 5 sections total, with a <h3> section title using ###. In each section there is a short bulleted list in description list format, with one bullet point per paper, with description list header as the paper title in bold, with quotes, then year and authors in parentheses, then a colon. (* *"Paper title" (year, authors)*: Paper description). For each paper, ALWAYS make the description list header be just the title of the paper, so that it is clickable and searchable based on title. In that same bullet point, offer a brief summary that encapsulates its core contribution to the field and its relevance to ongoing research or practical applications. Aim to cater to both newcomers and seasoned experts in the field by providing insights that are both educational and deeply informative.',
 };
+
+export const webSearchPrompt =
+  ' Extract this solely from Search Result snippets below.' +
+  ' Refer back to the source of the information as much as possible.' +
+  ' Mention dates of events wherever possible.' +
+  ' Output sections with clear and short section titles, and description list format within each section for readability.' +
+  ' At the start, add a note about these updates being fresh and based on a Bing search within the past week.' +
+  ' Avoid mentioning your inability to browse the internet or have data since your last model refresh.' +
+  ' Search results snippets:\n';
