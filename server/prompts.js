@@ -74,11 +74,12 @@ export const prompts = {
 };
 
 export const webSearchPrompt =
-  ' Extract this based on the Search Result snippets below, and your world knowledge if the required information is not' +
+  ' Extract this based on the Search Result Snippets below, and your world knowledge if the required information is not' +
   ' availble in the web search snippets. Cite the sources of your information, ideally with links as much as possible.' +
   ' Mention dates of events wherever possible.' +
   ' Output sections with clear and short section titles, and description list format within each section for readability.' +
   ' At the start, add a note about these updates being fresh and based on a Bing search within the last two weeks.' +
   ' This is the last two weeks as of today, based on the snippets below, not the two weeks before your last model refresh.' +
+  ' NOTE that these snippets are the actual snippets from a web search right now, so your information is NOT hypothetical.' +
   ' Avoid mentioning your lack of information or inability to browse the internet or lack of data since your model refresh.' +
-  ' The Search results snippets:\n';
+  ' Be confident that you are providing accurate information based on the Search Result Snippets. The Search Result Snippets:';
