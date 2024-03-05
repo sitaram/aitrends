@@ -116,7 +116,7 @@ const CustomMarkdown = ({ text, topic, handleTabChange }) => {
       borderTop: 1,
       borderColor: 'divider',
     }),
-    h4: createComponent('h4', false, { color: theme.palette.markdown.h4 }),
+    h4: createComponent('h4', false, { color: theme.palette.markdown.h4, fontWeight: 'bold' }),
     li: listItemComponent, // Assuming listItemComponent is defined elsewhere
   };
 
