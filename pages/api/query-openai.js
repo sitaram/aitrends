@@ -55,7 +55,14 @@ export default async (req, res) => {
       ? await searchAPI(topic == Constants.ALLTOPICS ? Constants.ALLTOPICS_TITLE : topic)
       : payload;
 
-    // DEBUG console.log('fetchAndUpdate', prompt.substr(0, 30), ttl, ttlRemaining, cachedResponse ? cachedResponse.substr(0, 30) : 0);
+    console.log(
+      'query-openai',
+      prompt.substr(0, 30),
+      ttl,
+      ttlRemaining,
+      'payload:',
+      finalPayload ? finalPayload.length : 0
+    );
     const fullPrompt = finalPayload ? `${prompt}: ${finalPayload}` : prompt;
     const data =
       isOnline && isOverview
