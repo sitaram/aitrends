@@ -1,10 +1,10 @@
 export const tabs = [
   'Overview',
   'Expert Q&A',
+  'News',
   'Innovative Use Cases',
   'Ecosystem',
   'Divider',
-  'News',
   'Recap',
   'Evolution',
   'Future roadmap',
@@ -30,3 +30,8 @@ export const tabs = [
   'Case Studies',
   'Impact',
 ];
+
+export const shouldWebSearch = {
+  News: true,
+  'Community and Events': true,
+};

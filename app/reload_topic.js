@@ -1,4 +1,5 @@
 import { fetchContent } from './api';
+import { shouldWebSearch } from './tabs';
 import axios from 'axios';
 
 class ReloadTopic {
@@ -23,8 +24,7 @@ class ReloadTopic {
 
   enqueueRequests() {
     this.tabs.forEach((tab) => {
-      if (tab !== 'Overview' && tab === 'News') {
-        // XXX
+      if (tab !== 'Overview') {
         this.requestQueue.push({ topic: this.topic, tab });
       }
     });
@@ -46,16 +46,14 @@ class ReloadTopic {
       this.activeRequests[key];
 
       let payload = null; // No payload by default
-      if (tab === 'News') {
-        console.log('fetchData search-api', topic); // XXX
+      if (shouldWebSearch[tab]) {
         const response = await axios({
           method: 'get',
           url: '/api/search-api',
-          params: { topic: topic },
+          params: { topic: topic == Constants.ALLTOPICS ? Constants.ALLTOPICS_TITLE : topic },
           signal: this.signal.signal,
         });
         payload = response.data.text;
-        console.log('payload....', payload); // XXX
       }
 
       const content = await fetchContent(

@@ -1,7 +1,8 @@
 import OpenAI from 'openai';
 import dotenv from 'dotenv';
 import Redis from 'ioredis';
-import { prompts, ttls } from '../../server/prompts';
+import { prompts, ttls, webSearchPrompt } from '../../server/prompts';
+import { shouldWebSearch } from '../../app/tabs';
 
 dotenv.config(); // Load environment variables from .env file
 
@@ -30,7 +31,7 @@ export default async (req, res) => {
 
     const { topic, tab, payload, isOverview, isOnline } = req.body;
 
-    const prompt = prompts[tab].replace('${topic}', topic);
+    const prompt = prompts[tab].replace('${topic}', topic) + (shouldWebSearch[tab] ? webSearchPrompt : '');
     const ttl = ttls[tab] || 90 * 86400;
     console.log('REQUEST:', prompt);
 
