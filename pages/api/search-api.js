@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default async function handler(req, res) {
-  const { topic } = req.query;
+  const topic = req.query.topic;
 
   if (!topic) {
     return res.status(400).json({ error: 'Topic parameter is required.' });

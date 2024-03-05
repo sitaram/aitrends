@@ -51,10 +51,10 @@ class ReloadTopic {
         const response = await axios({
           method: 'get',
           url: '/api/search-api',
-          data: { topic: topic },
+          params: { topic: topic },
           signal: this.signal.signal,
         });
-        payload = response.data.data;
+        payload = response.data.text;
         console.log('payload....', payload); // XXX
       }
 
