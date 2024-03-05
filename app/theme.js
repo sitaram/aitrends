@@ -19,7 +19,7 @@ export const getTheme = (mode) =>
       markdown: {
         strong: '#416D19',
         h1: '#8B4F33',
-        h2: '#fB53b0',
+        h2: 'crimson',
         h3: 'tomato',
         h4: 'purple',
       },
