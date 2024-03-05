@@ -22,14 +22,17 @@ import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import About from './About';
 import { fetchContent } from './api';
-import { flattenTopics, parseHashParams } from './utils';
+import { flattenTopics } from './utils';
 import { topics } from './topics';
 import { tabs } from './tabs';
 import { getTheme } from './theme';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import axios from 'axios';
 import * as Constants from './constants';
 
 const Home = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const theme = getTheme(useMediaQuery('(prefers-color-scheme: dark)') ? 'dark' : 'light');
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [topicsDrawerOpen, setTopicsDrawerOpen] = useState(true);
@@ -46,10 +49,8 @@ const Home = () => {
   const updateScheduled = useRef(false);
   const title = topic === Constants.ALLTOPICS ? Constants.ALLTOPICS_TITLE : topic;
 
-  // Function to update the URL hash for topic and tab
-  function updateUrlHash(topic, tab) {
-    const newHash = `#topic=${encodeURIComponent(topic)}&tab=${encodeURIComponent(tab)}`;
-    window.location.hash = newHash;
+  function updateUrlParams(topic, tab) {
+    router.push(`/?topic=${topic}&tab=${tab}`, undefined, { shallow: true });
   }
 
   // Toggles the visibility of the drawer
@@ -61,7 +62,7 @@ const Home = () => {
   const handleTopicChange = (newTopic) => {
     setTopicsDrawerOpen(false);
     setTopic(newTopic);
-    updateUrlHash(newTopic, tabs[tabIndex]);
+    updateUrlParams(newTopic, tabs[tabIndex]);
   };
 
   // Handles switching between topics
@@ -74,13 +75,13 @@ const Home = () => {
         : (oldIndex + 1) % allTopics.length;
     const newTopic = allTopics[newIndex];
     setTopic(newTopic);
-    updateUrlHash(newTopic, tabs[tabIndex]);
+    updateUrlParams(newTopic, tabs[tabIndex]);
   };
 
   // Handle tab change
   const handleTabChange = (event, newTabIndex) => {
     setTabIndex(newTabIndex);
-    updateUrlHash(topic, tabs[newTabIndex]);
+    updateUrlParams(topic, tabs[newTabIndex]);
   };
 
   const handleSwitchTab = (direction) => {
@@ -111,7 +112,7 @@ const Home = () => {
 
     // Once a valid tab is found or if 'Divider' is the only option, update the tabIndex state.
     if (tabIndex !== newIndex) setTabIndex(newIndex);
-    updateUrlHash(topic, tabs[newIndex]);
+    updateUrlParams(topic, tabs[newIndex]);
   };
 
   const handleDynamicTopicChange = (newTopic) => {
@@ -125,30 +126,16 @@ const Home = () => {
       handleTopicChange(newTopic);
     }
     // Update URL hash or other necessary state
-    updateUrlHash(newTopic, tabs[tabIndex]);
+    updateUrlParams(newTopic, tabs[tabIndex]);
   };
 
-  // Parse the initial hash parameters
   useEffect(() => {
-    if (!window.location.hash) return; // don't erase our default open cluster
-    const { topic, tab } = parseHashParams(window.location.hash);
-    if (topic) setTopic(topic);
-    const newTabIndex = tabs.findIndex((t) => t === tab);
+    const topicParam = searchParams.get('topic');
+    const tabParam = searchParams.get('tab');
+    if (topicParam) setTopic(topicParam);
+    const newTabIndex = tabs.findIndex((t) => t === tabParam);
     if (newTabIndex !== -1) setTabIndex(newTabIndex);
-  }, []);
-
-  // Parse hash parameters on hash change
-  useEffect(() => {
-    const handleHashChange = () => {
-      const { topic, tab } = parseHashParams(window.location.hash);
-      if (topic) setTopic(topic);
-      const newTabIndex = tabs.findIndex((t) => t === tab);
-      if (newTabIndex !== -1) setTabIndex(newTabIndex);
-    };
-
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, [tabs]);
+  }, [searchParams]);
 
   // Updates the displayed topic based on the scroll position
   useEffect(() => {
