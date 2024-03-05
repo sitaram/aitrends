@@ -52,7 +52,7 @@ export default async (req, res) => {
     }
 
     let finalPayload = shouldWebSearch[tab]
-      ? searchAPI(topic == Constants.ALLTOPICS ? Constants.ALLTOPICS_TITLE : topic)
+      ? await searchAPI(topic == Constants.ALLTOPICS ? Constants.ALLTOPICS_TITLE : topic)
       : payload;
 
     // DEBUG console.log('fetchAndUpdate', prompt.substr(0, 30), ttl, ttlRemaining, cachedResponse ? cachedResponse.substr(0, 30) : 0);
