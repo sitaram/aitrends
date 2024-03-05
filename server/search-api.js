@@ -98,13 +98,6 @@ async function fetchSnippetsFromBing(queries, subscriptionKey) {
   return snippets;
 }
 
-const compromise = require('compromise');
-const natural = require('natural');
-const KeywordExtractor = require('keyword-extractor');
-
-// Initialize the sentiment analyzer with the AFINN system
-const sentimentAnalyzer = new natural.SentimentAnalyzer('English', natural.PorterStemmer, 'afinn');
-
 function processSnippets(snippets) {
   // Deduplicate snippets
   let uniqueSnippets = [...new Set(snippets)];
