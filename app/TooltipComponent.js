@@ -36,8 +36,8 @@ export default function TooltipComponent({ open, onClose, onClick, handleTabChan
   });
 
   const categories = {
-    Introduction: ['Overview', 'Expert Q&A', 'Innovative Use Cases', 'Ecosystem'],
-    'Updates & Insights': ['News', 'Recap', 'Evolution', 'Future Roadmap'],
+    Introduction: ['Overview', 'Expert Q&A', 'News', 'Innovative Use Cases', 'Ecosystem'],
+    'Updates & Insights': ['Recap', 'Evolution', 'Future Roadmap'],
     'Development & Job Opportunities': [
       'Funding and Investment',
       'Career Paths',
