@@ -1,4 +1,5 @@
 import { fetchContent } from './api';
+import axios from 'axios';
 
 class ReloadTopic {
   constructor(topic, tabs, updateStateCallback, activeRequests, processNextTopic, maxConcurrentRequests = 50) {
@@ -22,7 +23,8 @@ class ReloadTopic {
 
   enqueueRequests() {
     this.tabs.forEach((tab) => {
-      if (tab !== 'Overview') {
+      if (tab !== 'Overview' && tab === 'News') {
+        // XXX
         this.requestQueue.push({ topic: this.topic, tab });
       }
     });
@@ -42,10 +44,24 @@ class ReloadTopic {
     try {
       this.activeRequests.add(key);
       this.activeRequests[key];
+
+      let payload = null; // No payload by default
+      if (tab === 'News') {
+        console.log('fetchData search-api', topic); // XXX
+        const response = await axios({
+          method: 'get',
+          url: '/api/search-api',
+          data: { topic: topic },
+          signal: this.signal.signal,
+        });
+        payload = response.data.data;
+        console.log('payload....', payload); // XXX
+      }
+
       const content = await fetchContent(
         topic,
         tab,
-        null, // No payload
+        payload, // No payload
         false, // Not Overview
         false, // Not Online
         () => {}, // No Progress Callback
