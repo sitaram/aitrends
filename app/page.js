@@ -24,10 +24,9 @@ import About from './About';
 import { fetchContent } from './api';
 import { flattenTopics } from './utils';
 import { topics } from './topics';
-import { tabs, shouldWebSearch } from './tabs';
+import { tabs } from './tabs';
 import { getTheme } from './theme';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import axios from 'axios';
 import * as Constants from './constants';
 
 const Home = () => {
@@ -163,23 +162,10 @@ const Home = () => {
     // Define the fetchData function directly inside useEffect
     const fetchData = async () => {
       try {
-        const tab = tabs[tabIndex];
-
-        let payload = null; // No payload by default
-        if (shouldWebSearch[tab]) {
-          const response = await axios({
-            method: 'get',
-            url: '/api/search-api',
-            params: { topic: topic == Constants.ALLTOPICS ? Constants.ALLTOPICS_TITLE : topic },
-            signal: abortController.signal,
-          });
-          payload = response.data.text;
-        }
-
         await fetchContent(
           topic,
-          tab,
-          payload,
+          tabs[tabIndex],
+          null, // No payload
           tabIndex === 0, // isOverview
           true, // isOnline
           setContent,

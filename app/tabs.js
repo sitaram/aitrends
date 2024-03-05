@@ -30,8 +30,3 @@ export const tabs = [
   'Case Studies',
   'Impact',
 ];
-
-export const shouldWebSearch = {
-  News: true,
-  'Community and Events': true,
-};

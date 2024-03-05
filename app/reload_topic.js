@@ -1,5 +1,4 @@
 import { fetchContent } from './api';
-import { shouldWebSearch } from './tabs';
 import axios from 'axios';
 import * as Constants from './constants';
 
@@ -46,21 +45,10 @@ class ReloadTopic {
       this.activeRequests.add(key);
       this.activeRequests[key];
 
-      let payload = null; // No payload by default
-      if (shouldWebSearch[tab]) {
-        const response = await axios({
-          method: 'get',
-          url: '/api/search-api',
-          params: { topic: topic == Constants.ALLTOPICS ? Constants.ALLTOPICS_TITLE : topic },
-          signal: this.signal.signal,
-        });
-        payload = response.data.text;
-      }
-
       const content = await fetchContent(
         topic,
         tab,
-        payload, // No payload
+        null, // No payload
         false, // Not Overview
         false, // Not Online
         () => {}, // No Progress Callback

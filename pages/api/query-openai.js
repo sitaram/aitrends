@@ -1,8 +1,8 @@
 import OpenAI from 'openai';
 import dotenv from 'dotenv';
 import Redis from 'ioredis';
-import { prompts, ttls, webSearchPrompt } from '../../server/prompts';
-import { shouldWebSearch } from '../../app/tabs';
+import { prompts, ttls, shouldWebSearch, webSearchPrompt } from '../../server/prompts';
+import { searchAPI } from '../../server/search-api';
 
 dotenv.config(); // Load environment variables from .env file
 
@@ -37,7 +37,6 @@ export default async (req, res) => {
 
     if (!prompt) return res.status(400).json({ error: 'Prompt is required' });
 
-    const fullPrompt = payload ? `${prompt}: ${payload}` : prompt;
     const cacheKey = `prompt:${prompt}`;
     const cachedResponse = await redis.get(cacheKey);
     const ttlRemaining = await redis.ttl(cacheKey);
@@ -51,7 +50,12 @@ export default async (req, res) => {
       return res.status(200).json({ data: cachedResponse });
     }
 
+    let finalPayload = shouldWebSearch[tab]
+      ? searchAPI(topic == Constants.ALLTOPICS ? Constants.ALLTOPICS_TITLE : topic)
+      : payload;
+
     // DEBUG console.log('fetchAndUpdate', prompt.substr(0, 30), ttl, ttlRemaining, cachedResponse ? cachedResponse.substr(0, 30) : 0);
+    const fullPrompt = finalPayload ? `${prompt}: ${payload}` : prompt;
     const data =
       isOnline && isOverview
         ? 'Recursive summarization not available online'
