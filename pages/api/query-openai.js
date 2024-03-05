@@ -56,7 +56,7 @@ export default async (req, res) => {
       : payload;
 
     // DEBUG console.log('fetchAndUpdate', prompt.substr(0, 30), ttl, ttlRemaining, cachedResponse ? cachedResponse.substr(0, 30) : 0);
-    const fullPrompt = finalPayload ? `${prompt}: ${payload}` : prompt;
+    const fullPrompt = finalPayload ? `${prompt}: ${finalPayload}` : prompt;
     const data =
       isOnline && isOverview
         ? 'Recursive summarization not available online'
