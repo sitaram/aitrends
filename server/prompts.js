@@ -33,7 +33,7 @@ export const prompts = {
   'Skill Development':
     'Provide resources and guidance for skill development in ${topic}. Include courses, workshops, books, and online resources for beginners to experts.',
   'Community and Events':
-    'List upcoming events, conferences, and meetups related to ${topic}. Feature interviews with community leaders and summaries of past events. ',
+    'List upcoming events, conferences, and meetups related to ${topic}. Feature interviews with community leaders and summaries of past events.  ',
   'Tech Stack':
     'Detail the technology stack and tools commonly used in ${topic}, including software, libraries, frameworks, and platforms. Offer insights into choosing the right stack for various projects.',
   'Tech Deep Dive':

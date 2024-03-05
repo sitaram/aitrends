@@ -34,7 +34,7 @@ export default async (req, res) => {
 
     const prompt = prompts[tab].replace('${topic}', topic) + (shouldWebSearch[tab] ? webSearchPrompt : '');
     const ttl = ttls[tab] || 90 * 86400;
-    console.log('REQUEST:', prompt);
+    console.log('REQUEST:', prompt.substr(0, 100));
 
     if (!prompt) return res.status(400).json({ error: 'Prompt is required' });
 
