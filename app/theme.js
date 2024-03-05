@@ -17,11 +17,11 @@ export const getTheme = (mode) =>
         contrastText: '#ffffff',
       },
       markdown: {
-        strong: '#416D19', // Deep forest green for emphasis
-        h1: '#9BCF53', // Vivid green for h1 headings
-        h2: '#9B53b0', // Vivid blue for h2 headings
-        h3: 'tomato', // Tomato for h3 headings
-        h4: 'undefined',
+        strong: '#416D19',
+        h1: '#8B4F33',
+        h2: '#fB53b0',
+        h3: 'tomato',
+        h4: 'purple',
       },
       background: {
         default: mode === 'light' ? '#ffffff' : '#303030', // White for light mode, dark grey for dark mode
