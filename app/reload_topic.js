@@ -1,6 +1,7 @@
 import { fetchContent } from './api';
 import { shouldWebSearch } from './tabs';
 import axios from 'axios';
+import * as Constants from './constants';
 
 class ReloadTopic {
   constructor(topic, tabs, updateStateCallback, activeRequests, processNextTopic, maxConcurrentRequests = 50) {
