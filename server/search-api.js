@@ -52,7 +52,7 @@ export default async function searchAPI(topic) {
     return combinedSnippets;
   } catch (error) {
     console.error('Error fetching search results:', topic, ':', error);
-    throw new Error('Error during search operation: ' + topic);
+    throw new Error('Error during search operation: ' + topic + ':' + error);
   }
 }
 
@@ -62,13 +62,9 @@ async function fetchSnippetsFromGoogle(queries, apiKey, searchEngineId) {
     const url = `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${searchEngineId}&q=${encodeURIComponent(
       query
     )}`;
-    try {
-      const response = await axios.get(url);
-      const items = response.data.items || [];
-      snippets.push(...items.map((item) => `${item.title}: ${item.snippet}`));
-    } catch (error) {
-      console.error(`Error fetching Google results for query "${query}":`, error);
-    }
+    const response = await axios.get(url);
+    const items = response.data.items || [];
+    snippets.push(...items.map((item) => `${item.title}: ${item.snippet}`));
   }
   console.log('----------------------------------');
   console.log('---- GOOGLE SNIPPETS -------------');
@@ -81,15 +77,11 @@ async function fetchSnippetsFromBing(queries, subscriptionKey) {
   const snippets = [];
   for (const query of queries) {
     const url = `https://api.bing.microsoft.com/v7.0/search?q=${encodeURIComponent(query)}`;
-    try {
-      const response = await axios.get(url, {
-        headers: { 'Ocp-Apim-Subscription-Key': subscriptionKey },
-      });
-      const items = response.data.webPages.value || [];
-      snippets.push(...items.map((item) => `${item.name}: ${item.snippet}`));
-    } catch (error) {
-      console.error(`Error fetching Bing results for query "${query}":`, error);
-    }
+    const response = await axios.get(url, {
+      headers: { 'Ocp-Apim-Subscription-Key': subscriptionKey },
+    });
+    const items = response.data.webPages.value || [];
+    snippets.push(...items.map((item) => `${item.name}: ${item.snippet}`));
   }
   console.log('----------------------------------');
   console.log('---- BING SNIPPETS ---------------');
