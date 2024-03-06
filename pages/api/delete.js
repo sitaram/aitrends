@@ -7,6 +7,8 @@ dotenv.config(); // Load environment variables from .env file
 const redis = new Redis(process.env.REDIS_URL); // Redis connection URL
 
 export default async (req, res) => {
+  if (req.method !== 'DELETE') return res.status(405).json({ error: 'Method not allowed' });
+
   try {
     const { topic, tab } = req.query;
     if (!topic) return res.status(400).json({ error: 'Topic is required' });
