@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef, Suspense } from 'react';
+import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
 import styles from './YouTubeCarousel.module.css';
-import YouTube from 'react-youtube';
+const YouTube = lazy(() => import('react-youtube'));
 
 const YouTubeCarousel = ({ query }) => {
   const theme = useTheme();
