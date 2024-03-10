@@ -159,6 +159,10 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
+    if (!topicsDrawerOpen) setShowTooltip(false);
+  }, [topicsDrawerOpen]);
+
+  useEffect(() => {
     const topicParam = searchParams.get('topic');
     const tabParam = searchParams.get('tab');
     if (topicParam) setTopic(topicParam);
