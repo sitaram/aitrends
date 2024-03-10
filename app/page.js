@@ -11,6 +11,7 @@ import {
   ThemeProvider,
   Tab,
   Tabs,
+  Popper,
   useMediaQuery,
 } from '@mui/material';
 import AppBarComponent from './AppBarComponent';
@@ -47,6 +48,29 @@ const Home = () => {
   const [isTabBarSticky, setIsTabBarSticky] = useState(false);
   const updateScheduled = useRef(false);
   const title = topic === Constants.ALLTOPICS ? Constants.ALLTOPICS_TITLE : topic;
+  const [showTooltip, setShowTooltip] = useState(true);
+
+  const TopicTooltip = () => (
+    <Popper open={showTooltip} style={{ zIndex: 2000 }}>
+      <Paper
+        elevation={3}
+        sx={{
+          padding: 2,
+          backgroundColor: 'secondary.main',
+          marginLeft: 13,
+          marginTop: 45,
+          borderRadius: 5,
+          textAlign: 'center',
+        }}
+      >
+        <Typography variant="body1">
+          First, choose an
+          <br />
+          AI topic or industry
+        </Typography>
+      </Paper>
+    </Popper>
+  );
 
   function updateUrlParams(topic, tab) {
     router.push(`/?topic=${topic}&tab=${tab}`, undefined, { shallow: true });
@@ -129,6 +153,12 @@ const Home = () => {
   };
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowTooltip(false);
+    }, 3000);
+  }, []);
+
+  useEffect(() => {
     const topicParam = searchParams.get('topic');
     const tabParam = searchParams.get('tab');
     if (topicParam) setTopic(topicParam);
@@ -191,6 +221,7 @@ const Home = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <TopicTooltip />
       <Box sx={{ display: 'flex' }}>
         <AppBarComponent
           handleTopicsDrawerToggle={handleTopicsDrawerToggle}
@@ -237,6 +268,7 @@ const Home = () => {
               tabIndex={tabIndex}
               handleTabChange={handleTabChange}
               setIsTabBarSticky={setIsTabBarSticky}
+              topicsDrawerOpen={topicsDrawerOpen}
             />
             <ContentComponent
               topic={topic}

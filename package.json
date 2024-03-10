@@ -44,6 +44,7 @@
     "react-router-dom": "^6.22.0",
     "react-slick": "^0.30.2",
     "react-swipeable": "^7.0.1",
+    "react-tooltip": "^5.26.3",
     "react-youtube": "^10.1.0",
     "redis-cli": "^1.4.0",
     "rehype-raw": "^7.0.0",

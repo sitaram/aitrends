@@ -86,3 +86,15 @@ a:hover {
 .MuiTabs-scroller {
   scroll-behavior: smooth;
 }
+
+/* Custom tooltip with long arrow */
+.react-tooltip.custom-long-arrow::after {
+  content: '';
+  position: absolute;
+  top: -5px; /* Adjust based on your layout */
+  left: 20px; /* Adjust based on your layout */
+  margin-left: -5px;
+  border-width: 10px; /* Increases the size of the arrow */
+  border-style: solid;
+  border-color: transparent transparent #000 transparent; /* Arrow color */
+}

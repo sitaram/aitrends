@@ -1,7 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { AppBar, Tabs, Tab, Box, Divider, IconButton, useScrollTrigger, useTheme, useMediaQuery } from '@mui/material';
+import {
+  AppBar,
+  Tabs,
+  Tab,
+  Box,
+  Divider,
+  Popper,
+  Paper,
+  Typography,
+  IconButton,
+  useScrollTrigger,
+  useTheme,
+  useMediaQuery,
+} from '@mui/material';
 import { hexToRgba } from './utils';
-import TooltipComponent from './TooltipComponent';
+import TabMenu from './TabMenu';
 
 const ElevationScroll = ({ children, window, setIsTabBarSticky }) => {
   const theme = useTheme();
@@ -74,18 +87,52 @@ const tabContainerStyle = (theme) => {
   };
 };
 
-const TabBar = ({ tabs, tabIndex, handleTabChange, window, setIsTabBarSticky }) => {
+const TabBar = ({ tabs, tabIndex, handleTabChange, window, setIsTabBarSticky, topicsDrawerOpen }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [showTabMenu, setShowTabMenu] = useState(false);
+
   const [showTooltip, setShowTooltip] = useState(false);
+  const [firstTime, setFirstTime] = useState(true);
 
   const handleToolbarClick = () => {
-    setShowTooltip(!showTooltip);
+    setShowTabMenu(!showTabMenu);
   };
+
+  useEffect(() => {
+    if (!topicsDrawerOpen && firstTime) {
+      setShowTooltip(true);
+      setFirstTime(false);
+      const timer2 = setTimeout(() => {
+        setShowTooltip(false);
+      }, 3000);
+    }
+  }, [topicsDrawerOpen]);
+
+  const tooltipRef = useRef(null); // Ref for the drawer button
+  const TabTooltip = () => (
+    <Popper open={showTooltip} anchorEl={tooltipRef.current} style={{ zIndex: 2000 }} arrow>
+      <Paper
+        elevation={3}
+        sx={{
+          padding: '10px 20px',
+          backgroundColor: 'secondary.main',
+          maxWidth: 250,
+          marginLeft: 3,
+          marginTop: 20,
+          borderRadius: 5,
+          textAlign: 'center',
+        }}
+      >
+        <Typography variant="body1">Then, expore the tabs, see them all in the dropdown</Typography>
+      </Paper>
+    </Popper>
+  );
 
   return (
     <ElevationScroll window={window} setIsTabBarSticky={setIsTabBarSticky}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <TabTooltip />
         <AppBar
           position="static"
           color="default"
@@ -100,9 +147,10 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window, setIsTabBarSticky }) 
           }}
         >
           <Box sx={{ ...tabContainerStyle(theme), flexGrow: 1, textAlign: 'end', padding: '0 5px' }}>
-            <TooltipComponent
-              open={showTooltip}
-              onClose={() => setShowTooltip(false)}
+            <TabMenu
+              open={showTabMenu}
+              ref={tooltipRef}
+              onClose={() => setShowTabMenu(false)}
               onClick={handleToolbarClick}
               handleTabChange={handleTabChange}
             />

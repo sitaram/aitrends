@@ -9,7 +9,7 @@ import { styled } from '@mui/material/styles';
 import { tabs as allTabs } from './tabs';
 import Grow from '@mui/material/Grow';
 
-export default function TooltipComponent({ open, onClose, onClick, handleTabChange }) {
+export default function TabMenu({ open, onClose, onClick, handleTabChange }) {
   const theme = useTheme();
   const CustomWidthTooltip = styled(({ theme, className, ...props }) => (
     <Tooltip
