@@ -185,7 +185,7 @@ const Home = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [topic]);
+  }, [topic, title]);
 
   // Fetches content when tab or topic changes
   useEffect(() => {
