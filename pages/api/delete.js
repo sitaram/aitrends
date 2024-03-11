@@ -6,7 +6,7 @@ dotenv.config(); // Load environment variables from .env file
 
 const redis = new Redis(process.env.REDIS_URL); // Redis connection URL
 
-export default async (req, res) => {
+async function deleteItem(req, res) {
   if (req.method !== 'DELETE') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
@@ -25,4 +25,6 @@ export default async (req, res) => {
     console.error('Error deleting key:', error);
     res.status(500).json({ error: 'An error occurred', details: error.message });
   }
-};
+}
+
+export default deleteItem;

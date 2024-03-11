@@ -26,7 +26,7 @@ async function fetchAndUpdate(prompt, cacheKey, ttl) {
   return responseData;
 }
 
-export default async (req, res) => {
+async function queryOpenAI(req, res) {
   try {
     if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
@@ -77,4 +77,6 @@ export default async (req, res) => {
     console.error('Error making request to OpenAI:', error);
     res.status(500).json({ error: 'An error occurred', details: error.message });
   }
-};
+}
+
+export default queryOpenAI;
