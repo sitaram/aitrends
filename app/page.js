@@ -58,7 +58,7 @@ const Home = () => {
           position: 'absolute',
           padding: 1,
           backgroundColor: 'secondary.main',
-          left: isMobile ? '-100px' : '-600px',
+          left: isMobile ? '-100px' : '-450px',
           top: '400px',
           width: 160,
           borderRadius: 5,

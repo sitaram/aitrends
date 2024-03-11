@@ -70,8 +70,8 @@ const YouTubeCarousel = ({ query }) => {
                     src={video.snippet.thumbnails.high.url}
                     alt={video.snippet.title}
                     className={styles.thumbnail}
-                    width={304}
-                    height={169}
+                    width={480}
+                    height={360}
                   />
                   <div className={styles.videoTitle}>{decodeHTMLEntities(video.snippet.title)}</div>
                   <div className={styles.playIcon}>
