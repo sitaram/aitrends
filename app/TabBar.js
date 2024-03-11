@@ -108,7 +108,7 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window, setIsTabBarSticky, to
         setShowTooltip(false);
       }, 3000);
     }
-  }, [topicsDrawerOpen]);
+  }, [topicsDrawerOpen, firstTime]);
 
   const TabTooltip = () => (
     <Popper open={showTooltip} anchorEl={tooltipRef.current} style={{ zIndex: 2000 }} arrow="true">

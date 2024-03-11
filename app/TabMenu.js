@@ -126,4 +126,5 @@ const TabMenu = forwardRef(({ open, onClose, onClick, handleTabChange }, ref) =>
   );
 });
 
+TabMenu.displayName = 'TabMenu';
 export default TabMenu;
