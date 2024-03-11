@@ -46,10 +46,14 @@ export default async (req, res) => {
     if (cachedResponse && (isOnline || ttlRemaining > BASE_TTL)) {
       // Schedule a non-blocking refresh if TTL expired
       if (!isOverview && ttlRemaining < BASE_TTL) {
+        console.log('Issuing non-blocking refresh since TTL expired:', topic, tab);
         setImmediate(() => fetchAndUpdate(prompt, cacheKey, ttl));
       }
+      console.log('Serving query response from cache:', topic, tab);
       return res.status(200).json({ data: cachedResponse });
     }
+
+    console.log('Computing query response:', topic, tab, 'shouldWebSearch=', shouldWebSearch);
 
     let finalPayload = shouldWebSearch[tab]
       ? await searchAPI(topic == Constants.ALLTOPICS ? Constants.ALLTOPICS_TITLE : topic)

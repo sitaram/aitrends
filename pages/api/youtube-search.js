@@ -17,7 +17,7 @@ export default async function handler(req, res) {
   const cachedData = await redis.get(cacheKey);
 
   if (cachedData) {
-    console.log('Serving from cache:', query);
+    console.log('Serving YT from cache:', query);
     return res.status(200).json(JSON.parse(cachedData));
   }
 
@@ -38,7 +38,7 @@ export default async function handler(req, res) {
     // Cache the successful response for random 2 to 4 months
     const cacheDays = Math.floor(Math.random() * (120 - 60 + 1)) + 60;
     await redis.setex(cacheKey, 86400 * cacheDays, JSON.stringify(youtubeData));
-    console.log('Serving fresh data and caching:', query);
+    console.log('Serving fresh YT data and caching:', query);
     res.status(200).json(youtubeData);
   } catch (error) {
     console.error('Request failed:', error);
