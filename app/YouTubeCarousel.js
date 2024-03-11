@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
+import Image from 'next/image';
 import { useMediaQuery, useTheme } from '@mui/material';
 import styles from './YouTubeCarousel.module.css';
 const YouTube = lazy(() => import('react-youtube'));
@@ -65,10 +66,16 @@ const YouTubeCarousel = ({ query }) => {
                 </Suspense>
               ) : (
                 <div className={styles.thumbnailContainer} onClick={() => handleThumbnailClick(video.id.videoId)}>
-                  <img src={video.snippet.thumbnails.high.url} alt={video.snippet.title} className={styles.thumbnail} />
+                  <Image
+                    src={video.snippet.thumbnails.high.url}
+                    alt={video.snippet.title}
+                    className={styles.thumbnail}
+                    width={304}
+                    height={169}
+                  />
                   <div className={styles.videoTitle}>{decodeHTMLEntities(video.snippet.title)}</div>
                   <div className={styles.playIcon}>
-                    <img src="/play-icon.svg" alt="Play" />
+                    <Image src="/play-icon.svg" alt="Play" width={100} height={68} />
                   </div>
                 </div>
               )}
