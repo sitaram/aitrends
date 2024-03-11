@@ -119,11 +119,7 @@ const ContentComponent = ({
                   borderRadius: 0,
                 }}
               >
-                <CustomMarkdown
-                  text={part}
-                  topic={topic}
-                  handleTabChange={handleTabChange}
-                />
+                <CustomMarkdown text={part} topic={topic} handleTabChange={handleTabChange} />
               </Paper>
             ))}
           </div>

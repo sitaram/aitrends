@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, forwardRef } from 'react';
 import { TextField, Button, List, ListItem, ListItemText, Collapse, useTheme, useMediaQuery } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ExpandLess from '@mui/icons-material/ExpandLess';
@@ -67,7 +67,7 @@ const CollapseWrapper = styled(Collapse)(({ theme }) => ({
   overflowX: 'hidden', // Hide horizontal overflow for collapsing section
 }));
 
-const TopicBrowser = ({ topic, handleTopicChange, selectedTopic }) => {
+const TopicBrowser = forwardRef(({ topic, handleTopicChange, selectedTopic }, ref) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -257,6 +257,6 @@ const TopicBrowser = ({ topic, handleTopicChange, selectedTopic }) => {
       </StyledList>
     </>
   );
-};
+});
 
 export default TopicBrowser;

@@ -94,6 +94,7 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window, setIsTabBarSticky, to
 
   const [showTooltip, setShowTooltip] = useState(false);
   const [firstTime, setFirstTime] = useState(true);
+  const tooltipRef = useRef(null); // Ref for the drawer button
 
   const handleToolbarClick = () => {
     setShowTabMenu(!showTabMenu);
@@ -109,22 +110,25 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window, setIsTabBarSticky, to
     }
   }, [topicsDrawerOpen]);
 
-  const tooltipRef = useRef(null); // Ref for the drawer button
   const TabTooltip = () => (
-    <Popper open={showTooltip} anchorEl={tooltipRef.current} style={{ zIndex: 2000 }} arrow>
+    <Popper open={showTooltip} anchorEl={tooltipRef.current} style={{ zIndex: 2000 }} arrow="true">
       <Paper
         elevation={3}
         sx={{
           padding: '10px 20px',
           backgroundColor: 'secondary.main',
-          maxWidth: 250,
-          marginLeft: 3,
-          marginTop: 20,
+          width: 260,
+          marginLeft: 0,
+          marginTop: 0,
           borderRadius: 5,
           textAlign: 'center',
         }}
       >
-        <Typography variant="body1">Then, expore the tabs, see them all in the dropdown</Typography>
+        <Typography variant="body1">
+          Then, see lots of tabs here
+          <br />
+          See them all in this dropdown
+        </Typography>
       </Paper>
     </Popper>
   );
@@ -132,7 +136,7 @@ const TabBar = ({ tabs, tabIndex, handleTabChange, window, setIsTabBarSticky, to
   return (
     <ElevationScroll window={window} setIsTabBarSticky={setIsTabBarSticky}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <TabTooltip />
+        {tooltipRef.current && <TabTooltip />}
         <AppBar
           position="static"
           color="default"

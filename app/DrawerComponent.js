@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { Drawer, useMediaQuery, useTheme, Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import TopicBrowser from './TopicBrowser';
 
-const DrawerComponent = ({ topic, topicsDrawerOpen, handleTopicsDrawerToggle, handleTopicChange }) => {
+const DrawerComponent = forwardRef(({ topic, topicsDrawerOpen, handleTopicsDrawerToggle, handleTopicChange }, ref) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const drawerWidth = 250;
-  const drawerContent = <TopicBrowser topic={topic} handleTopicChange={handleTopicChange} selectedTopic={topic} />;
+
+  const drawerContent = (
+    <TopicBrowser ref={ref} topic={topic} handleTopicChange={handleTopicChange} selectedTopic={topic} />
+  );
 
   return (
     <>
@@ -55,6 +58,6 @@ const DrawerComponent = ({ topic, topicsDrawerOpen, handleTopicsDrawerToggle, ha
       )}
     </>
   );
-};
+});
 
 export default DrawerComponent;

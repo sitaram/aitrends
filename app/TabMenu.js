@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { forwardRef } from 'react';
 import { Button, Tooltip, tooltipClasses, useTheme } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
@@ -9,7 +8,7 @@ import { styled } from '@mui/material/styles';
 import { tabs as allTabs } from './tabs';
 import Grow from '@mui/material/Grow';
 
-export default function TabMenu({ open, onClose, onClick, handleTabChange }) {
+const TabMenu = forwardRef(({ open, onClose, onClick, handleTabChange }, ref) => {
   const theme = useTheme();
   const CustomWidthTooltip = styled(({ theme, className, ...props }) => (
     <Tooltip
@@ -57,69 +56,74 @@ export default function TabMenu({ open, onClose, onClick, handleTabChange }) {
   };
 
   return (
-    <CustomWidthTooltip
-      title={
-        <>
-          <Typography variant="h5" style={{ fontWeight: 'bold' }}>
-            Lots of tabs (choose one?)
-          </Typography>
-          {Object.entries(categories).map(([category, tabs]) => (
-            <span key={category} sx={{ margin: 2 }}>
-              <Typography variant="body2" component="div" sx={{ fontWeight: 'bold', mt: 1, mb: 1 }}>
-                {category}
-              </Typography>
-              <span>
-                {tabs.map((tab) => (
-                  <Chip
-                    key={tab}
-                    label={tab}
-                    variant="outlined"
-                    size="small"
-                    sx={{
-                      mr: 0.5,
-                      mb: 0.5,
-                      borderColor: theme.palette.tertiary.main,
-                      '&:hover': {
-                        backgroundColor: theme.palette.primary.main + ' !important',
-                        color: '#ffffff',
-                        borderColor: theme.palette.primary.main, // Optionally, you can ensure the border color matches during hover
-                      },
-                    }}
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      const index = allTabs.findIndex((t) => t === tab);
-                      if (index !== -1) handleTabChange(null, index);
-                      onClose();
-                    }}
-                  />
-                ))}
+    <>
+      <span ref={ref}></span>
+      <CustomWidthTooltip
+        title={
+          <>
+            <Typography variant="h5" style={{ fontWeight: 'bold' }}>
+              Lots of tabs (choose one?)
+            </Typography>
+            {Object.entries(categories).map(([category, tabs]) => (
+              <span key={category} sx={{ margin: 2 }}>
+                <Typography variant="body2" component="div" sx={{ fontWeight: 'bold', mt: 1, mb: 1 }}>
+                  {category}
+                </Typography>
+                <span>
+                  {tabs.map((tab) => (
+                    <Chip
+                      key={tab}
+                      label={tab}
+                      variant="outlined"
+                      size="small"
+                      sx={{
+                        mr: 0.5,
+                        mb: 0.5,
+                        borderColor: theme.palette.tertiary.main,
+                        '&:hover': {
+                          backgroundColor: theme.palette.primary.main + ' !important',
+                          color: '#ffffff',
+                          borderColor: theme.palette.primary.main, // Optionally, you can ensure the border color matches during hover
+                        },
+                      }}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        const index = allTabs.findIndex((t) => t === tab);
+                        if (index !== -1) handleTabChange(null, index);
+                        onClose();
+                      }}
+                    />
+                  ))}
+                </span>
               </span>
-            </span>
-          ))}
-          <Box sx={{ textAlign: 'right', mt: 1 }}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={onClose}
-              style={{ backgroundColor: theme.palette.primary.main }}
-            >
-              Got it!
-            </Button>
-          </Box>
-        </>
-      }
-      TransitionComponent={Grow}
-      TransitionProps={{ timeout: 500 }}
-      open={open}
-      onClose={onClose}
-      disableFocusListener
-      disableHoverListener
-      disableTouchListener
-      arrow
-    >
-      <IconButton color="primary" style={{ padding: 0, verticalAlign: '-2px' }} onClick={onClick}>
-        {!open ? <ArrowDropDownCircleTwoToneIcon /> : <ArrowDropDownCircleIcon />}
-      </IconButton>
-    </CustomWidthTooltip>
+            ))}
+            <Box sx={{ textAlign: 'right', mt: 1 }}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={onClose}
+                style={{ backgroundColor: theme.palette.primary.main }}
+              >
+                Got it!
+              </Button>
+            </Box>
+          </>
+        }
+        TransitionComponent={Grow}
+        TransitionProps={{ timeout: 500 }}
+        open={open}
+        onClose={onClose}
+        disableFocusListener
+        disableHoverListener
+        disableTouchListener
+        arrow
+      >
+        <IconButton color="primary" style={{ padding: 0, verticalAlign: '-2px' }} onClick={onClick}>
+          {!open ? <ArrowDropDownCircleTwoToneIcon /> : <ArrowDropDownCircleIcon />}
+        </IconButton>
+      </CustomWidthTooltip>
+    </>
   );
-}
+});
+
+export default TabMenu;

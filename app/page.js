@@ -49,16 +49,18 @@ const Home = () => {
   const updateScheduled = useRef(false);
   const title = topic === Constants.ALLTOPICS ? Constants.ALLTOPICS_TITLE : topic;
   const [showTooltip, setShowTooltip] = useState(true);
+  const tooltipRef = useRef(null); // Ref for the drawer button
 
   const TopicTooltip = () => (
-    <Popper open={showTooltip} style={{ zIndex: 2000 }}>
+    <Popper open={showTooltip} anchorEl={tooltipRef.current} style={{ zIndex: 2000 }}>
       <Paper
-        elevation={3}
         sx={{
-          padding: 2,
+          position: 'absolute',
+          padding: 1,
           backgroundColor: 'secondary.main',
-          marginLeft: 13,
-          marginTop: 45,
+          left: isMobile ? '-100px' : '-600px',
+          top: '400px',
+          width: 160,
           borderRadius: 5,
           textAlign: 'center',
         }}
@@ -225,7 +227,8 @@ const Home = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <TopicTooltip />
+      <div ref={tooltipRef} />
+      {tooltipRef.current && <TopicTooltip />}
       <Box sx={{ display: 'flex' }}>
         <AppBarComponent
           handleTopicsDrawerToggle={handleTopicsDrawerToggle}
