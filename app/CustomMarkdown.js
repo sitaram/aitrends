@@ -38,7 +38,7 @@ const CustomMarkdown = ({ text, topic, handleTabChange }) => {
         typeof child === 'string' ? removeLeadingNumbers(child) : child
       );
 
-      return shouldLink ? (
+      return shouldLink && props.children ? (
         <Tag {...props} style={{ ...style, fontWeight: style.fontWeight || 'normal' }}>
           <a
             href={createGoogleSearchLink(props.children.toString())}
