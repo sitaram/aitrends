@@ -1,13 +1,16 @@
-import dotenv from 'dotenv';
+// pages/api/delete.js
 import Redis from 'ioredis';
+import dotenv from 'dotenv';
 import { prompts, shouldWebSearch, webSearchPrompt } from '../../server/prompts';
 
-dotenv.config(); // Load environment variables from .env file
+dotenv.config();
 
-const redis = new Redis(process.env.REDIS_URL); // Redis connection URL
+const redis = new Redis(process.env.REDIS_URL);
 
-async function deleteItem(req, res) {
-  if (req.method !== 'DELETE') return res.status(405).json({ error: 'Method not allowed' });
+export default async function handler(req, res) {
+  if (req.method !== 'DELETE') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
 
   try {
     const { topic, tab } = req.query;
@@ -20,11 +23,9 @@ async function deleteItem(req, res) {
     const cacheKey = `prompt:${prompt}`;
     await redis.del(cacheKey);
 
-    return res.status(200).json({ message: 'Deleted from Redis: ' + cacheKey });
+    res.status(200).json({ message: `Deleted from Redis: ${cacheKey}` });
   } catch (error) {
     console.error('Error deleting key:', error);
-    res.status(500).json({ error: 'An error occurred', details: error.message });
+    res.status(500).json({ error: 'Internal server error', details: error.message });
   }
 }
-
-export default deleteItem;

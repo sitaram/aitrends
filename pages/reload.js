@@ -38,11 +38,12 @@ const Reload = () => {
       setLoading(true);
       setReloadState({});
       initiateReloadForTopic(Constants.ALLTOPICS, tabs);
-      topics.clusters.forEach((cluster) => {
-        cluster.topics.forEach((topic) => {
-          initiateReloadForTopic(topic, tabs);
+      if (0)
+        topics.clusters.forEach((cluster) => {
+          cluster.topics.forEach((topic) => {
+            initiateReloadForTopic(topic, tabs);
+          });
         });
-      });
     } else {
       // Cancel all ongoing requests
       Object.values(reloadTopics).forEach((reloadTopic) => reloadTopic.cancelAllRequests());
