@@ -47,8 +47,8 @@ const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic, setShowAbou
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'AITrends.live',
-          text: 'Keep up with the latest trends in AI with this dynamic and interactive newsletter. Explore now!',
+          title: 'AITrends.live: ' + displayedTopic,
+          text: 'Keep up with the latest trends in AI using http://aitrends.live/',
           url: window.location.href,
         });
         console.log('Content shared successfully');
