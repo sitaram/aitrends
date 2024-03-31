@@ -38,11 +38,13 @@ const Reload = () => {
       setLoading(true);
       setReloadState({});
       initiateReloadForTopic(Constants.ALLTOPICS, tabs);
-      topics.clusters.forEach((cluster) => {
-        cluster.topics.forEach((topic) => {
-          initiateReloadForTopic(topic, tabs);
+      // XXX BING API COSTS $120 AND OPENAI API COSTS $75 ISH PER RELOAD
+      if (0)
+        topics.clusters.forEach((cluster) => {
+          cluster.topics.forEach((topic) => {
+            initiateReloadForTopic(topic, tabs);
+          });
         });
-      });
     } else {
       // Cancel all ongoing requests
       Object.values(reloadTopics).forEach((reloadTopic) => reloadTopic.cancelAllRequests());
