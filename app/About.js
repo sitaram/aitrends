@@ -7,13 +7,6 @@ const About = ({ showAbout, setShowAbout }) => {
 
   const handleClose = () => setShowAbout(false);
 
-  const handleLinkedInPost = () => {
-    window.open(
-      'https://www.linkedin.com/posts/activity-7142703288986050561-oRre?utm_source=share&utm_medium=member_desktop',
-      '_blank'
-    );
-  };
-
   return (
     <Modal
       open={showAbout}
@@ -64,15 +57,6 @@ const About = ({ showAbout, setShowAbout }) => {
           Hope you enjoy learning AI (using AI)!
         </Typography>
         <Box sx={{ textAlign: 'right' }}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleLinkedInPost}
-            style={{ backgroundColor: theme.palette.primary.main }}
-          >
-            Read more
-          </Button>
-          &emsp;
           <Button
             variant="contained"
             color="primary"

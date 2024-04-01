@@ -87,7 +87,7 @@ const AppBarComponent = ({ handleTopicsDrawerToggle, displayedTopic, setShowAbou
 
   const handleLinkedInPost = () => {
     window.open(
-      'https://www.linkedin.com/posts/activity-7142703288986050561-oRre?utm_source=share&utm_medium=member_desktop',
+      'https://www.linkedin.com/posts/activity-7180399374219329537-wmEl?utm_source=share&utm_medium=member_desktop',
       '_blank'
     );
   };
