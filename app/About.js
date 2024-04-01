@@ -30,7 +30,7 @@ const About = ({ showAbout, setShowAbout }) => {
         }}
       >
         <Typography id="about-aitrends-title" variant="h5" component="h2" gutterBottom>
-          AITrends.live: Your AI Hub
+          AITrends.live: Get Ahead on AI!
         </Typography>
         <Divider sx={{ mb: 2 }} />
         <Typography id="about-aitrends-description" variant="body1" sx={{ mb: 2 }}>
