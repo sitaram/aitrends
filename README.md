@@ -1,4 +1,4 @@
-# Introducing [AITrends.live](AITrends.live). Get Ahead on AI!
+# Introducing [AITrends.live](http://AITrends.live/). Get Ahead on AI!
 
 Finding it hard to keep up with AI advances in your industry -- whether that’s Healthcare, Fintech, or e-Commerce? Curious to learn the wide range of AI concepts and techniques like GANs, GNNs, RAG, or delve into deeper areas like Explainable AI, Sustainable AI, or AI Ethics and Policy? Eager to explore how AI is revolutionizing fields like climate change, journalism, or blockchain -- or on the hunt for a job and interested in learning about innovative and recently funded AI startups in your sector?
 
