@@ -9,7 +9,7 @@ export const getTheme = (mode) =>
         contrastText: '#ffffff',
       },
       secondary: {
-        main: mode === 'light' ? '#FFF67E' : '#FFDD95', // Sunny yellow for light mode, a warmer yellow for dark mode
+        main: mode === 'light' ? '#FFF67E' : '#402C01', // Sunny yellow for light mode, a warmer yellow for dark mode
         contrastText: mode === 'light' ? '#000000' : '#000000',
       },
       tertiary: {
