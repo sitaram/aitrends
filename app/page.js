@@ -250,7 +250,14 @@ const Home = () => {
             }}
           >
             <Toolbar />
-            <Paper elevation={1} sx={{ padding: '1rem 0', backgroundColor: theme.palette.tertiary.main }}>
+            <Paper
+              elevation={1}
+              sx={{
+                padding: '1rem 0',
+                color: theme.palette.tertiary.contrastText,
+                backgroundColor: theme.palette.tertiary.main,
+              }}
+            >
               <Typography
                 variant="h1"
                 sx={{
@@ -262,11 +269,11 @@ const Home = () => {
                 className="title"
               >
                 <IconButton onClick={() => handleSwitchTopic('Previous')}>
-                  <NavigateBeforeIcon sx={{ fontSize: '2rem' }} />
+                  <NavigateBeforeIcon sx={{ fontSize: '2rem', color: theme.palette.tertiary.contrastText }} />
                 </IconButton>
                 <span>{title}</span>
                 <IconButton onClick={() => handleSwitchTopic('Next')}>
-                  <NavigateNextIcon sx={{ fontSize: '2rem' }} />
+                  <NavigateNextIcon sx={{ fontSize: '2rem', color: theme.palette.tertiary.contrastText }} />
                 </IconButton>
               </Typography>
             </Paper>

@@ -5,7 +5,7 @@ export const getTheme = (mode) =>
     palette: {
       mode,
       primary: {
-        main: mode === 'light' ? '#416D19' : '#416D19', // Deep forest green, consistent in both modes
+        main: mode === 'light' ? '#416D19' : '#658557', // Deep forest green, consistent in both modes
         contrastText: '#ffffff',
       },
       secondary: {
@@ -13,8 +13,8 @@ export const getTheme = (mode) =>
         contrastText: mode === 'light' ? '#000000' : '#000000',
       },
       tertiary: {
-        main: mode === 'light' ? '#9BCF53' : '#BFEA7C', // Vivid green for light mode, soft green for dark mode
-        contrastText: '#ffffff',
+        main: mode === 'light' ? '#9BCF53' : '#133A03', // Vivid green for light mode, soft green for dark mode
+        contrastText: mode === 'light' ? '#000000' : '#ffffff',
       },
       markdown: {
         strong: '#416D19',
